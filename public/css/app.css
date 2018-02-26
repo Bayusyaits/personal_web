@@ -1,0 +1,149 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@font-face {
+  font-family: "Open Sans";
+  src: url(/fonts/Open-Sans.eot?06a04537db9294681f93bc12bd1d9c53);
+  src: url(/fonts/Open-Sans.eot?06a04537db9294681f93bc12bd1d9c53?#iefix) format("embedded-opentype"), url(/fonts/Open-Sans.woff2?8a0ebc534f0927d24d959f99d794242f) format("woff2"), url(/fonts/Open-Sans.woff?62ce5818ce607b8ecd18a55b3e7bbe65) format("woff"), url(/fonts/Open-Sans.svg?022a0ebe529880449ef3d2bf20f4aa5f#Open Sans) format("svg"), url(/fonts/Open-Sans.ttf?629a55a7e793da068dc580d184cc0e31) format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url(/fonts/Open-Sans-Semibold.eot?31a82a9bde90eec038693f26ada892ad);
+  src: url(/fonts/Open-Sans-Semibold.eot?31a82a9bde90eec038693f26ada892ad?#iefix) format("embedded-opentype"), url(/fonts/Open-Sans-Semibold.woff2?5f276fbfbdcfa0d6d349a92f80ca02dc) format("woff2"), url(/fonts/Open-Sans-Semibold.woff?182802f3f8059f91f07c3c6ee44b113f) format("woff"), url(/fonts/Open-Sans-Semibold.svg?2c9ca963b3fffcdbb7aafa426f51243d#Open Sans) format("svg"), url(/fonts/Open-Sans-Semibold.ttf?33f225b8f5f7d6b34a0926f58f96c1e9) format("truetype");
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url(/fonts/Open-Sans-Light.eot?b180c799a87a4cad9108713ebe309686);
+  src: url(/fonts/Open-Sans-Light.eot?b180c799a87a4cad9108713ebe309686?#iefix) format("embedded-opentype"), url(/fonts/Open-Sans-Light.woff2?6c5ff600d6c86028dc708e874cd68c8d) format("woff2"), url(/fonts/Open-Sans-Light.woff?8528d42e728db092bc8d1906e6700438) format("woff"), url(/fonts/Open-Sans-Light.svg?f9b44716e739cfa488c4185e244c1afd#Open Sans) format("svg"), url(/fonts/Open-Sans-Light.ttf?1bf71be111189e76987a4bb9b3115cb7) format("truetype");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url(/fonts/Open-Sans-Bold.eot?33696c1691b434f58dd2887f2fa2a30f);
+  src: url(/fonts/Open-Sans-Bold.eot?33696c1691b434f58dd2887f2fa2a30f?#iefix) format("embedded-opentype"), url(/fonts/Open-Sans-Bold.woff2?2ba6100c683690b40cfa25bf907d91ff) format("woff2"), url(/fonts/Open-Sans-Bold.woff?d953b1c1136b7221fef3d22fc41df01e) format("woff"), url(/fonts/Open-Sans-Bold.svg?bfde6035d35afa4aeeb9f9cbcab536dc#Open Sans) format("svg"), url(/fonts/Open-Sans-Bold.ttf?50145685042b4df07a1fd19957275b81) format("truetype");
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Transition */
+
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  pre {
+    white-space: pre-wrap !important;
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+*,
+:after,
+:before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  /* Adjust font size */
+  font-size: 100%;
+  line-height: 1.15;
+  /* 1 */
+  /* Font varient */
+  -webkit-font-variant-ligatures: none;
+          font-variant-ligatures: none;
+  /* Smoothing */
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
+
