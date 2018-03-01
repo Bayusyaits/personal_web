@@ -1,6 +1,6 @@
 <?php
 
-nnamespace App\Http\Middleware;
+namespace App\Http\Middleware;
 
 use Closure;
 use JWTAuth;
