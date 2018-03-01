@@ -164,7 +164,16 @@ return [
         Dingo\Api\Provider\LaravelServiceProvider::class,
 
         //jwtauth
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
+        //generator
+        Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
+
+        //cors
+        Barryvdh\Cors\ServiceProvider::class,
+
+        //form html
+        Collective\Html\HtmlServiceProvider::class
 
     ],
 
@@ -217,6 +226,8 @@ return [
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

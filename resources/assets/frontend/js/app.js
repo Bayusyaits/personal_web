@@ -1,15 +1,28 @@
-require('../css/app.css')
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
 
 /**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
  */
- 
-/* Import the Main component */
-import Main from './components/Main';
+
+require('../css/app.css');
+
+import Vue from 'vue';
+
+import App from './App.vue';
+import router from './router';
+
+Vue.filter('formatMoney', (value) => {
+	return Number(value)
+	.toFixed(2)
+	.replace()
+})
+
+const app = new Vue({
+	el: '#app',
+	render: h =>h(App),
+
+	router
+})
+
+// new Vue(Vue.util.extend({ router }, App)).$mount('#app');

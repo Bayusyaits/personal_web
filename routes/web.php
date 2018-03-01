@@ -12,8 +12,8 @@
 */
 set_time_limit(3600);
 // ini_set('session.gc_maxlifetime', env('SESSION_TIMEOUT', 1200));
-define('env', env('APP_ENV'));
-define('env_bo', env('BACKOFFICE'));
+// define('env', env('APP_ENV'));
+// define('env_bo', env('BACKOFFICE'));
 define('REQUEST_SCHEME', 'http');
 define('DATETIME', date('Y-m-d H:i:s'));
 define('DATE', date('Y-m-d'));
@@ -25,9 +25,13 @@ $api = app('Dingo\Api\Routing\Router');
 Route::get('/', function () {
     return view('welcome');
 });
+
+//vue.js
+Route::get('home', ['uses'=>'FrontEndController@index', 'as'=>'home']);
 //
-$api->version('v1', function($api) {
-	$api->get('hello', function() {
-		return 'Hello';
-	});
+$api->version('v1', function ($api) {
+    $api->get('/halo', function() {
+        return ['data'=>'halo'];
+    });
+    $api->get('/user',['uses'=>'App\Http\Controllers\API\PostController@do_signin', 'as'=>'user']);
 });
