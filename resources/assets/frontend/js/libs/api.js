@@ -7,8 +7,9 @@
 
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
+import VueResource from 'vue-resource';
 import axios from 'axios';
-Vue.use(VueAxios, axios);
+Vue.use(VueAxios, VueResource, axios);
 
 
 export function get(url, params) {

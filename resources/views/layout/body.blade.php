@@ -1,22 +1,15 @@
 @section('body')
     <div id="app">
-        @section('navigation')
-            {{-- Comment this include to remove navigation --}}
-            @include('common.navigation')
-
-        @show
-        @section('header')
-            {{-- Comment this include to remove header section --}}
-            @include('common.header')
-        @show
-
+        <navbar></navbar>
+        <page></page>
+       <!--  <main>
         {{-- CONTENT --}}
         @yield('content')
         {{-- /CONTENT --}}
-
+        </main>
         @section('footer')
             {{-- Comment this include to remove footer section --}}
             @include('common.footer')
-        @show
+        @show -->
     </div>
 @show

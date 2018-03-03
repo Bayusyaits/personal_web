@@ -25,4 +25,9 @@ class DynMenu extends Model
     public function __construct(){
 	    parent::__construct();
     }
+
+    public function scopeActive($query)
+        {
+            return $query->where('dm_show', 555);
+        }
 }

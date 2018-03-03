@@ -40,7 +40,8 @@ class MrCategory extends Model
 	 Funtion
 	 */
 	 
-	  public function scopeCategoryActive($query)
+
+	 public function scopeCategoryActive($query)
 	    {
 	        return $query->where('mc_show', 555);
 	    }

@@ -10,8 +10,12 @@ require('../css/app.css');
 import Vue from 'vue';
 
 import App from './App.vue';
-import router from './router';
+import Router from './router';
+import Navbar from './common/navbar';
 
+
+
+//format money
 Vue.filter('formatMoney', (value) => {
 	return Number(value)
 	.toFixed(2)
@@ -20,9 +24,12 @@ Vue.filter('formatMoney', (value) => {
 
 const app = new Vue({
 	el: '#app',
-	render: h =>h(App),
+	components: {
+		'navbar': Navbar,
+		'page': App
+	},
+	router: Router
 
-	router
 })
 
 // new Vue(Vue.util.extend({ router }, App)).$mount('#app');

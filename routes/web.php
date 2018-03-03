@@ -22,16 +22,13 @@ define('JT', 1000000);
 
 $api = app('Dingo\Api\Routing\Router');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', ['uses'=>'Frontend\AppController@getIndex','as'=>'index']);
 
 //vue.js
-Route::get('home', ['uses'=>'FrontEndController@index', 'as'=>'home']);
-//
 $api->version('v1', function ($api) {
     $api->get('/halo', function() {
         return ['data'=>'halo'];
     });
+    $api->get('/pages', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);
     $api->get('/user',['uses'=>'App\Http\Controllers\API\PostController@do_signin', 'as'=>'user']);
 });
