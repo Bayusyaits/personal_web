@@ -30,5 +30,6 @@ $api->version('v1', function ($api) {
         return ['data'=>'halo'];
     });
     $api->get('/pages', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);
+    $api->get('/auth', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);
     $api->get('/user',['uses'=>'App\Http\Controllers\API\PostController@do_signin', 'as'=>'user']);
 });

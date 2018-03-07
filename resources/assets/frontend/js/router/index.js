@@ -10,7 +10,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
-import Home from '../views/home/index.vue';
+import Home from '../store/home/index.vue';
+
+import Auth from '../store/auth/index.vue';
 
 const Routes = new VueRouter({
 	routes: [{
@@ -21,6 +23,15 @@ const Routes = new VueRouter({
       // ini adalah tampilan/component yang akan munculkan saat user mengunjungi http://localhost:8000/forum - kita belum buat component ini
 	name: 'Home', 
 	component: Home
+	},
+	{
+	path: '/auth',
+	  // ini hanya alias route kalau dilaravel biasa kita pakai as atau name
+      // ini path view, maksudnya bila kita mengunjungi http://localhost:8000/forum maka route ini yg akan menghandle
+      // penting diingat path: '/' ini bukan berarti http://localhost:8000/ melainkan http://localhost:8000/forum
+      // ini adalah tampilan/component yang akan munculkan saat user mengunjungi http://localhost:8000/forum - kita belum buat component ini
+	name: 'Auth', 
+	component: Auth
 	}
 	// {path: '/', redirect: '/home'},
 	// {name: 'Home', path: '/home', component: Home}

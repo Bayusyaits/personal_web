@@ -28,6 +28,7 @@ class DynMenu extends Model
 
     public function scopeActive($query)
         {
-            return $query->where('dm_show', 555);
+            return $query->selectRaw('dm_id,dm_name,dm_url')
+                         ->where('dm_show', 555);
         }
 }

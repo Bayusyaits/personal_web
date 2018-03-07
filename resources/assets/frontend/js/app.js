@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -17,18 +16,18 @@ import Navbar from './common/navbar';
 
 //format money
 Vue.filter('formatMoney', (value) => {
-	return Number(value)
-	.toFixed(2)
-	.replace()
+  return Number(value)
+  .toFixed(2)
+  .replace()
 })
 
 const app = new Vue({
-	el: '#app',
-	components: {
-		'navbar': Navbar,
-		'page': App
-	},
-	router: Router
+  el: '#app',
+  components: {
+    'navbar': Navbar,
+    'page': App
+  },
+  router: Router
 
 })
 

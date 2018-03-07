@@ -3,15 +3,15 @@
         <div>
             <img src="../../../images/logo/bayusyaits.svg">
             <h1>{{ msg }}</h1>
-            <h1>Navbar</h1>
-            <h1>Test</h1>
+            <div v-for="post in posts"><a href="post.dm_url ">{{ post.dm_name }}</a></div>
+            <button @click="setData" ></button>
+
         </div>
     </div>
 </template>
 
 <script type="text-javascript">
 import Vue from 'vue';
-
 import { get } from '../../libs/api';
 
 export default {
@@ -19,6 +19,7 @@ export default {
 	data () {
 	    return {
         show: false,
+        posts: [],
         model: {
           items: [],
           customer: {}
@@ -27,15 +28,26 @@ export default {
 	    }
 	},
 beforeRouteEnter(to, from, next) {
-    get('api/halo')
-    .then((res) => {
-
+    get('api/pages')
+    .then(function (res) {
       next(vm => vm.setData(res))
+      console.log(res);
     })
+    .catch(function (error) {
+      console.log(error);
+    });
+},
+created () {
+  get('api/pages')
+  .then(({data})=>{
+    console.log(data)
+    this.posts = data
+  })
+  .catch(as => {console.log(as)} )
 },
 methods: {
   setData(res) {
-    Vue.set(this.$data, 'model', res.data.model)
+    Vue.set(this.$data, 'posts', res.data.posts)
     this.show = true
   }
 }

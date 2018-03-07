@@ -10,36 +10,6 @@
 </template>
 
 <script type="text-javascript">
-import Vue from 'vue';
-
-import { get } from '../../libs/api';
-
-export default {
-	name: 'app',
-	data () {
-	    return {
-        show: false,
-        model: {
-          items: [],
-          customer: {}
-        },
-	      msg: 'Welcome to Your Vue.js App'
-	    }
-	},
-beforeRouteEnter(to, from, next) {
-    get('api/halo')
-    .then((res) => {
-
-      next(vm => vm.setData(res))
-    })
-},
-methods: {
-  setData(res) {
-    Vue.set(this.$data, 'model', res.data.model)
-    this.show = true
-  }
-}
-}
 
 </script>
 

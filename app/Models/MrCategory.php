@@ -46,7 +46,8 @@ class MrCategory extends Model
 	        return $query->where('mc_show', 555);
 	    }
 	 public function scopeFields($query) {
-	    return $query->join('dyn_menu','mc_dm_id','=','dm_id')
+	    return $query->select('mc_id')
+                     ->join('dyn_menu','mc_dm_id','=','dm_id')
 	    			 ->where([
 					'mc_dm_id'	=> 55103,
 					'mc_show'	=> 555
