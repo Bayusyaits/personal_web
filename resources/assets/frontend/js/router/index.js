@@ -8,6 +8,7 @@
 import Vue from 'vue';
 
 import VueRouter from 'vue-router';
+
 Vue.use(VueRouter);
 
 import Home from '../store/home/index.vue';
@@ -15,6 +16,7 @@ import Home from '../store/home/index.vue';
 import Auth from '../store/auth/index.vue';
 
 const Routes = new VueRouter({
+	mode: 'history',
 	routes: [{
 	path: '/',
 	  // ini hanya alias route kalau dilaravel biasa kita pakai as atau name

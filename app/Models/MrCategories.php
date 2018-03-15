@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MrCategory extends Model
+class MrCategories extends Model
 {
     //
     protected static $elq = __CLASS__;
-    protected $table = 'mr_category';
+    protected $table = 'mr_categories';
     protected $primaryKey = 'mc_id';
     protected $foreignKey = 'mc_dm_id';
     protected $fillable = [
@@ -41,13 +41,20 @@ class MrCategory extends Model
 	 */
 	 
 
-	 public function scopeCategoryActive($query)
+	 public function scopeCategoriesActive($query)
 	    {
 	        return $query->where('mc_show', 555);
 	    }
 	 public function scopeFields($query) {
-	    return $query->select('mc_id')
-                     ->join('dyn_menu','mc_dm_id','=','dm_id')
+	    return $query->leftjoin('dyn_menu','mc_dm_id','=','dm_id')
+	    			 ->where([
+                    'mc_type'	=> 'field',
+                    'mc_dm_id'	=> 55103,
+					'mc_show'	=> 555
+					]);
+    }
+    public function scopeCategories($query) {
+	    return $query->join('dyn_menu','mc_dm_id','=','dm_id')
 	    			 ->where([
 					'mc_dm_id'	=> 55103,
 					'mc_show'	=> 555

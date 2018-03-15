@@ -14,6 +14,7 @@ class DynMenu extends Model
     protected $fillable = [
         'dm_name',
         'dm_url',
+        'dm_slug',
         'dm_is_parent',
         'dm_parent_id',
         'dm_show',
@@ -28,7 +29,7 @@ class DynMenu extends Model
 
     public function scopeActive($query)
         {
-            return $query->selectRaw('dm_id,dm_name,dm_url')
+            return $query->selectRaw('dm_id,dm_name,dm_url,dm_slug')
                          ->where('dm_show', 555);
         }
 }

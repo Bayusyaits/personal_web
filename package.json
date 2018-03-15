@@ -29,6 +29,7 @@
         "envify": "^4.1.0",
         "prop-types": "^15.6.1",
         "vue": "^2.5.13",
-        "vue-resource": "^1.5.0"
+        "vue-resource": "^1.5.0",
+        "vue-scrollto": "^2.11.0"
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMrCategoryTable extends Migration
+class CreateMrCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMrCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::table('mr_category', function (Blueprint $table) {
+        Schema::table('mr_categories', function (Blueprint $table) {
             //
         });
     }
@@ -25,7 +25,7 @@ class CreateMrCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::table('mr_category', function (Blueprint $table) {
+        Schema::table('mr_categories', function (Blueprint $table) {
             //
         });
     }

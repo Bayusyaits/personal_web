@@ -1,8 +1,7 @@
 <template>
-    <div class="mcm-casestudies container" id="mcm-projects">
-        <fields></fields>
-        <div v-for="post in posts" :class="post.mcm_initial">
-          <h1>{{ post.mcm_content_en }}</h1>
+    <div class="mc-casestudies" id="mc-fields">
+        <div v-for="post in posts" :class="post.mc_initial" :id="post.mc_name">
+          <h5>{{ post.mc_name }}</h5>
         </div>
     </div>
 </template>
@@ -10,20 +9,16 @@
 <script type="text-javascript">
 import Vue from 'vue';
 import { get } from '../../libs/api';
-import Fields from '../../common/categories/fields.vue';
 
 export default {
-  name: 'casestudies',
-  components: {
-    'fields': Fields
-  },
+  name: 'fields',
   data() {
     return {
       posts:[]
       }
   },
   created() {
-    get('api/pages/case-studies')
+    get('api/categories/fields')
     .then(({
           data
         }) => {

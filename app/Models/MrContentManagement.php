@@ -18,6 +18,7 @@ class MrContentManagement extends Model
     ];
     protected $fillable = [
         'mcm_keyword',
+        'mcm_initial',
         'mcm_title_id',
         'mcm_title_en',
         'mcm_content_id',
@@ -42,6 +43,7 @@ class MrContentManagement extends Model
         "mcm_mc_id"=>["",""],
         "mcm_mm_id"=>["",""],
         "mcm_keyword"=>["required",""],
+        "mcm_initial"=>["required",""],
         "mcm_title_id"=>["required",""],
         "mcm_title_en"=>["",""],
         "mcm_content_id"=>["required",""],
@@ -60,11 +62,29 @@ class MrContentManagement extends Model
 	    {
 	        return $query->where('mcm_show', 555);
 	    }
-	 public function scopeContentWork($query) {
+	 public function scopeContentCaseStudies($query) {
 	    return $query->join('dyn_menu','mcm_dm_id','=','dm_id')
 	    			 ->where([
-					'mcm_dm_id'	=> 55103,
-					'mcm_show'	=> 555
+					'mcm_dm_id'	        => 55103,
+					'mcm_show'      	=> 555
+					]);
+    }
+    public function scopeContentMenu($query) {
+        return $query->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
+	    			 ->where([
+                    'mcm_keyword'   	=> '[Content-Menu]',
+                    'mcm_is_parent' 	=> 1,
+                    'mcm_parent_id'	    => 0,
+					'mcm_show'	        => 555
+					]);
+    }
+    public function scopeContentMenuCaseStudies($query) {
+        return $query->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
+	    			 ->where([
+                    'mcm_keyword'   	=> '[Content-Menu]Case-Studies',
+                    'mcm_is_parent' 	=> 1,
+                    'mcm_parent_id'	    => 5511203,
+					'mcm_show'	        => 555
 					]);
     }
 }

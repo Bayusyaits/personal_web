@@ -2,6 +2,7 @@
     <div id="app">
         <navbar></navbar>
         <page></page>
+        <foot></foot>
        <!--  <main>
         {{-- CONTENT --}}
         @yield('content')
