@@ -1,7 +1,6 @@
 <template>
     <div class="container" v-if="show">
         <div>
-            <img src="../../../images/logo/bayusyaits.svg">
             <h1>{{ msg }}</h1>
             <h1>Navbar</h1>
             <h1>Test</h1>

@@ -11,7 +11,7 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import Home from '../store/home/index.vue';
+import Index from '../store/layout/index.vue';
 
 import Auth from '../store/auth/index.vue';
 
@@ -23,8 +23,8 @@ const Routes = new VueRouter({
       // ini path view, maksudnya bila kita mengunjungi http://localhost:8000/forum maka route ini yg akan menghandle
       // penting diingat path: '/' ini bukan berarti http://localhost:8000/ melainkan http://localhost:8000/forum
       // ini adalah tampilan/component yang akan munculkan saat user mengunjungi http://localhost:8000/forum - kita belum buat component ini
-	name: 'Home', 
-	component: Home
+	name: 'Index', 
+	component: Index
 	},
 	{
 	path: '/auth',

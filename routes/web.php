@@ -26,11 +26,10 @@ Route::get('/', ['uses'=>'Frontend\AppController@getIndex','as'=>'index']);
 
 //vue.js
 $api->version('v1', function ($api) {
-    $api->get('/halo', function() {
-        return ['data'=>'halo'];
-    });
     $api->get('/pages/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);
     $api->get('/categories/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getCategories','as'=>'categories']);
+    $api->get('/media/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getMedSos','as'=>'media']);
+    $api->get('/case-studies/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getCaseStudies','as'=>'case-studies']);
     $api->get('/auth', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);
     $api->get('/user',['uses'=>'App\Http\Controllers\API\PostController@do_signin', 'as'=>'user']);
 });

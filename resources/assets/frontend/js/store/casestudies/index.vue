@@ -1,9 +1,10 @@
 <template>
-    <div class="mcm-casestudies container" id="mcm-projects">
+    <div class="mcm-casestudies container" id="mcm-casestudies">
+        <section  :class="posts.mtp_initial" :id="posts.mtp_title_en">
+          <h1>{{ posts.mtp_content_en }}</h1>
+        </section>
         <fields></fields>
-        <div v-for="post in posts" :class="post.mcm_initial">
-          <h1>{{ post.mcm_content_en }}</h1>
-        </div>
+        <projects></projects>
     </div>
 </template>
 
@@ -11,11 +12,13 @@
 import Vue from 'vue';
 import { get } from '../../libs/api';
 import Fields from '../../common/categories/fields.vue';
+import Projects from './projects/';
 
 export default {
-  name: 'casestudies',
+  name: 'Casestudies',
   components: {
-    'fields': Fields
+    'fields': Fields,
+    'projects': Projects
   },
   data() {
     return {

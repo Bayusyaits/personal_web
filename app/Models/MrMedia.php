@@ -12,7 +12,10 @@ class MrMedia extends Model
     protected $primaryKey = 'mm_id';
     protected $foreignKey = 'mm_dm_id';
     protected $fillable = [
+        'mm_keyword',
+        'mm_initial',
         'mm_name',
+        'mm_alt',
         'mm_url',
         'mm_is_parent',
         'mm_parent_id',
@@ -29,8 +32,11 @@ class MrMedia extends Model
     protected $fieldRules = [
         "mm_id"=>["",""],
         "mm_dm_id"=>["",""],
+        "mm_keyword"=>["required",""],
+        "mm_initial"=>["required",""],
         "mm_name"=>["required",""],
-        "mm_url"=>["required",""],
+        "mm_alt"=>["required",""],
+        "mm_src"=>["required",""],
         "mm_is_parent"=>["",""],
         "mm_parent_id"=>["",""],
         "mm_show"=>["required",""],
@@ -49,6 +55,23 @@ class MrMedia extends Model
 	    			 ->where([
 					'mm_dm_id'	=> 55103,
 					'mm_show'	=> 555
+					]);
+    }
+    public function scopeMediaLogosMedsos($query) {
+        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,dm_initial,dm_url')
+                     ->leftjoin('dyn_menu','mm_dm_id','=','dm_id')
+	    			 ->where([
+                    'mm_keyword'	=> '[Logo-Medsos]',
+					'mm_show'	    => 555
+					]);
+    }
+
+    public function scopeMediaLogo($query) {
+        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,dm_initial,dm_url')
+                     ->leftjoin('dyn_menu','mm_dm_id','=','dm_id')
+	    			 ->where([
+                    'mm_keyword'	=> '[Logo]',
+					'mm_show'	    => 555
 					]);
     }
 }

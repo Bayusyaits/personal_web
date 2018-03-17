@@ -1,18 +1,41 @@
 <template>
-  <div class="container" id="dm-about">
-    <div>
-      <h1>{{ Title }}</h1>
+    <div class="mcm-about container" id="mcm-about">
+        <section  :class="posts.mtp_initial" :id="posts.mtp_title_en">
+          <h1>{{ posts.mtp_content_en }}</h1>
+        </section>
     </div>
-  </div>
 </template>
 
 <script type="text-javascript">
-  export default {
-    name: 'About',
-    props: ['source', 'title']
+import Vue from 'vue';
+import { get } from '../../libs/api';
+
+export default {
+  name: 'About',
+  components: {
+  },
+  data() {
+    return {
+      posts:[]
+      }
+  },
+  created() {
+    get('api/pages/about')
+    .then(({
+          data
+        }) => {
+          console.log(data)
+          this.posts = data
+        })
+        .catch(as => {
+          console.log(as)
+        })
   }
+
+}
+
 </script>
 
-<style>
-  
+<style lang="scss">
+
 </style>

@@ -6,9 +6,9 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('links')
-    @if(config('h5b.manifest'))
+    <!-- @if(config('h5b.manifest'))
         <link rel="manifest" href="{{ config('h5b.manifest') }}">
-    @endif
+    @endif -->
     @if(config('h5b.appleicon'))
         <link rel="apple-touch-icon" href="{{ config('h5b.appleicon') }}">
     @endif
