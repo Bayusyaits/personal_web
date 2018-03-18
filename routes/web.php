@@ -24,6 +24,12 @@ $api = app('Dingo\Api\Routing\Router');
 
 Route::get('/', ['uses'=>'Frontend\AppController@getIndex','as'=>'index']);
 
+//clear cache
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    // return what you want
+});
+
 //vue.js
 $api->version('v1', function ($api) {
     $api->get('/pages/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);

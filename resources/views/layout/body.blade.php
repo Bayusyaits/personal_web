@@ -1,5 +1,5 @@
 @section('body')
-    <div id="app">
+    <main id="app">
         <navbar></navbar>
         <page></page>
         <foot></foot>
@@ -12,5 +12,5 @@
             {{-- Comment this include to remove footer section --}}
             @include('common.footer')
         @show -->
-    </div>
+    </main>
 @show

@@ -4,8 +4,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('../css/app.css');
-
 import Vue from 'vue';
 
 import App from './App.vue';
@@ -29,6 +27,37 @@ Vue.use(VueLazyload, {
   error: 'http://res.cloudinary.com/limononoto/image/upload/v1521294359/personal_web/uploads/icons/error.png',
   loading:'http://res.cloudinary.com/limononoto/image/upload/v1521294360/personal_web/uploads/icons/loading.gif',
   attempt: 1
+})
+
+
+//scrolled visible
+Vue.directive('scrolled', {
+  inViewport (el) {
+    var rect =el.getBoundingClientRect()
+        return !(rect.bottom < 0 || rect.right < 0 || rect.left > window.innerWidth ||
+             rect.top > window.innerHeight)
+  },
+
+  bind: function (el,binding) {
+    el.classList.add('not-visible')
+    el.$onScroll = function() {
+      if (binding.def.inViewport(el)) {
+        el.classList.add('already-visible')
+        el.classList.remove('not-visible')
+        binding.def.unbind(el, binding)        
+      }
+    }
+    document.addEventListener('scroll', el.$onScroll)
+  },
+  inserted: function (el, binding) {
+    el.$onScroll()  
+  },
+  update: function () {},
+  componentUpdated: function () {},
+  unbind: function (el,binding) {
+    document.removeEventListener('scroll', el.$onScroll)
+    delete el.$onScroll
+  }  
 })
 
 

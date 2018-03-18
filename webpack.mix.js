@@ -14,7 +14,14 @@ let mix = require('laravel-mix');
 mix.js(['resources/assets/frontend/js/app.js'], 'public/js')
    .sass('resources/assets/frontend/sass/app.scss', 'public/css', {
     precision: 5
-	});
+    })
+    mix.webpackConfig({
+        output: {
+            publicPath: "http://localhost:8080/", // Development Server
+            // publicPath: "http://example.com/", // Production Server
+          }
+    })
+    ;
     if (mix.config.inProduction) {
         mix.version();
      }

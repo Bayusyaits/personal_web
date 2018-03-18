@@ -1,9 +1,9 @@
 <template>
-    <div class="mc-contact" id="mc-subjects">
-        <div v-for="post in posts" :class="post.mc_initial" :id="post.mc_name">
-          <h5>{{ post.mc_name }}</h5>
-        </div>
-    </div>
+    <ul class="mc-contact" id="mc-subjects" v-bind:class="{active}" v-on:click.prevent>
+        <li v-for="post in posts" class="mc">
+          <a href="#" :class="post.mc_initial" :id="post.mc_name" v-text="post.mc_name" v-on:click="makeActive(post.mc_name)"></a>
+        </li>
+    </ul>
 </template>
 
 <script type="text-javascript">
@@ -14,8 +14,15 @@ export default {
   name: 'Subjects',
   data() {
     return {
+      active: null,
       posts:[]
       }
+  },
+  methods: {
+    makeActive: function(item) {
+      this.active = item;
+      console.log(this.active)
+    }
   },
   created() {
     get('api/categories/subjects')

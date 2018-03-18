@@ -1,32 +1,56 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@font-face {
   font-family: "Open Sans";
-  src: url(/fonts/Open-Sans.eot?06a04537db9294681f93bc12bd1d9c53);
-  src: url(/fonts/Open-Sans.eot?06a04537db9294681f93bc12bd1d9c53?#iefix) format("embedded-opentype"), url(/fonts/Open-Sans.woff2?8a0ebc534f0927d24d959f99d794242f) format("woff2"), url(/fonts/Open-Sans.woff?62ce5818ce607b8ecd18a55b3e7bbe65) format("woff"), url(/fonts/Open-Sans.svg?022a0ebe529880449ef3d2bf20f4aa5f#Open Sans) format("svg"), url(/fonts/Open-Sans.ttf?629a55a7e793da068dc580d184cc0e31) format("truetype");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans.eot");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans.eot?#iefix") format("embedded-opentype"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans.woff2") format("woff2"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans.woff") format("woff"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans.ttf") format("truetype");
   font-style: normal;
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Open Sans";
-  src: url(/fonts/Open-Sans-Semibold.eot?31a82a9bde90eec038693f26ada892ad);
-  src: url(/fonts/Open-Sans-Semibold.eot?31a82a9bde90eec038693f26ada892ad?#iefix) format("embedded-opentype"), url(/fonts/Open-Sans-Semibold.woff2?5f276fbfbdcfa0d6d349a92f80ca02dc) format("woff2"), url(/fonts/Open-Sans-Semibold.woff?182802f3f8059f91f07c3c6ee44b113f) format("woff"), url(/fonts/Open-Sans-Semibold.svg?2c9ca963b3fffcdbb7aafa426f51243d#Open Sans) format("svg"), url(/fonts/Open-Sans-Semibold.ttf?33f225b8f5f7d6b34a0926f58f96c1e9) format("truetype");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans-Italic.eot");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans-Italic.eot?#iefix") format("embedded-opentype"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans-Italic.woff2") format("woff2"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans-Italic.woff") format("woff"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Regular/Open-Sans-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Semibold/Open-Sans-Semibold.eot");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Semibold/Open-Sans-Semibold.eot?#iefix") format("embedded-opentype"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Semibold/Open-Sans-Semibold.woff2") format("woff2"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Semibold/Open-Sans-Semibold.woff") format("woff"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Semibold/Open-Sans-Semibold.ttf") format("truetype");
   font-style: normal;
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Open Sans";
-  src: url(/fonts/Open-Sans-Light.eot?b180c799a87a4cad9108713ebe309686);
-  src: url(/fonts/Open-Sans-Light.eot?b180c799a87a4cad9108713ebe309686?#iefix) format("embedded-opentype"), url(/fonts/Open-Sans-Light.woff2?6c5ff600d6c86028dc708e874cd68c8d) format("woff2"), url(/fonts/Open-Sans-Light.woff?8528d42e728db092bc8d1906e6700438) format("woff"), url(/fonts/Open-Sans-Light.svg?f9b44716e739cfa488c4185e244c1afd#Open Sans) format("svg"), url(/fonts/Open-Sans-Light.ttf?1bf71be111189e76987a4bb9b3115cb7) format("truetype");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light.eot");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light.eot?#iefix") format("embedded-opentype"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light.woff2") format("woff2"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light.woff") format("woff"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light.ttf") format("truetype");
   font-style: normal;
   font-weight: 300;
 }
 
 @font-face {
   font-family: "Open Sans";
-  src: url(/fonts/Open-Sans-Bold.eot?33696c1691b434f58dd2887f2fa2a30f);
-  src: url(/fonts/Open-Sans-Bold.eot?33696c1691b434f58dd2887f2fa2a30f?#iefix) format("embedded-opentype"), url(/fonts/Open-Sans-Bold.woff2?2ba6100c683690b40cfa25bf907d91ff) format("woff2"), url(/fonts/Open-Sans-Bold.woff?d953b1c1136b7221fef3d22fc41df01e) format("woff"), url(/fonts/Open-Sans-Bold.svg?bfde6035d35afa4aeeb9f9cbcab536dc#Open Sans) format("svg"), url(/fonts/Open-Sans-Bold.ttf?50145685042b4df07a1fd19957275b81) format("truetype");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light-Italic.eot");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light-Italic.eot?#iefix") format("embedded-opentype"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light-Italic.woff2") format("woff2"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light-Italic.woff") format("woff"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Light/Open-Sans-Light-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold.eot");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold.eot?#iefix") format("embedded-opentype"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341771/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold.woff2") format("woff2"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341760/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold.woff") format("woff"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521341778/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold.ttf") format("truetype");
   font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521345423/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold-Italic.eot.eot");
+  src: url("https://res.cloudinary.com/limononoto/raw/upload/v1521345423/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold-Italic.eot?#iefix") format("embedded-opentype"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521345360/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold-Italic.woff2") format("woff2"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521345371/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold-Italic.woff") format("woff"), url("https://res.cloudinary.com/limononoto/raw/upload/v1521345394/personal_web/uploads/fonts/Open-Sans/Bold/Open-Sans-Bold-Italic.ttf") format("truetype");
+  font-style: italic;
   font-weight: 600;
 }
 
@@ -556,8 +580,160 @@ output {
   color: #555;
 }
 
+body {
+  padding-right: 0px;
+  padding-left: 0px;
+  clear: both;
+  margin: auto;
+  height: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+main {
+  padding: 0px;
+  clear: both;
+  vertical-align: top;
+  direction: ltr;
+}
+
 .row {
   width: 100%;
+}
+
+.container {
+  max-width: 100%;
+  position: relative;
+}
+
+/* Enter and leave animations can use different */
+
+/* durations and timing functions.              */
+
+.slide-fade-enter-active {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.slide-fade-leave-active {
+  -webkit-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  -webkit-transform: translateX(10px);
+          transform: translateX(10px);
+  opacity: 0;
+}
+
+.not-visible {
+  opacity: 0;
+}
+
+.already-visible {
+  -webkit-transition: opacity 2s ease;
+  transition: opacity 2s ease;
+}
+
+/* ---------------- */
+
+.header-container {
+  padding-left: 40px;
+  padding-right: 40px;
+  margin: 0 auto;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 500px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.flex-inner {
+  -ms-flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+}
+
+.flex-reverse {
+  -ms-flex-direction: row-reverse;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+          flex-direction: row-reverse;
+}
+
+.flex-start,
+.flex-reverse,
+.flex-end,
+.flex-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  width: 100%;
+}
+
+.flex-reverse {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+}
+
+.flex-center {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.flex-start {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.flex-end {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.flex-column {
+  -webkit-box-flex: 0;
+  -ms-flex: none;
+  flex: none;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+img {
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
 }
 
 img[lazy=loading],
@@ -587,5 +763,17 @@ img[lazy=loaded],
   opacity: 1;
   -webkit-transform: scale(1);
   transform: scale(1);
+}
+
+@media only screen and (min-width: 768px) {
+  .header-container,
+  .container,
+  main,
+  .modal-container,
+  footer {
+    max-width: 1390px;
+    font-size: calc(.00485*0vw + 14.18182px);
+    line-height: inherit;
+  }
 }
 

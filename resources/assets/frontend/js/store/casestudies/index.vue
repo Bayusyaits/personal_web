@@ -1,11 +1,17 @@
 <template>
-    <div class="mcm-casestudies container" id="mcm-casestudies">
-        <section  :class="posts.mtp_initial" :id="posts.mtp_title_en">
-          <h1>{{ posts.mtp_content_en }}</h1>
-        </section>
+    <section class="mcm-casestudies" :id="posts.mtp_title_en" v-scrolled>
+        <div class="column row">
+            <div class="column-2 row">
+              <h5 v-text="posts.mtp_title_en"></h5>
+              <h2 v-text="posts.mtp_caption_en"></h2>
+            </div>
+            <div class="column-2 row">
+              <p v-text="posts.mtp_content_en"></p>
+            </div>
+        </div>
         <fields></fields>
         <projects></projects>
-    </div>
+    </section>
 </template>
 
 <script type="text-javascript">
@@ -43,5 +49,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+  .mcm-casestudies {
+    position: relative;
+    float: left;
+    width: 100%;
+  }
 </style>

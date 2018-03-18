@@ -1,5 +1,5 @@
 <template>
-  <div class="container tg-b" id="tg-body" v-if="show">
+  <div class="layout tg-b" id="tg-body" v-if="show">
     <!-- <my-component></my-component> -->
     <home></home>
     <about></about>
@@ -45,11 +45,11 @@
 
 <style lang="scss">
   .tg-b {
-    padding: 0px;
-    clear: both;
-    vertical-align: top;
-    direction: ltr;
-    box-sizing: border-box;
+    width: 100%;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    top: 0px;
     > .mcm-home {
       background: blue;
     }

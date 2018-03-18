@@ -1,9 +1,19 @@
 <template>
-    <div class="mcm-about container" id="mcm-about">
-        <section  :class="posts.mtp_initial" :id="posts.mtp_title_en">
-          <h1>{{ posts.mtp_content_en }}</h1>
-        </section>
-    </div>
+    <section class="mcm-about" :id="posts.mtp_title_en" v-scrolled>
+      <div class="section-inner">
+          <div  :class="posts.mtp_initial">
+            <div class="column row">
+              <div class="column-2">
+                <h5 v-text="posts.mtp_title_en"></h5>
+                <h2 v-text="posts.mtp_caption_en"></h2>
+              </div>
+              <div class="column-2">
+                <p v-text="posts.mtp_content_en"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
 </template>
 
 <script type="text-javascript">
@@ -37,5 +47,15 @@ export default {
 </script>
 
 <style lang="scss">
-
+  .mcm-about {
+    position: relative;
+    float: left;
+    width: 100%;
+    .section-inner {
+      width: 100%;
+      background-color: #FBFBFB;
+      overflow: hidden;
+      float: left;
+    }
+  }
 </style>
