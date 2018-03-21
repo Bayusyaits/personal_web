@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "85dbf820e83b3a440234b9589b156f98",
+    "content-hash": "8021d3b9323f2f70784fe712a0b5ce47",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1372,6 +1372,54 @@
             "time": "2017-06-12T11:04:56+00:00"
         },
         {
+            "name": "logaretm/transformers",
+            "version": "0.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/logaretm/transformers.git",
+                "reference": "90309c08bd722f2cd38a5fea78b9dc2f157d8ecf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/logaretm/transformers/zipball/90309c08bd722f2cd38a5fea78b9dc2f157d8ecf",
+                "reference": "90309c08bd722f2cd38a5fea78b9dc2f157d8ecf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^5.2",
+                "illuminate/support": "^5.2"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "^1.5",
+                "illuminate/database": "^5.2",
+                "illuminate/pagination": "^5.2",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Logaretm\\Transformers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdelrahman Awad",
+                    "email": "logaretm1@gmail.com"
+                }
+            ],
+            "description": "Simple laravel eloquent models transformers.",
+            "keywords": [
+                "laravel",
+                "transformers"
+            ],
+            "time": "2016-11-13T22:59:24+00:00"
+        },
+        {
             "name": "mnapoli/front-yaml",
             "version": "1.6.0",
             "source": {
@@ -1789,16 +1837,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.24.2",
+            "version": "1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "bba6c6e410c6b4317e37a9474aeaa753808c3875"
+                "reference": "cbcf13da0b531767e39eb86e9687f5deba9857b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bba6c6e410c6b4317e37a9474aeaa753808c3875",
-                "reference": "bba6c6e410c6b4317e37a9474aeaa753808c3875",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/cbcf13da0b531767e39eb86e9687f5deba9857b4",
+                "reference": "cbcf13da0b531767e39eb86e9687f5deba9857b4",
                 "shasum": ""
             },
             "require": {
@@ -1838,7 +1886,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-03-10T10:10:14+00:00"
+            "time": "2018-03-19T15:50:49+00:00"
         },
         {
             "name": "nikic/php-parser",

@@ -173,7 +173,10 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
 
         //form html
-        Collective\Html\HtmlServiceProvider::class
+        Collective\Html\HtmlServiceProvider::class,
+
+        //transformers repository
+        Logaretm\Transformers\Providers\TransformerServiceProvider::class
 
     ],
 

@@ -14,6 +14,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "league/fractal": "^0.17.0",
+        "logaretm/transformers": "^0.2.5",
         "mpociot/laravel-apidoc-generator": "^2.0",
         "tymon/jwt-auth": "dev-develop",
         "ven7ura/laravel-html5-boilerplate": "^0.6.6"
@@ -42,7 +43,8 @@
                "libs/",
                "app/Helpers",
                "app/Models",
-               "app/Modules"
+               "app/Modules",
+               "app/Repository"
            ]
         }
     },

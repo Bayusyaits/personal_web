@@ -36,6 +36,7 @@ $api->version('v1', function ($api) {
     $api->get('/categories/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getCategories','as'=>'categories']);
     $api->get('/media/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getMedSos','as'=>'media']);
     $api->get('/case-studies/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getCaseStudies','as'=>'case-studies']);
+    $api->get('/', ['uses'=>'App\Http\Controllers\API\AppController@getIndex','as'=>'index']);
     $api->get('/auth', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);
     $api->get('/user',['uses'=>'App\Http\Controllers\API\PostController@do_signin', 'as'=>'user']);
 });
