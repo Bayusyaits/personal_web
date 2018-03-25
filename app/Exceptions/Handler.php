@@ -46,16 +46,14 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        
-        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) 
-        {
-        return response()->json([
-                'message' => 'Resource not found'
-            ], 404);
+        $response = parent::render($request, $e);
+
+        if ($request->is('api/*')) {
+            app('Asm89\Stack\CorsService')->addActualRequestHeaders($response, $request);
         }
-        
-        return parent::render($request, $exception);
+
+        return $response;
     }
 }

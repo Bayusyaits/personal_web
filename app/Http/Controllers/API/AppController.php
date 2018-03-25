@@ -3,23 +3,33 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Models\MrCategories;
 use App\Models\MrContentLanguage;
 use App\Models\MrContentManagement;
 use App\Models\MrMedia;
 use App\Models\DynMenu;
+
+//use dingo
+
+use Dingo\Api\Routing\Helpers;
+
 use App\Transformers\AppTransformer;
 use Response;
 use \Illuminate\Http\Response as Res;
 
-class AppController extends Controller
+class AppController extends Res
 {
+    use Helpers;
     //
     public function getIndex(AppTransformer $transformer) {
        return $transformer->transform(5501);
     }
 
+    public function postPages(Request $requests) {
+        
+        return $requests;
+    }
     public function getPages($list = "") {
         $dm =  array('status' => 'success',
                     'status_code' => Res::HTTP_NOT_FOUND,

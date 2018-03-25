@@ -11,7 +11,9 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
+    //https://github.com/DennyLoko/dingo-cors
     protected $except = [
         //
+        'api/*'
     ];
 }

@@ -15,7 +15,14 @@ class PostController extends Controller
     {
         $this->user = new User;
     }
-    
+    public function postPages(Request $request) {
+        return response()->json([
+            'response' => 'success',
+            'result' => [
+                'token' => 'halo',
+            ],
+        ]);
+    }
     public function do_signin(Request $request){
         $credentials = $request->only('email', 'password');
         $token = null;

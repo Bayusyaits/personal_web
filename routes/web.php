@@ -31,12 +31,25 @@ Route::get('/clear-cache', function() {
 });
 
 //vue.js
-$api->version('v1', function ($api) {
-    $api->get('/pages/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);
-    $api->get('/categories/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getCategories','as'=>'categories']);
-    $api->get('/media/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getMedSos','as'=>'media']);
-    $api->get('/case-studies/{list}', ['uses'=>'App\Http\Controllers\API\AppController@getCaseStudies','as'=>'case-studies']);
-    $api->get('/', ['uses'=>'App\Http\Controllers\API\AppController@getIndex','as'=>'index']);
-    $api->get('/auth', ['uses'=>'App\Http\Controllers\API\AppController@getPages', 'as'=>'pages']);
-    $api->get('/user',['uses'=>'App\Http\Controllers\API\PostController@do_signin', 'as'=>'user']);
+$api->version('v1',
+	[
+		'middleware'=>'cors',
+		'limit'=>100,
+		'expires'=>60,
+		'namespace'=>'App\Http\Controllers\API'
+	], 
+	function ($api) {
+	$api->group(['middleware'=>'cors'], function($api) {
+
+    $api->get('/pages/{list}', ['uses'=>'AppController@getPages', 'as'=>'pages']);
+    $api->get('/categories/{list}', ['uses'=>'AppController@getCategories','as'=>'categories']);
+    $api->get('/media/{list}', ['uses'=>'AppController@getMedSos','as'=>'media']);
+    $api->get('/case-studies/{list}', ['uses'=>'AppController@getCaseStudies','as'=>'case-studies']);
+    $api->get('/', ['uses'=>'AppController@getIndex','as'=>'index']);
+    $api->get('/auth', ['uses'=>'AppController@getPages', 'as'=>'pages']);
+    $api->get('/user',['uses'=>'PostController@do_signin', 'as'=>'user']);
+
+    $api->post('/pages', ['uses'=>'AppController@postPages', 'as'=>'pages']);
+
+   	});
 });

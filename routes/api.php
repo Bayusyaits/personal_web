@@ -26,6 +26,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Route::get('/auth/token','API\TokenController@auth');
 Route::get('/token','API\TokenController@token');
+// Route::post('/pages', function(Request $request) {
+// 	return response()->json(['data' => 'token']);
+// });
 Route::get('/create', function(Request $request) {
 	return response()->json(['data' => 'token']);
 });

@@ -8,7 +8,7 @@ use App\Models\MrCategories;
 use App\Models\MrContentLanguage;
 use App\Models\MrContentManagement;
 use App\Models\MrMedia;
-use Illuminate\Http\Request;
+
 use Session;
 
 class MrController extends Controller
