@@ -49,7 +49,7 @@ $api->version('v1',
     $api->get('/auth', ['uses'=>'AppController@getPages', 'as'=>'pages']);
     $api->get('/user',['uses'=>'PostController@do_signin', 'as'=>'user']);
 
-    $api->post('/pages', ['uses'=>'AppController@postPages', 'as'=>'pages']);
+    $api->post('/pages/{uri}', ['uses'=>'AppController@postPages', 'as'=>'pages']);
 
    	});
 });

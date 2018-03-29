@@ -14,6 +14,10 @@ use App\Models\DynMenu;
 
 use Dingo\Api\Routing\Helpers;
 
+//guzzle client api
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+
 use App\Transformers\AppTransformer;
 use Response;
 use \Illuminate\Http\Response as Res;
@@ -25,11 +29,46 @@ class AppController extends Res
     public function getIndex(AppTransformer $transformer) {
        return $transformer->transform(5501);
     }
-
-    public function postPages(Request $requests) {
+    public function postPage(Request $requests) {
         
-        return $requests;
+        $content = $requests->getContent();
+        $req = json_decode($content,true);
+
+        return $req['operation'];
+        // return response()->json(['name' => 'Abigail', 'state' => 'CA'])
+        //     ->withCallback($requests->input('callback'))->header('Content-Type', 'text/plain')->header('X-Header-One', 'Header Value')
+        //     ->header('X-Header-Two', 'Header Value');
+
+
+        // return $requests->url();
     }
+    public function postPag(Request $requests,$uri = '') {
+        
+        $content = $requests->getContent();
+        $req = json_decode($content,true);
+
+        if($req['operation'] == "Get menu pages") {
+            $url    = 'pages/'.$req['mcm_id'];
+            $client = new Client();
+            $request = $client->get('localhost:8000/api/pages/home', ['auth' =>  ['user', 'pass']]);
+            $response = $request->getBody();
+        }
+        return $response;
+    }
+    public function postPages(Request $requests,$uri = '') {
+        
+        $content = $requests->getContent();
+        $req = json_decode($content,true);
+
+        if($req['operation'] == "Get menu pages") {
+            $url    = 'pages/'.$req['mcm_id'];
+            $client = new Client();
+            $request = $client->get('localhost:8000/api/pages/content-menu', ['auth' =>  ['user', 'pass']]);
+            $response = json_decode($request->getBody(), true);
+        }
+        dd($response);
+    }
+    
     public function getPages($list = "") {
         $dm =  array('status' => 'success',
                     'status_code' => Res::HTTP_NOT_FOUND,
