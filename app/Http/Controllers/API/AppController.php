@@ -24,6 +24,11 @@ use \Illuminate\Http\Response as Res;
 
 class AppController extends Res
 {
+
+    public function __construct() {
+       
+    }
+
     use Helpers;
     //
     public function getIndex(AppTransformer $transformer) {
@@ -48,85 +53,25 @@ class AppController extends Res
         $req = json_decode($content,true);
 
         if($req['operation'] == "Get menu pages") {
-            $url    = 'pages/'.$req['mcm_id'];
+            $url    = getUrlApi().'pages/'.$req['mcm_id'];
             $client = new Client();
-            $request = $client->get('localhost:8000/api/pages/home', ['auth' =>  ['user', 'pass']]);
+            $request = $client->get($url.'pages/home', ['auth' =>  ['user', 'pass']]);
             $response = $request->getBody();
         }
         return $response;
-    }
-    public function postPages(Request $requests,$uri = '') {
-        
-        $content = $requests->getContent();
-        $req = json_decode($content,true);
-
-        if($req['operation'] == "Get menu pages") {
-            $url    = 'pages/'.$req['mcm_id'];
-            $client = new Client();
-            $request = $client->get('localhost:8000/api/pages/content-menu', ['auth' =>  ['user', 'pass']]);
-            $response = json_decode($request->getBody(), true);
-        }
-        dd($response);
-    }
+    }    
     
-    public function getPages($list = "") {
-        $dm =  array('status' => 'success',
-                    'status_code' => Res::HTTP_NOT_FOUND,
-                    'message' => 'Not found',
-                    'data' => 'empty');
-        switch($list)  {
-            case 'menu' : $dm = DynMenu::active()->get(); break;
-            case 'content-menu' : $dm = MrContentManagement::contentmenu()->get(); break;
-            case 'home' : $dm = MrContentManagement::contentmenupage(55101)->first(); break;
-            case 'about' : $dm = MrContentManagement::contentmenupage(55102)->first(); break;
-            case 'case-studies' : $dm = MrContentManagement::contentmenupage(55103)->first(); break;
-            case 'contact' : $dm = MrContentManagement::contentmenupage(55104)->first(); break;
-        }
-        return response()->json($dm,Res::HTTP_OK);
-    }
-    public function getCaseStudies($list = "") {
-        $mcm =  array('status' => 'success',
-                        'status_code' => Res::HTTP_NOT_FOUND,
-                        'message' => 'Not found',
-                        'data' => 'empty');
-        switch($list)  {
-            case 'projects' : $mcm = MrContentManagement::contentmenucasestudies()->get(); break;
-        }
-        return response()->json($mcm,Res::HTTP_OK);
-    }
-    public function getMedSos($list = "") {
-        $mm =  array('status' => 'success',
-                    'status_code' => Res::HTTP_NOT_FOUND,
-                    'message' => 'Not found',
-                    'data' => 'empty');
-        switch($list)  {
-            case 'med-sos' : $mm = MrMedia::medialogosmedsos()->get(); break;
-        }
-        return response()->json($mm,Res::HTTP_OK);
-    }
-    public function getCategories($list = "") {
-        $mc =  array('status' => 'success',
-                    'status_code' => Res::HTTP_NOT_FOUND,
-                    'message' => 'Not found',
-                    'data' => 'empty');
-        switch($list)  {
-            case 'fields' : $mc = MrCategories::fields()->get(); break;
-            case 'categories' : $mc = MrCategories::categories()->get(); break;
-            case 'subjects' : $mc = MrCategories::subjects()->get(); break;
-        }
-        return response()->json($mc,Res::HTTP_OK);
-    }
     public function respondInternalError($message){
         return $this->respond([
-            'status' => 'error',
-            'status_code' => Res::HTTP_INTERNAL_SERVER_ERROR,
+            'status' => 'Error',
+            'code' => Res::HTTP_INTERNAL_SERVER_ERROR,
             'message' => $message,
         ]);
     }
     public function respondValidationError($message, $errors){
         return $this->respond([
-            'status' => 'error',
-            'status_code' => Res::HTTP_UNPROCESSABLE_ENTITY,
+            'status' => 'Error',
+            'code' => Res::HTTP_UNPROCESSABLE_ENTITY,
             'message' => $message,
             'data' => $errors
         ]);
@@ -136,8 +81,8 @@ class AppController extends Res
     }
     public function respondWithError($message){
         return $this->respond([
-            'status' => 'error',
-            'status_code' => Res::HTTP_UNAUTHORIZED,
+            'status' => 'Error',
+            'code' => Res::HTTP_UNAUTHORIZED,
             'message' => $message,
         ]);
     }

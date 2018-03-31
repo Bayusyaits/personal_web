@@ -7,7 +7,7 @@
                         <div class="flex-column">
                             <div class="header-logo">
                                 <a href="/">
-                                    <img class="mm-l_1" alt="Primary Logo" width="80" height="40" src="http://res.cloudinary.com/limononoto/image/upload/v1521290953/personal_web/uploads/logos/bayusyaits.svg" />
+                                    <img class="mm-l_1" alt="Primary Logo" width="80" height="40" src="https://res.cloudinary.com/limononoto/image/upload/v1521290953/personal_web/uploads/logos/bayusyaits.svg" />
                                 </a>
                             </div>
                         </div>

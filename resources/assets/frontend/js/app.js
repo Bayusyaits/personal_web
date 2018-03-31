@@ -24,8 +24,8 @@ Vue.use(VueLazyload, {
   preLoad: 1.3,
   // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
   listenEvents: [ 'scroll' ],
-  error: 'http://res.cloudinary.com/limononoto/image/upload/v1521294359/personal_web/uploads/icons/error.png',
-  loading:'http://res.cloudinary.com/limononoto/image/upload/v1521294360/personal_web/uploads/icons/loading.gif',
+  error: 'https://res.cloudinary.com/limononoto/image/upload/v1521294359/personal_web/uploads/icons/error.png',
+  loading:'https://res.cloudinary.com/limononoto/image/upload/v1521294360/personal_web/uploads/icons/loading.gif',
   attempt: 1
 })
 

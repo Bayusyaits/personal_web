@@ -14,12 +14,14 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        //handling cors https://github.com/barryvdh/laravel-cors/issues/89
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        // \Barryvdh\Cors\HandleCors::class,
+        \Barryvdh\Cors\HandleCors::class,
+        //89
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\TrustProxies::class,
+        \App\Http\Middleware\TrustProxies::class,        
     ];
 
     /**

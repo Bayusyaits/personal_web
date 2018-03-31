@@ -30,7 +30,8 @@
     },
     "autoload": {
         "files":[
-            "libs/general_function.php"
+            "libs/general_function.php",
+            "libs/api.php"
         ],
         "classmap": [
             "database/seeds",
