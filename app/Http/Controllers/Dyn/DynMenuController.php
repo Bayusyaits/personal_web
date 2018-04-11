@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Dyn;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\DynMenu;
-
 //use dingo
 
 use Dingo\Api\Routing\Helpers;
@@ -14,10 +12,19 @@ use Dingo\Api\Routing\Helpers;
 //guzzle client api
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\CurlHandler;
 
 use App\Transformers\AppTransformer;
 use Response;
 use \Illuminate\Http\Response as Res;
+
+use App\Rest;
+
+use Illuminate\Support\Facades\Auth;
+ 
+use Validator;
 
 class DynMenuController extends Res
 {
@@ -25,49 +32,64 @@ class DynMenuController extends Res
     public function __construct() {
 
     }
-
+	public $error = 500;
+	public $successStatus = 200;
     use Helpers;
 
     public function getMenuContact() {
-    	$dm = DynMenu::menuactive()->get();
-    	return $dm;
+    	$dm = model('DynMenu')::menuactive()->get();
+    	return URL::current();
+
+
     }
 
     /*
 		-Method Post
     */
 
-	public function postMenu(Request $requests,$uri = '') {
+    public function postMenu(Request $requests,$uri = '') {
+
+        $dm =  array('status' 	=> 'Error',
+                    'code' 		=> Res::HTTP_NOT_FOUND,
+                    'message' 	=> 'Not found',
+                    'data' 		=> 'Empty');
+		
+        $input = $requests->all();
+        //from javascript
+        $decrypted = cryptoJsAesDecrypt("[Nav-Menu]", $input['password']);
         
-        $content = $requests->getContent();
-        $req = json_decode($content,true);
+        if($input['operation'] == 'Get all nav menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        	// $input['operation'] = bcrypt($input['operation']);
 
-        $response = array('status' => 'Error',
-                        'code' => Res::HTTP_NOT_FOUND,
-                        'message' => 'Not found',
-                        'data' => 'Empty');
+	        $rests 				= model('Rests')::isexist($input['operation'])->first();
+	        
+			if(!isset($rests) && empty($rests)) {
+			
+				$user                   = Rest::create($input);	        
+		        $success['token'] 		=  $user->createToken($input['hostname'])->accessToken;
+		        $success['operation'] 	=  $user->operation;
+			
+			}else {
+                $user                   = Auth::user(); 
+                // Creating a token without scopes...
+                $success['token']       = $user->createToken($input['hostname'])->accessToken;
 
-        if($req['operation'] == "Get menu pages" && $req['keyword'] == 'Nav-Menu') {
-            $hostname = $requests->root();
-            $url    = getUrlApi().'pages/nav-menu';
-            $client = new Client();
-            $request = $client->get($url, [
-                'headers' => [
-                    'User-Agent'    => 'testing/1.0',
-                    'Accept'        => 'application/json',
-                    'secret_key'    => 'QwQjR4V8VKXqvWR3l7v056VU9l2d2JKkcXvM9GQKYhn8J5gsGKNdEYj6cHaoP5HOne51TwSRk4CT0ksZjCUCEEKi6V1a34bQqXEI',
-                    'client'        => $hostname,
-                    'X-Foo'         => ['Bar', 'Baz']
-                ]
-            ], ['auth'              =>  ['user', 'pass']]);
+                // Creating a token with scopes...
+                // $token = $user->createToken('My Token', ['place-orders'])->accessToken;
+            }
 
-            if($request->getStatusCode() == 200)
-                $response = json_decode($request->getBody(),true);
+	        switch($uri)  {
+	            case 'nav-menu' : $dm = model('DynMenu')::active()->get(); break;
+	        }
+
+    	}else {
+            $dm =  array(
+                    'status'    => 'Error',
+                    'code'      => Res::HTTP_FORBIDDEN,
+                    'message'   => 'Forbidden',
+                    'data'      => 'Empty');
         }
-        foreach($response as $k => $v) {
-            $posts = $v;
-        }
-        return $response;
+        return response()->json($dm,Res::HTTP_OK);
     }
 
     /*
@@ -80,7 +102,7 @@ class DynMenuController extends Res
                         'message' => 'Not found',
                         'data' => 'Empty');
         switch($uri)  {
-            case 'nav-menu' : $dm = DynMenu::active()->get(); break;
+            case 'nav-menu' : $dm = model('DynMenu')::active()->get(); break;
         }
         return response()->json($dm,Res::HTTP_OK);
     }

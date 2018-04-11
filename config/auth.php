@@ -34,18 +34,26 @@ return [
     | Supported: "session", "token"
     |
     */
-
+    //passport change token for driver
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-        ],
-    ],
+ 
+       'web' => [
+ 
+           'driver' => 'session',
+ 
+           'provider' => 'users',
+ 
+       ],
+ 
+       'api' => [
+ 
+           'driver' => 'passport',
+ 
+           'provider' => 'users',
+ 
+       ],
+ 
+   ],
 
     /*
     |--------------------------------------------------------------------------

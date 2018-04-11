@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddVotesToMrCategoriesTable extends Migration
+class AddVotesToRestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddVotesToMrCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mr_categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::table('rests', function (Blueprint $table) {
+            //
         });
     }
 
@@ -26,6 +25,8 @@ class AddVotesToMrCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mr_categories');
+        Schema::table('rests', function (Blueprint $table) {
+            //
+        });
     }
 }

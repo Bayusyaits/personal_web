@@ -176,7 +176,10 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         //transformers repository
-        Logaretm\Transformers\Providers\TransformerServiceProvider::class
+        Logaretm\Transformers\Providers\TransformerServiceProvider::class,
+
+        //passport token api
+        Laravel\Passport\PassportServiceProvider::class
 
     ],
 

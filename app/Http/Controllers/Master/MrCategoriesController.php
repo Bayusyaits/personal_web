@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Master;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\MrCategories;
-
 //use dingo
 
 use Dingo\Api\Routing\Helpers;
@@ -36,9 +34,9 @@ class MrCategoriesController extends Res
                     'message' 		=> 	'Not found',
                     'data' 			=> 'Empty');
         switch($uri)  {
-            case 'fields' 		: $mc = MrCategories::fields()->get(); break;
-            case 'categories' 	: $mc = MrCategories::categories()->get(); break;
-            case 'subjects' 	: $mc = MrCategories::subjects()->get(); break;
+            case 'fields' 		: $mc = model('MrCategories')::fields()->get(); break;
+            case 'categories' 	: $mc = model('MrCategories')::categories()->get(); break;
+            case 'subjects' 	: $mc = model('MrCategories')::subjects()->get(); break;
         }
         return response()->json($mc,Res::HTTP_OK);
     }

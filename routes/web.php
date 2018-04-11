@@ -35,6 +35,12 @@ Route::get('/clear-cache', function() {
     // return what you want
 });
 
+Route::get('/test', function() {
+    $data = [];
+    $data['hostname'] = 'bayusyaits.com';
+    return getClientDataApi($data);
+});
+
 //vue.js
 $api->version('v1',
 	[
@@ -49,6 +55,14 @@ $api->version('v1',
 
 	$api->group(['middleware'  =>  'cors'], function($api) {
 
+    //rest controller from client
+    //post
+    $api->post('/v1/{uri1}/{uri2}', 
+        [
+            'uses'             =>  'RestController@postApi',
+            'as'               =>  'postApi'
+        ]
+    );
 
     //get
     $api->get('/content/{uri1}', 
@@ -99,12 +113,12 @@ $api->version('v1',
         ]
     );
 
-    $api->get('/user',
-        [
-            'uses'             =>   'API\PostController@do_signin', 
-            'as'               =>   'user'
-        ]
-    );
+    // $api->get('/user',
+    //     [
+    //         'uses'             =>   'API\PostController@do_signin', 
+    //         'as'               =>   'user'
+    //     ]
+    // );
 
     //posts
     $api->post('/content/{uri}', 
@@ -114,12 +128,22 @@ $api->version('v1',
         ]
     );
 
-     $api->post('/pages/{uri}', 
+    $api->post('/pages/{uri}', 
         [
             'uses'             =>  'Dyn\DynMenuController@postMenu',
             'as'               =>  'postMenu'
         ]
     );
 
+    $api->post('/media/{uri}', 
+        [
+            'uses'             =>  'Master\MrMediaController@postMedia',
+            'as'               =>  'postMedia'
+        ]
+    );
+
    	});
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

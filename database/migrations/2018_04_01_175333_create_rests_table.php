@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMrCategoriesTable extends Migration
+class CreateRestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateMrCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('mr_categories', function (Blueprint $table) {
-            //
+        Schema::create('rests', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('operation');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class CreateMrCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('mr_categories', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('rests');
     }
 }

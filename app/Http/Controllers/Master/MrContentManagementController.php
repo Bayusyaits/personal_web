@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Master;
 
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-//models
-use App\Models\MrContentManagement;
 
 //use dingo
 
@@ -15,10 +13,19 @@ use Dingo\Api\Routing\Helpers;
 //guzzle client api
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\CurlHandler;
 
 use App\Transformers\AppTransformer;
 use Response;
 use \Illuminate\Http\Response as Res;
+
+use App\Rest;
+
+use Illuminate\Support\Facades\Auth;
+ 
+use Validator;
 
 class MrContentManagementController extends Res
 {
@@ -36,35 +43,63 @@ class MrContentManagementController extends Res
 
 	public function postContentManagement(Request $requests,$uri = '') {
         
-        $content = $requests->getContent();
-        $req = json_decode($content,true);
+        $mcm =  array('status'   => 'Error',
+                    'code'      => Res::HTTP_NOT_FOUND,
+                    'message'   => 'Not found',
+                    'data'      => 'Empty');
+        
+        $input = $requests->all();
+        //from javascript
+        $decrypted = cryptoJsAesDecrypt("[Content-Menu]", $input['password']);
+        
+        if($input['operation'] == 'Get all content menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+            // $input['operation'] = bcrypt($input['operation']);
 
-        $response = array('status' => 'Error',
-                        'code' => Res::HTTP_NOT_FOUND,
-                        'message' => 'Not found',
-                        'data' => 'Empty');
+            $rests              = model('Rests')::isexist($input['operation'])->first();
+            
+            if(!isset($rests) && empty($rests)) {
+            
+                $user                   = Rest::create($input);         
+                $success['token']       =  $user->createToken($input['hostname'])->accessToken;
+                $success['operation']   =  $user->operation;
+            
+            }else {
+                $user                   = Auth::user(); 
+                // Creating a token without scopes...
+                $success['token']       = $user->createToken($input['hostname'])->accessToken;
 
-        if($req['operation'] == "Get menu pages" && $req['keyword'] == 'Nav-Menu') {
-            $hostname = $requests->root();
-            $url    = getUrlApi().'content/menu';
-            $client = new Client();
-            $request = $client->get($url, [
-                'headers' => [
-                    'User-Agent'    => 'testing/1.0',
-                    'Accept'        => 'application/json',
-                    'secret_key'    => 'QwQjR4V8VKXqvWR3l7v056VU9l2d2JKkcXvM9GQKYhn8J5gsGKNdEYj6cHaoP5HOne51TwSRk4CT0ksZjCUCEEKi6V1a34bQqXEI',
-                    'client'        => $hostname,
-                    'X-Foo'         => ['Bar', 'Baz']
-                ]
-            ], ['auth'              =>  ['user', 'pass']]);
+                // Creating a token with scopes...
+                // $token = $user->createToken('My Token', ['place-orders'])->accessToken;
+            }
 
-            if($request->getStatusCode() == 200)
-                $response = json_decode($request->getBody(),true);
+            switch($uri)  {
+                case 'menu' : 
+                    $mcm = model('MrContentManagement')::contentmenu()->get(); 
+                break;
+                case 'home'         : 
+                    $mcm = model('MrContentManagement')::contentmenupage(55101)->first(); 
+                break;
+                case 'about'        : 
+                    $mcm = model('MrContentManagement')::contentmenupage(55102)->first(); 
+                break;
+                case 'case-studies' : 
+                    $mcm = model('MrContentManagement')::contentmenupage(55103)->first(); 
+                break;
+                case 'contact'      : 
+                    $mcm = model('MrContentManagement')::contentmenupage(55104)->first(); 
+                break;
+                default: 
+                    $mcm = model('MrContentManagement')::contentmenu()->get(); 
+            }
+
+        }else {
+            $mcm =  array(
+                    'status'    => 'Error',
+                    'code'      => Res::HTTP_FORBIDDEN,
+                    'message'   => 'Forbidden',
+                    'data'      => 'Empty');
         }
-        foreach($response as $k => $v) {
-            $posts = $v;
-        }
-        return $response;
+        return response()->json($mcm,Res::HTTP_OK);
     }
 
     /*
@@ -76,24 +111,24 @@ class MrContentManagementController extends Res
         $mcm 	=  array(
         				'status' 	=> 'Error',
                         'code' 		=> Res::HTTP_NOT_FOUND,
-                        'message' 	=> 'Not ada',
+                        'message' 	=> 'Not found',
                         'data' 		=> 'Empty'
                     );
         switch($uri1)  {
             case 'menu' : 
-            	$mcm = MrContentManagement::contentmenu()->get(); 
+            	$mcm = model('MrContentManagement')::contentmenu()->get(); 
             break;
             case 'home' 		: 
-            	$mcm = MrContentManagement::contentmenupage(55101)->first(); 
+            	$mcm = model('MrContentManagement')::contentmenupage(55101)->first(); 
             break;
             case 'about' 		: 
-            	$mcm = MrContentManagement::contentmenupage(55102)->first(); 
+            	$mcm = model('MrContentManagement')::contentmenupage(55102)->first(); 
             break;
             case 'case-studies' : 
-            	$mcm = MrContentManagement::contentmenupage(55103)->first(); 
+            	$mcm = model('MrContentManagement')::contentmenupage(55103)->first(); 
             break;
             case 'contact' 		: 
-            	$mcm = MrContentManagement::contentmenupage(55104)->first(); 
+            	$mcm = model('MrContentManagement')::contentmenupage(55104)->first(); 
             break;
         }
         return response()->json($mcm,Res::HTTP_OK);
@@ -108,7 +143,7 @@ class MrContentManagementController extends Res
 
         switch($uri)  {
             case 'projects' 	: 
-            	$mcm = MrContentManagement::contentmenucasestudies()->get(); 
+            	$mcm = model('MrContentManagement')::contentmenucasestudies()->get(); 
          	break;
         }
         return response()->json($mcm,Res::HTTP_OK);
