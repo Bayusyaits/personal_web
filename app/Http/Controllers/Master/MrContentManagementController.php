@@ -102,6 +102,50 @@ class MrContentManagementController extends Res
         return response()->json($mcm,Res::HTTP_OK);
     }
 
+    public function postContentProjects(Request $requests,$uri = '') {
+        
+        $mcm =  array('status'   => 'Error',
+                    'code'      => Res::HTTP_NOT_FOUND,
+                    'message'   => 'Not found',
+                    'data'      => 'Empty');
+        
+        $input = $requests->all();
+        //from javascript
+        $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
+        
+        if($input['operation'] == 'Get content projects' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+            // $input['operation'] = bcrypt($input['operation']);
+
+            $rests              = model('Rests')::isexist($input['operation'])->first();
+            
+            if(!isset($rests) && empty($rests)) {
+            
+                $user                   = Rest::create($input);         
+                $success['token']       =  $user->createToken($input['hostname'])->accessToken;
+                $success['operation']   =  $user->operation;
+            
+            }else {
+                $user                   = Auth::user(); 
+                // Creating a token without scopes...
+                $success['token']       = $user->createToken($input['hostname'])->accessToken;
+            }
+
+            switch($uri)  {
+                case 'projects'     : 
+                    $mcm = model('MrContentManagement')::contentmenucasestudies()->get(); 
+                  break;
+            }
+
+        }else {
+            $mcm =  array(
+                    'status'    => 'Error',
+                    'code'      => Res::HTTP_FORBIDDEN,
+                    'message'   => 'Forbidden',
+                    'data'      => 'Empty');
+        }
+        return response()->json($mcm,Res::HTTP_OK);
+    }
+
     /*
 		-Method Get
     */
@@ -114,38 +158,7 @@ class MrContentManagementController extends Res
                         'message' 	=> 'Not found',
                         'data' 		=> 'Empty'
                     );
-        switch($uri1)  {
-            case 'menu' : 
-            	$mcm = model('MrContentManagement')::contentmenu()->get(); 
-            break;
-            case 'home' 		: 
-            	$mcm = model('MrContentManagement')::contentmenupage(55101)->first(); 
-            break;
-            case 'about' 		: 
-            	$mcm = model('MrContentManagement')::contentmenupage(55102)->first(); 
-            break;
-            case 'case-studies' : 
-            	$mcm = model('MrContentManagement')::contentmenupage(55103)->first(); 
-            break;
-            case 'contact' 		: 
-            	$mcm = model('MrContentManagement')::contentmenupage(55104)->first(); 
-            break;
-        }
         return response()->json($mcm,Res::HTTP_OK);
     }
-
-    public function getCaseStudies(Request $request, $uri = "") {
-        $mcm =  array(
-        				'status' 	=> 'Error',
-                        'code' 		=> Res::HTTP_NOT_FOUND,
-                        'message' 	=> 'Not found',
-                        'data' 		=> 'Empty');
-
-        switch($uri)  {
-            case 'projects' 	: 
-            	$mcm = model('MrContentManagement')::contentmenucasestudies()->get(); 
-         	break;
-        }
-        return response()->json($mcm,Res::HTTP_OK);
-    }
+    
 }

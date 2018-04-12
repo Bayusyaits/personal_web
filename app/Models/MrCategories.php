@@ -48,7 +48,7 @@ class MrCategories extends Model
 	 public function scopeFields($query) {
 	    return $query->leftjoin('dyn_menu','mc_dm_id','=','dm_id')
 	    			 ->where([
-                    'mc_type'	=> 'field',
+                    'mc_type'	=> 'Field',
                     'mc_dm_id'	=> 55103,
 					'mc_show'	=> 555
 					]);
@@ -56,13 +56,13 @@ class MrCategories extends Model
     public function scopeCategories($query) {
 	    return $query->join('dyn_menu','mc_dm_id','=','dm_id')
 	    			 ->where([
-					'mc_dm_id'	=> 55103,
 					'mc_show'	=> 555
 					]);
     }
     public function scopeSubjects($query) {
         return $query->join('dyn_menu','mc_dm_id','=','dm_id')
                      ->where([
+                    'mc_type'   => 'Subject',
                     'mc_dm_id'  => 55104,
                     'mc_show'   => 555
                     ]);

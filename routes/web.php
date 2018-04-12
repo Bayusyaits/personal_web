@@ -71,14 +71,7 @@ $api->version('v1',
             'as'               =>  'getContentManagement'
         ]
     );
-    
-    $api->get('/case-studies/{uri}', 
-        [
-            'uses'             =>   'Master\MrContentManagementController@getCaseStudies',
-            'as'               =>   'getCaseStudies'
-        ]
-    );
-    
+        
     //get
     $api->get('/pages/{uri}', 
         [
@@ -128,6 +121,13 @@ $api->version('v1',
         ]
     );
 
+    $api->post('/case-studies/{uri}', 
+        [
+            'uses'             =>   'Master\MrContentManagementController@postContentProjects',
+            'as'               =>   'postContentProjects'
+        ]
+    );
+
     $api->post('/pages/{uri}', 
         [
             'uses'             =>  'Dyn\DynMenuController@postMenu',
@@ -139,6 +139,13 @@ $api->version('v1',
         [
             'uses'             =>  'Master\MrMediaController@postMedia',
             'as'               =>  'postMedia'
+        ]
+    );
+
+    $api->post('/categories/{uri}', 
+        [
+            'uses'             =>  'Master\MrCategoriesController@postcategories',
+            'as'               =>  'postcategories'
         ]
     );
 

@@ -99,7 +99,7 @@ class MrContentManagement extends Model
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
                      ->orderBy('mcm_id','desc')
 	    			 ->where([
-                    'mtp_keyword'   	=> '[Content-Menu]Case-Studies',
+                    'mtp_keyword'   	=> '[Content-Menu|Case-Studies]',
                     'mtp_uri'        	=> 2,
                     'mtp_is_parent' 	=> 1,
                     'mcm_is_parent' 	=> 1,
