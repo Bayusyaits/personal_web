@@ -30,9 +30,9 @@ class RestController extends Res
 {
     //
 
-    public function postApi(Request $requests,$uri1 = '',$uri2 = '') {
+    public function postApi(Request $request,$uri1 = '',$uri2 = '') {
         
-        $content = $requests->getContent();
+        $content = $request->getContent();
         $req = json_decode($content,true);
 
         $response = array('status' => 'Error',
@@ -46,11 +46,12 @@ class RestController extends Res
         if(!empty($req['password']))
             $data['password']       = $req['password'];
 
-        if(isset($req) && !empty($req['operation']) && !empty($req['keyword']) && !empty($req['body'])) {
+        if(isset($req) && !empty($req['form_params']) && !empty($req['body'])) {
 
-        	$string = str_replace('api/v1/', '', $requests->path());
-            $req['operation']       = $req['operation'];
-            $req['hostname']        = $requests->root();
+        	$string = str_replace('api/v1/', '', $request->path());
+            $body                   = $req['body'];
+            $req['operation']       = $body['operation'];
+            $req['hostname']        = $request->root();
             $query                  = getClientQueryApi($req);
             $url                    = getUrlApi().$string;
             $client                 = new Client(getClientHeadersApi($req));
@@ -58,6 +59,7 @@ class RestController extends Res
 
             if($request->getStatusCode() == 200)
                 $response           = json_decode($request->getBody()->getContents(),true);
+
         }
         
         return $response;

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Master;
 
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -37,14 +36,15 @@ class MrCategoriesController extends Res
     use Helpers;
     //
 
-    public function postCategories(Request $requests,$uri = '') {
+    public function postCategories(Request $request,$uri = '') {
         
         $mc =  array('status'   => 'Error',
                     'code'      => Res::HTTP_NOT_FOUND,
                     'message'   => 'Not found',
                     'data'      => 'Empty');
         
-        $input = $requests->all();
+        $input = $request->all();
+        $url = $request->url();
         //from javascript
         if($uri         == 'fields'){
             $decrypted  = cryptoJsAesDecrypt("[Categories-Fields]", $input['password']);
@@ -68,7 +68,7 @@ class MrCategoriesController extends Res
             }else {
                 $user                   = Auth::user(); 
                 // Creating a token without scopes...
-                $success['token']       = $user->createToken($input['hostname'])->accessToken;
+                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
 
                 // Creating a token with scopes...
                 // $token = $user->createToken('My Token', ['place-orders'])->accessToken;

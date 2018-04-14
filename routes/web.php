@@ -121,6 +121,13 @@ $api->version('v1',
         ]
     );
 
+    $api->post('/client/token', 
+        [
+            'uses'             =>   'Master\MrContentManagementController@issueToken', 
+            'as'               =>   'issueToken'
+        ]
+    );
+
     $api->post('/case-studies/{uri}', 
         [
             'uses'             =>   'Master\MrContentManagementController@postContentProjects',

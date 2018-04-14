@@ -37,14 +37,14 @@ class MrMediaController extends Res
     use Helpers;
 
 
-    public function postMedia(Request $requests,$uri = '') {
+    public function postMedia(Request $request,$uri = '') {
         
         $mm =  array('status'   => 'Error',
                     'code'      => Res::HTTP_NOT_FOUND,
                     'message'   => 'Not found',
                     'data'      => 'Empty');
         
-        $input = $requests->all();
+        $input = $request->all();
         //from javascript
         $decrypted = cryptoJsAesDecrypt("[Media]", $input['password']);
         
@@ -62,7 +62,7 @@ class MrMediaController extends Res
             }else {
                 $user                   = Auth::user(); 
                 // Creating a token without scopes...
-                $success['token']       = $user->createToken($input['hostname'])->accessToken;
+                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
 
                 // Creating a token with scopes...
                 // $token = $user->createToken('My Token', ['place-orders'])->accessToken;
@@ -86,7 +86,7 @@ class MrMediaController extends Res
         return response()->json($mm,Res::HTTP_OK);
     }
 
-    public function getMedSos(Request $requests, $uri = "") {
+    public function getMedSos(Request $request, $uri = "") {
         $mm =  array('status' => 'Error',
                     'status_code' => Res::HTTP_NOT_FOUND,
                     'message' => 'Not found',

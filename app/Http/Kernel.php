@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
             * passport
             * https://laravel.com/docs/5.6/passport
         */
+        'client' => CheckClientCredentials::class,
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
     ];

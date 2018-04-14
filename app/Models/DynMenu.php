@@ -30,7 +30,7 @@ class DynMenu extends Model
 
     public function scopeActive($query)
         {
-            return $query->selectRaw('dm_id,dm_name,dm_url,dm_initial,dm_keyword')
+            return $query->selectRaw('dm_id,dm_name,dm_url,dm_uri,dm_initial,dm_keyword')
                          ->leftJoin('table_groups','dm_tg_id','=','tg_id')
                          ->where([
                              'dm_tg_id' => 5501,

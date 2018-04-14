@@ -47,14 +47,14 @@ class DynMenuController extends Res
 		-Method Post
     */
 
-    public function postMenu(Request $requests,$uri = '') {
+    public function postMenu(Request $request,$uri = '') {
 
         $dm =  array('status' 	=> 'Error',
                     'code' 		=> Res::HTTP_NOT_FOUND,
                     'message' 	=> 'Not found',
                     'data' 		=> 'Empty');
 		
-        $input = $requests->all();
+        $input = $request->all();
         //from javascript
         $decrypted = cryptoJsAesDecrypt("[Nav-Menu]", $input['password']);
         
@@ -72,7 +72,7 @@ class DynMenuController extends Res
 			}else {
                 $user                   = Auth::user(); 
                 // Creating a token without scopes...
-                $success['token']       = $user->createToken($input['hostname'])->accessToken;
+                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
 
                 // Creating a token with scopes...
                 // $token = $user->createToken('My Token', ['place-orders'])->accessToken;

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Master;
 
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -27,28 +26,70 @@ use Illuminate\Support\Facades\Auth;
  
 use Validator;
 
+//passport
+use Laravel\Passport\TokenRepository;
+use Lcobucci\JWT\Parser as JwtParser;
+use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response as Psr7Response;
+use League\OAuth2\Server\AuthorizationServer;
+use Laravel\Passport\Http\Controllers\HandlesOAuthErrors as HandlesOAuthErrors;
+
 class MrContentManagementController extends Res
 {
     //
 
-    public function __construct() {
+    use Helpers,HandlesOAuthErrors;
 
+    /**
+     * The authorization server.
+     *
+     * @var \League\OAuth2\Server\AuthorizationServer
+     */
+    protected $server;
+
+    /**
+     * The token repository instance.
+     *
+     * @var \Laravel\Passport\TokenRepository
+     */
+    protected $tokens;
+
+    /**
+     * The JWT parser instance.
+     *
+     * @var \Lcobucci\JWT\Parser
+     */
+    protected $jwt;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  \League\OAuth2\Server\AuthorizationServer  $server
+     * @param  \Laravel\Passport\TokenRepository  $tokens
+     * @param  \Lcobucci\JWT\Parser  $jwt
+     * @return void
+     */
+    public function __construct(AuthorizationServer $server,
+                                TokenRepository $tokens,
+                                JwtParser $jwt)
+    {
+        $this->jwt = $jwt;
+        $this->server = $server;
+        $this->tokens = $tokens;
     }
-
-    use Helpers;
 
     /*
 		-Method Post
     */
 
-	public function postContentManagement(Request $requests,$uri = '') {
+	public function postContentManagement(Request $request,$uri = '') {
         
         $mcm =  array('status'   => 'Error',
                     'code'      => Res::HTTP_NOT_FOUND,
                     'message'   => 'Not found',
                     'data'      => 'Empty');
         
-        $input = $requests->all();
+        $input = $request->all();
         //from javascript
         $decrypted = cryptoJsAesDecrypt("[Content-Menu]", $input['password']);
         
@@ -66,7 +107,7 @@ class MrContentManagementController extends Res
             }else {
                 $user                   = Auth::user(); 
                 // Creating a token without scopes...
-                $success['token']       = $user->createToken($input['hostname'])->accessToken;
+                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
 
                 // Creating a token with scopes...
                 // $token = $user->createToken('My Token', ['place-orders'])->accessToken;
@@ -102,14 +143,14 @@ class MrContentManagementController extends Res
         return response()->json($mcm,Res::HTTP_OK);
     }
 
-    public function postContentProjects(Request $requests,$uri = '') {
+    public function postContentProjects(Request $request,$uri = '') {
         
         $mcm =  array('status'   => 'Error',
                     'code'      => Res::HTTP_NOT_FOUND,
                     'message'   => 'Not found',
                     'data'      => 'Empty');
         
-        $input = $requests->all();
+        $input = $request->all();
         //from javascript
         $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
         
@@ -127,7 +168,7 @@ class MrContentManagementController extends Res
             }else {
                 $user                   = Auth::user(); 
                 // Creating a token without scopes...
-                $success['token']       = $user->createToken($input['hostname'])->accessToken;
+                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
             }
 
             switch($uri)  {
@@ -160,5 +201,19 @@ class MrContentManagementController extends Res
                     );
         return response()->json($mcm,Res::HTTP_OK);
     }
-    
+
+    public function issueToken(ServerRequestInterface $request)
+    {
+        return $this->withErrorHandling(function () use ($request) {
+            $convert =  $this->convertResponse(
+                $this->server->respondToAccessTokenRequest($request, new Psr7Response)
+            );
+            if($convert){
+                //ServerRequestInterface -> getParsedBody()
+                return 'halo';
+            }else {
+                return 'hai';
+            }
+        });
+    }
 }

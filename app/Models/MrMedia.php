@@ -58,8 +58,7 @@ class MrMedia extends Model
 					]);
     }
     public function scopeMediaLogosMedsos($query) {
-        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,dm_initial,dm_keyword,dm_url')
-                     ->leftjoin('dyn_menu','mm_dm_id','=','dm_id')
+        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_keyword')
 	    			 ->where([
                     'mm_keyword'	=> '[Media-Logo|Medsos]',
 					'mm_show'	    => 555
