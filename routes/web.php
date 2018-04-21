@@ -156,6 +156,13 @@ $api->version('v1',
         ]
     );
 
+    $api->post('post/contact',
+        [
+            'uses'            => 'Post\PostContactController@postMessages',
+            'as'              => 'postContact'
+        ]
+    );
+
    	});
 });
 Auth::routes();
