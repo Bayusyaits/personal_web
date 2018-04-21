@@ -40,13 +40,8 @@ class RestController extends Res
                         'message' => 'Not found',
                         'data' => 'Empty');
 
-        if(!empty($req['username']))
-            $data['username']       = $req['username'];
 
-        if(!empty($req['password']))
-            $data['password']       = $req['password'];
-
-        if(isset($req) && !empty($req['form_params']) && !empty($req['body'])) {
+        if(isset($req) && isset($req['form_params']) && isset($req['body'])) {
 
         	$string = str_replace('api/v1/', '', $request->path());
             $body                   = $req['body'];

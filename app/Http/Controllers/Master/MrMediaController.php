@@ -46,9 +46,14 @@ class MrMediaController extends Res
         
         $input = $request->all();
         //from javascript
-        $decrypted = cryptoJsAesDecrypt("[Media]", $input['password']);
         
-        if($input['operation'] == 'Get all media' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        if(isset($input) && isset($input['password'])){
+            $decrypted = cryptoJsAesDecrypt("[Media]", $input['password']);
+        }else {
+            $decrypted = 0;
+        }
+        
+        if(isset($input) && $input['operation'] == 'Get all media' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
             // $input['operation'] = bcrypt($input['operation']);
 
             $rests              = model('Rests')::isexist($input['operation'])->first();

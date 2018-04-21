@@ -91,9 +91,14 @@ class MrContentManagementController extends Res
         
         $input = $request->all();
         //from javascript
-        $decrypted = cryptoJsAesDecrypt("[Content-Menu]", $input['password']);
+        if(isset($input) && isset($input['password'])){
+            $decrypted = cryptoJsAesDecrypt("[Content-Menu]", $input['password']);
+        }else {
+            $decrypted = 0;
+        }
         
-        if($input['operation'] == 'Get all content menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        
+        if(isset($input) && $input['operation'] == 'Get all content menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
             // $input['operation'] = bcrypt($input['operation']);
 
             $rests              = model('Rests')::isexist($input['operation'])->first();
@@ -152,9 +157,13 @@ class MrContentManagementController extends Res
         
         $input = $request->all();
         //from javascript
-        $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
+        if(isset($input) && isset($input['password'])){
+            $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
+        }else {
+            $decrypted = 0;
+        }
         
-        if($input['operation'] == 'Get content projects' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        if(isset($input) && $input['operation'] == 'Get content projects' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
             // $input['operation'] = bcrypt($input['operation']);
 
             $rests              = model('Rests')::isexist($input['operation'])->first();

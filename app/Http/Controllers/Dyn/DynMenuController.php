@@ -56,9 +56,12 @@ class DynMenuController extends Res
 		
         $input = $request->all();
         //from javascript
-        $decrypted = cryptoJsAesDecrypt("[Nav-Menu]", $input['password']);
-        
-        if($input['operation'] == 'Get all nav menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        if(isset($input) && isset($input['password'])){
+            $decrypted = cryptoJsAesDecrypt("[Nav-Menu]", $input['password']);
+        }else {
+            $decrypted = 0;
+        }
+        if(isset($input) && $input['operation'] == 'Get all nav menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
         	// $input['operation'] = bcrypt($input['operation']);
 
 	        $rests 				= model('Rests')::isexist($input['operation'])->first();

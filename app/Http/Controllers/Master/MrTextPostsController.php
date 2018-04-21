@@ -45,6 +45,12 @@ class MrTextPostsController extends Res
         
         $input = $requests->all();
         //from javascript
+        if(isset($input) && isset($input['password'])){
+            $input['password'] = $input['password'];
+        }else {
+            $input['password'] = null;
+        }
+
         if($uri         == 'fields'){
             $decrypted  = cryptoJsAesDecrypt("[Categories-Fields]", $input['password']);
         }else if($uri   == 'subjects'){
@@ -53,7 +59,7 @@ class MrTextPostsController extends Res
             $decrypted  = cryptoJsAesDecrypt("[Categories]", $input['password']);
         }
         
-        if($input['operation'] == 'Get all categories' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        if(isset($input) && $input['operation'] == 'Get all categories' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
             // $input['operation'] = bcrypt($input['operation']);
 
             $rests              = model('Rests')::isexist($input['operation'])->first();
