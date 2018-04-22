@@ -95,8 +95,19 @@ class PostContactController extends Res
 						'code'    => Res::HTTP_OK,
 						'message' => 'Success',
 						'data'    => 'Not Empty');
-            if($convert && isset($body)){
+            if($convert && isset($body) && $body['operation'] == 'Add new message'){
                 //ServerRequestInterface -> getParsedBody()
+                $rests 				= model('Rests')::isexist($body['operation'])->first();
+	        
+					if(!isset($rests) && empty($rests)) {
+					
+						$user                   = Rest::create($body);	        
+				        $success['operation'] 	= $user->operation;
+					
+					}else {
+		                $user                   = Auth::user(); 
+		            }
+		            
                 $pc = model('PostContact')::insertmessage($body);
                 return $response;
 

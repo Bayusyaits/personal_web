@@ -55,6 +55,25 @@ class RestController extends Res
             if($request->getStatusCode() == 200)
                 $response           = json_decode($request->getBody()->getContents(),true);
 
+        }else if(isset($req) && isset($req['body'])) {
+
+            $string = str_replace('api/v1/', '', $request->path());
+            $body                   = $req['body'];
+            $req['operation']       = $body['operation'];
+            $req['hostname']        = $request->root();
+            $url                    = getUrlApi().$string;
+            $client                 = new Client(getClientHeadersApi($req));
+            $request                = $client->post($url, ['query' => $req]);
+
+            if($request->getStatusCode() == 200)
+                $response           = json_decode($request->getBody()->getContents(),true);
+
+        }else {
+            $response = array(
+                        'status'    => 'Error',
+                        'code'      => Res::HTTP_FORBIDDEN,
+                        'message'   => 'Forbidden',
+                        'data'      => 'Empty');   
         }
         
         return $response;

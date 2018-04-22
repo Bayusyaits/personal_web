@@ -39,11 +39,14 @@ class PostContact extends Model
     ];
 
     public function scopeInsertMessage($query,$posts) {
+        $now = \Carbon\Carbon::now();
+               setlocale(LC_TIME, 'IND');
         $query->insert([
             'pc_mc_id'              => $posts['pc_mc_id'],
             'pc_username'           => $posts['pc_username'],
             'pc_email'              => $posts['pc_email'],
-            'pc_message'            => $posts['pc_message']
+            'pc_message'            => $posts['pc_message'],
+            'pc_create_at'          => $now
         ]);
     }
 }
