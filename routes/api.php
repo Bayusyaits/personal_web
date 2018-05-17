@@ -21,7 +21,7 @@ Route::group(['middleware' => ['api','cors']], function () {
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    return 'halo';
 });
 
 // Route::get('/auth/token','API\TokenController@auth');

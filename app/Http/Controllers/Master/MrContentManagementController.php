@@ -96,6 +96,12 @@ class MrContentManagementController extends Res
         }else {
             $decrypted = 0;
         }
+
+        if(isset($input['operation'])){
+            $input['operation'] = $input['operation'];
+        }else {
+            $input['operation'] = '';
+        }
         
         
         if(isset($input) && $input['operation'] == 'Get all content menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
@@ -124,15 +130,19 @@ class MrContentManagementController extends Res
                 break;
                 case 'home'         : 
                     $mcm = model('MrContentManagement')::contentmenupage(55101)->first(); 
+                    $mcm = n2lbr_mtp($mcm);
                 break;
                 case 'about'        : 
                     $mcm = model('MrContentManagement')::contentmenupage(55102)->first(); 
+                    $mcm = n2lbr_mtp($mcm);
                 break;
                 case 'case-studies' : 
                     $mcm = model('MrContentManagement')::contentmenupage(55103)->first(); 
+                    $mcm = n2lbr_mtp($mcm);
                 break;
                 case 'contact'      : 
                     $mcm = model('MrContentManagement')::contentmenupage(55104)->first(); 
+                    $mcm = n2lbr_mtp($mcm);
                 break;
                 default: 
                     $mcm = model('MrContentManagement')::contentmenu()->get(); 
@@ -161,6 +171,12 @@ class MrContentManagementController extends Res
             $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
         }else {
             $decrypted = 0;
+        }
+        
+        if(isset($input['operation'])){
+            $input['operation'] = $input['operation'];
+        }else {
+            $input['operation'] = '';
         }
         
         if(isset($input) && $input['operation'] == 'Get content projects' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
@@ -202,12 +218,12 @@ class MrContentManagementController extends Res
 
 
     public function getContentManagement(Request $request, $uri1 = "") {
-        $mcm 	=  array(
-        				'status' 	=> 'Error',
-                        'code' 		=> Res::HTTP_NOT_FOUND,
-                        'message' 	=> 'Not found',
-                        'data' 		=> 'Empty'
-                    );
+        
+        $mcm =  array('status'   => 'Error',
+                    'code'      => Res::HTTP_NOT_FOUND,
+                    'message'   => 'Not found',
+                    'data'      => 'Empty');
+        
         return response()->json($mcm,Res::HTTP_OK);
     }
 

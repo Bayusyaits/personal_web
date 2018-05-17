@@ -16,6 +16,7 @@ class Users extends Model
         'name',
         'email',
         'password',
+        'ip_address',
         'hostname',
         // 'dm_parent_id',
         // 'dm_show',

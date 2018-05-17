@@ -61,6 +61,13 @@ class DynMenuController extends Res
         }else {
             $decrypted = 0;
         }
+
+        if(isset($input['operation'])){
+            $input['operation'] = $input['operation'];
+        }else {
+            $input['operation'] = '';
+        }
+        
         if(isset($input) && $input['operation'] == 'Get all nav menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
         	// $input['operation'] = bcrypt($input['operation']);
 

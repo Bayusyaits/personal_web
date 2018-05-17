@@ -302,6 +302,18 @@ function user(){
 	}
 }
 
-function geturi($param, $default = '') {
+function n2lbr_mtp($data = []) {
+
+	if(isset($data)) {
 	
+	$data['mtp_caption_en'] = nl2br(e($data['mtp_caption_en']));
+    $data['mtp_caption_id'] = nl2br(e($data['mtp_caption_id']));
+    $data['mtp_content_en'] = nl2br(e($data['mtp_content_en']));
+    $data['mtp_content_id'] = nl2br(e($data['mtp_content_id']));
+
+    return $data;
+
+	}else {
+		return false;
+	}
 }

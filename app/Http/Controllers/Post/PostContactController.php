@@ -82,19 +82,106 @@ class PostContactController extends Res
     /*
 		-Method Post
     */
-	public function postMessages(ServerRequestInterface $request)
+    public function postMessages(Request $request,$uri = '')
+    {
+        
+        $pc =  array('status'   => 'Error',
+                    'code'      => Res::HTTP_NOT_FOUND,
+                    'message'   => 'Not found',
+                    'data'      => 'Empty');
+        
+        $input = $request->all();
+        //from javascript
+        if(isset($input) && isset($input['password'])){
+            $decrypted = cryptoJsAesDecrypt("[Post-Contact|Message]", $input['password']);
+        }else {
+            $decrypted = 0;
+        }
+
+        if(isset($input) && isset($input['body'])) {
+            $body = $input['body'];
+        }else {
+            $body = [];
+        }
+
+        if(isset($input['operation'])){
+            $input['operation'] = $input['operation'];
+        }else {
+            $input['operation'] = '';
+        }
+        
+        if(isset($input) && isset($body) && $input['operation'] == 'Add new message' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+            // $input['operation'] = bcrypt($input['operation']);
+
+            $rests              = model('Rests')::isexist($input['operation'])->first();
+            
+            if(!isset($rests) && empty($rests)) {
+            
+                $user                   = Rest::create($input);         
+                $success['token']       =  $user->createToken($input['hostname'])->accessToken;
+                $success['operation']   =  $user->operation;
+                $success['name']        =  $user->name;
+            
+            }else {
+                $user                   = Auth::user(); 
+                // Creating a token without scopes...
+                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
+                //hapus token
+                // $success['token'] = $user->token()->revoke();
+            }
+
+            
+           
+            switch($uri)  {
+                case 'contact'     : 
+                    $post = model('PostContact')::insertmessage($body);
+                  break;
+            }
+
+            if($post) {
+                $pc = array(
+                    'status'  => 'Success',
+                    'code'    => Res::HTTP_OK,
+                    'message' => 'Success',
+                    'data'    => 'Not Empty');
+                }else {
+                 $pc = array(
+                    'status'    => 'Error',
+                    'code'      => Res::HTTP_FORBIDDEN,
+                    'message'   => 'Forbidden',
+                    'data'      => 'Empty');   
+                }
+
+        }else {
+            $pc =  array(
+                    'status'    => 'Error',
+                    'code'      => Res::HTTP_FORBIDDEN,
+                    'message'   => 'Forbidden',
+                    'data'      => 'Empty');
+        }
+        return response()->json($pc,Res::HTTP_OK);
+    }
+
+	public function postForm(ServerRequestInterface $request)
     {
         return $this->withErrorHandling(function () use ($request) {
             $convert =  $this->convertResponse(
                 $this->server->respondToAccessTokenRequest($request, new Psr7Response)
             );
             $body = $request->getParsedBody();
-            $body = $body['body'];
+            if(isset($body) && !empty($body) && isset($body['body'])){
+                $body = $body['body'];
+                $body['operation'] = $body['operation'];
+            }else{
+                $body = [];
+                $body['operation'] = '';
+            }
             $response = array(
 						'status'  => 'Success',
 						'code'    => Res::HTTP_OK,
 						'message' => 'Success',
 						'data'    => 'Not Empty');
+
             if($convert && isset($body) && $body['operation'] == 'Add new message'){
                 //ServerRequestInterface -> getParsedBody()
                 $rests 				= model('Rests')::isexist($body['operation'])->first();
@@ -107,12 +194,23 @@ class PostContactController extends Res
 					}else {
 		                $user                   = Auth::user(); 
 		            }
-		            
-                $pc = model('PostContact')::insertmessage($body);
-                return $response;
 
+                if(isset($body['category_fc']) && !empty($body['category_fc'])) {
+		          $pc = model('PostContact')::insertmessage($body);
+                  return $response;
+                }else {
+                    return array(
+                            'status'    => 'Error',
+                            'code'      => Res::HTTP_FORBIDDEN,
+                            'message'   => 'Forbidden',
+                            'data'      => 'Empty');
+                }    
             }else {
-                return 'hai';
+                return array(
+                    'status'    => 'Error',
+                    'code'      => Res::HTTP_FORBIDDEN,
+                    'message'   => 'Forbidden',
+                    'data'      => 'Empty');
             }
         });
     }

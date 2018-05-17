@@ -18,6 +18,7 @@ class PostContact extends Model
         'pc_phonenumber',
         'pc_message',
         'pc_reply',
+        'pc_ip_address',
     ];
     
     public $timestamps = false;
@@ -42,10 +43,12 @@ class PostContact extends Model
         $now = \Carbon\Carbon::now();
                setlocale(LC_TIME, 'IND');
         $query->insert([
-            'pc_mc_id'              => $posts['pc_mc_id'],
-            'pc_username'           => $posts['pc_username'],
-            'pc_email'              => $posts['pc_email'],
-            'pc_message'            => $posts['pc_message'],
+            //fc = field contact
+            'pc_mc_id'              => $posts['category_fc'],
+            'pc_username'           => $posts['username_fc'],
+            'pc_email'              => $posts['email_fc'],
+            'pc_message'            => $posts['message_fc'],
+            'pc_ip_address'         => $posts['ip'],
             'pc_create_at'          => $now
         ]);
     }

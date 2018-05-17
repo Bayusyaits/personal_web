@@ -156,7 +156,7 @@ $api->version('v1',
         ]
     );
 
-    $api->post('post/contact',
+    $api->post('/post/{uri}',
         [
             'uses'            => 'Post\PostContactController@postMessages',
             'as'              => 'postContact'
@@ -165,6 +165,10 @@ $api->version('v1',
 
    	});
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

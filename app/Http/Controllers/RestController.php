@@ -47,6 +47,7 @@ class RestController extends Res
             $body                   = $req['body'];
             $req['operation']       = $body['operation'];
             $req['hostname']        = $request->root();
+            $req['ip']              = $request->ip();
             $query                  = getClientQueryApi($req);
             $url                    = getUrlApi().$string;
             $client                 = new Client(getClientHeadersApi($req));

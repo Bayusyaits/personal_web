@@ -29,22 +29,30 @@ function getClientQueryApi($data = []) {
 
     $body = [];
 
-    if(isset($data) && !empty($data['form_params']))
+    if(isset($data) && !empty($data['form_params'])){
         $form_params = $data['form_params'];
+    }else {
+        $form_params = '';
+    }
 
-    if(isset($data) && !empty($data['body']))
+    if(isset($data) && !empty($data['body'])){
         $body = $data['body'];
+    }else {
+        $body = '';
+    }
 
     if(isset($data) && !empty($data)) {
         $query['grant_type']    = $form_params['grant_type'];
+        $query['body']          = $body;
         $query['operation']     = $body['operation'];
         $query['hostname']      = $data['hostname'];
+        $query['body']['ip']    = $data['ip'];
         $query['username']      = $form_params['username'];
         $query['password']      = $form_params['password'];
         $query['client_id']     = $form_params['client_id'];
         $query['client_secret'] = $form_params['client_secret'];
         $query['scope']         = $form_params['scope'];
-        
+
         return $query;
 
     }else {
