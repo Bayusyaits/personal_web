@@ -24,6 +24,7 @@
     "require-dev": {
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
+        "laravel/dusk": "^3.0",
         "mockery/mockery": "~1.0",
         "nunomaduro/collision": "~1.1",
         "phpunit/phpunit": "^7",
@@ -32,6 +33,7 @@
     "autoload": {
         "files":[
             "libs/general_function.php",
+            "app/Support/helpers.php",
             "libs/api.php"
         ],
         "classmap": [
