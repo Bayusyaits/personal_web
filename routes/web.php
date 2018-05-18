@@ -14,7 +14,7 @@ set_time_limit(3600);
 // ini_set('session.gc_maxlifetime', env('SESSION_TIMEOUT', 1200));
 // define('env', env('APP_ENV'));
 // define('env_bo', env('BACKOFFICE'));
-define('DATETIME', date('Y-m-d H:i:s'));
+// define('DATETIME', date('Y-m-d H:i:s'));
 define('REQUEST_SCHEME', 'http');
 define('DATE', date('Y-m-d'));
 define('TIME', time());

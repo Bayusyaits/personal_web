@@ -39,10 +39,11 @@
             "database/factories"
         ],
         "psr-4": {
+            "Dingo\\Api\\": "src/",
             "App\\": "app/"
         },
         "psr-0": {
-           "" :[ 
+           "app" :[ 
                "libs/",
                "app/Helpers",
                "app/Models",
@@ -53,13 +54,20 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Dingo\\Api\\Tests\\": "tests/",
             "Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "dont-discover": [
-            ]
+            ],
+        "providers": [
+            "Dingo\\Api\\Provider\\LaravelServiceProvider"
+        ],
+        "aliases": {
+            "API": "Dingo\\Api\\Facade\\API"
+        }
         }
     },
     "scripts": {
