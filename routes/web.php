@@ -29,6 +29,16 @@ Route::get('/',
     ]
 );
 
+Route::get('/carbon', function () {
+    $before = Carbon\Carbon::now();
+
+    sleep(3);
+
+    $now = Carbon\Carbon::now();
+
+    return $now->diffInSeconds($before); // returns 0
+});
+
 //clear cache
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
@@ -41,6 +51,7 @@ Route::get('/test', function() {
     return getClientDataApi($data);
 });
 
+require base_path('routes/firewall.php');
 require base_path('routes/v1.php');
 
 Auth::routes();

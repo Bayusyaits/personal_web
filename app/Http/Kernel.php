@@ -47,6 +47,10 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+        'firewall' => [
+            \PragmaRX\Firewall\Middleware\FirewallBlacklist::class,
+            \PragmaRX\Firewall\Middleware\BlockAttacks::class,
+        ],
     ];
 
     /**
@@ -74,5 +78,9 @@ class Kernel extends HttpKernel
         'client' => CheckClientCredentials::class,
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
+        //pregmarx firewall ip
+        'fw-only-whitelisted' => \PragmaRX\Firewall\Middleware\FirewallWhitelist::class,
+        'fw-block-blacklisted' => \PragmaRX\Firewall\Middleware\FirewallBlacklist::class,
+        'fw-block-attacks' => \PragmaRX\Firewall\Middleware\BlockAttacks::class,
     ];
 }

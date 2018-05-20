@@ -40,7 +40,7 @@ class RestController extends Res
                         'message' => 'Not found',
                         'data' => 'Empty');
 
-
+        
         if(isset($req) && isset($req['form_params']) && isset($req['body'])) {
 
         	$string = str_replace('api/v1/', '', $request->path());

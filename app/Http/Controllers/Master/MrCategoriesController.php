@@ -52,6 +52,12 @@ class MrCategoriesController extends Res
             $input['password'] = null;
         }
 
+        if(isset($input['operation'])){
+            $input['operation'] = $input['operation'];
+        }else {
+            $input['operation'] = '';
+        }
+        
         if($uri         == 'fields'){
             $decrypted  = cryptoJsAesDecrypt("[Categories-Fields]", $input['password']);
         }else if($uri   == 'subjects'){

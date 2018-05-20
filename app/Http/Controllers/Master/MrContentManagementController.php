@@ -195,11 +195,15 @@ class MrContentManagementController extends Res
                 // Creating a token without scopes...
                 // $success['token']       = $user->createToken($input['hostname'])->accessToken;
             }
-
+            if(isset($input['sort']) && !empty($input['sort'])){
+                $mcm = model('MrContentManagement')::contentmenucasestudies()->get();
+            }else {
+                $mcm = model('MrContentManagement')::contentmenucasestudies()->get();
+            }
             switch($uri)  {
-                case 'projects'     : 
-                    $mcm = model('MrContentManagement')::contentmenucasestudies()->get(); 
-                  break;
+            case 'projects'     : 
+                $mcm; 
+              break;
             }
 
         }else {
