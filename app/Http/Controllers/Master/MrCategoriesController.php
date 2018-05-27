@@ -99,7 +99,13 @@ class MrCategoriesController extends Res
                 default: 
                     $mc = model('MrCategories')::categories()->get();
             }
-
+            $mc = response_mr_categories($mc,'join|dm_menu','get');
+            $mc = array(
+                        'status'    => 'Success',
+                        'code'      => Res::HTTP_OK,
+                        'message'   => 'Request has been processed successfully on server',
+                        'data'      => $mc
+                    );
         }else {
             $mc =  array(
                     'status'    => 'Error',
@@ -116,6 +122,6 @@ class MrCategoriesController extends Res
                     'code'			=> 	Res::HTTP_NOT_FOUND,
                     'message' 		=> 	'Not found',
                     'data' 			=> 'Empty');
-        return response()->json($mc,Res::HTTP_OK);
+        return response()->json($mc,Res::HTTP_NOT_FOUND);
     }
 }

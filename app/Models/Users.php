@@ -18,9 +18,10 @@ class Users extends Model
         'password',
         'ip_address',
         'hostname',
-        // 'dm_parent_id',
-        // 'dm_show',
-        // 'dm_keyword'
+        'is_delete',
+        'is_update',
+        'ip_address',
+        'level_access',
     ];
 
     // public $timestamps = false;
@@ -32,10 +33,13 @@ class Users extends Model
 
     public function scopeActiveUser($query, $data) {
     	return $query->selectRaw('users.name, users.email, users.hostname, oauth_clients.secret, oauth_clients.user_id')
-    				 ->leftJoin('oauth_clients','users.id', '=', 'user_id')
+    				 ->leftJoin('firewall','firewall.ip_address', '=', 'user.ip_address')
+                     ->leftJoin('oauth_clients','users.id', '=', 'user_id')
     				 ->where([	
     				 	'email'		=>	$data['email'],
-    				 	'hostname'	=>	$data['hostname']
+    				 	'hostname'	=>	$data['hostname'],
+                        'ip_address'=>  Firewall::getIp(),
+                        'is_delete' =>  0
     				 	]);
     }
 

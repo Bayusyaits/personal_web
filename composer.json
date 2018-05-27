@@ -34,7 +34,9 @@
     "autoload": {
         "files":[
             "libs/general_function.php",
+            "libs/variable_function.php",
             "app/Support/helpers.php",
+            "libs/alias.php",
             "libs/api.php"
         ],
         "classmap": [

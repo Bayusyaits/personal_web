@@ -21,11 +21,18 @@ define('TIME', time());
 define('JT', 1000000);
 
 $api = app('Dingo\Api\Routing\Router');
-
+//https://laravel.com/docs/5.6/routing#route-parameters
 Route::get('/', 
     [
-        'uses'                 =>  'Frontend\AppController@getIndex',
-        'as'                   =>  'index'
+        'uses'                 => 'Frontend\AppController@getIndex',
+        'as'                   => 'index'
+    ]
+);
+
+Route::match(['get','post'],'/exceptions',
+    [
+        'uses'                => 'Exceptions\ExceptionsController@index',
+        'as'                  => 'api_404'
     ]
 );
 
@@ -44,7 +51,6 @@ Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
     // return what you want
 });
-
 Route::get('/test', function() {
     $data = [];
     $data['hostname'] = 'bayusyaits.com';
@@ -52,8 +58,9 @@ Route::get('/test', function() {
 });
 
 require base_path('routes/firewall.php');
-require base_path('routes/v1.php');
-
+if(env('API_URI')== 'api.bayusyaits.com' && env('API_PREFIX') == 'api'){
+    require base_path('routes/v1.php');
+}
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

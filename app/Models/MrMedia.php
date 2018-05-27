@@ -20,6 +20,7 @@ class MrMedia extends Model
         'mm_is_parent',
         'mm_parent_id',
         'mm_show',
+        'mm_is_delete',
     ];
     
     public $timestamps = false;
@@ -48,29 +49,34 @@ class MrMedia extends Model
 	 
 	  public function scopeMediaActive($query)
 	    {
-	        return $query->where('mm_show', 555);
+	        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_keyword,mm_create_at,mm_update_at')
+                       ->where(['mm_show'=> 555,'mm_is_delete'=>0]);
 	    }
 	 public function scopeMediaWork($query) {
-	    return $query->join('dyn_menu','mm_dm_id','=','dm_id')
+	    return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_keyword,mm_create_at,mm_update_at,dm_name,dm_initial,dm_keyword,dm_uri')
+                     ->join('dyn_menu','mm_dm_id','=','dm_id')
 	    			 ->where([
-					'mm_dm_id'	=> 55103,
-					'mm_show'	=> 555
+					'mm_dm_id'	     => 55103,
+					'mm_show'	     => 555,
+                    'mm_is_delete'   => 0,
 					]);
     }
     public function scopeMediaLogosMedsos($query) {
-        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_keyword')
+        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_keyword,mm_create_at,mm_update_at')
 	    			 ->where([
-                    'mm_keyword'	=> '[Media-Logo|Medsos]',
-					'mm_show'	    => 555
+                    'mm_keyword'	 => '[Media-Logo|Medsos]',
+					'mm_show'	     => 555,
+                    'mm_is_delete'   => 0,
 					]);
     }
 
     public function scopeMediaLogo($query) {
-        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,dm_initial,dm_keyword,dm_url')
+        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_create_at,mm_update_at,dm_name,dm_initial,dm_keyword,dm_url')
                      ->leftjoin('dyn_menu','mm_dm_id','=','dm_id')
 	    			 ->where([
                     'mm_keyword'	=> '[Media-Logo]',
-					'mm_show'	    => 555
+					'mm_show'	    => 555,
+                    'mm_is_delete'  => 0,
 					]);
     }
 }

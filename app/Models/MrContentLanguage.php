@@ -18,6 +18,7 @@ class MrContentLanguage extends Model
         'mcl_content_en',
         'mcl_salt',
         'mcl_show',
+        'mcl_is_delete',
     ];
     
     public $timestamps = false;
@@ -44,13 +45,14 @@ class MrContentLanguage extends Model
 	 
 	  public function scopeContentActive($query)
 	    {
-	        return $query->where('mcl_show', 555);
+	        return $query->where(['mcl_show', 555,'mcl_is_delete'=>0]);
 	    }
 	 public function scopeContentWork($query) {
 	    return $query->join('dyn_menu','mcl_dm_id','=','dm_id')
 	    			 ->where([
 					'mcl_dm_id'	=> 55103,
-					'mcl_show'	=> 555
+					'mcl_show'	=> 555,
+                    'mcl_is_delete'=>0
 					]);
     }
 }

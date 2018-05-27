@@ -17,6 +17,7 @@ class MrCategories extends Model
         'mc_is_parent',
         'mc_parent_id',
         'mc_show',
+        'mc_is_delete',
     ];
     
     public $timestamps = false;
@@ -43,28 +44,70 @@ class MrCategories extends Model
 
 	 public function scopeCategoriesActive($query)
 	    {
-	        return $query->where('mc_show', 555);
+	        return $query->selectRaw('
+                                mc_id,
+                                mc_dm_id,
+                                mc_type,
+                                mc_name,
+                                mc_initial,
+                                mc_is_parent,
+                                mc_parent_id,
+                                ')
+                        ->where(['mc_show'=> 555,'mc_is_delete'  => 0]);
 	    }
 	 public function scopeFields($query) {
-	    return $query->leftjoin('dyn_menu','mc_dm_id','=','dm_id')
+	    return $query->selectRaw('
+                                mc_id,
+                                mc_dm_id,
+                                mc_type,
+                                mc_name,
+                                mc_initial,
+                                mc_is_parent,
+                                mc_parent_id,
+                                dm_id,
+                                dm_name')
+                     ->leftjoin('dyn_menu','mc_dm_id','=','dm_id')
 	    			 ->where([
-                    'mc_type'	=> 'Field',
-                    'mc_dm_id'	=> 55103,
-					'mc_show'	=> 555
+                    'mc_type'	     => 'Field',
+                    'mc_dm_id'	     => 55103,
+					'mc_show'	     => 555,
+                    'mc_is_delete'   => 0,
 					]);
     }
     public function scopeCategories($query) {
-	    return $query->join('dyn_menu','mc_dm_id','=','dm_id')
+	    return $query->selectRaw('
+                                mc_id,
+                                mc_dm_id,
+                                mc_type,
+                                mc_name,
+                                mc_initial,
+                                mc_is_parent,
+                                mc_parent_id,
+                                dm_id,
+                                dm_name')
+                     ->join('dyn_menu','mc_dm_id','=','dm_id')
 	    			 ->where([
-					'mc_show'	=> 555
+					'mc_show'	     => 555,
+                    'mc_is_delete'   => 0,
 					]);
     }
     public function scopeSubjects($query) {
-        return $query->join('dyn_menu','mc_dm_id','=','dm_id')
+        return $query->selectRaw('
+                                mc_id,
+                                mc_dm_id,
+                                mc_type,
+                                mc_name,
+                                mc_initial,
+                                mc_is_parent,
+                                mc_parent_id,
+                                dm_id,
+                                dm_name')
+                     ->join('dyn_menu','mc_dm_id','=','dm_id')
                      ->where([
-                    'mc_type'   => 'Subject',
-                    'mc_dm_id'  => 55104,
-                    'mc_show'   => 555
+                    'mc_type'       => 'Subject',
+                    'mc_dm_id'      => 55104,
+                    'mc_show'       => 555,
+                    'mc_is_delete'  => 0,
                     ]);
     }
 

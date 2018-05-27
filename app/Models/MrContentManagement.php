@@ -22,6 +22,7 @@ class MrContentManagement extends Model
         'mcm_parent_id',
         'mcm_salt',
         'mcm_show',
+        'mcm_is_delete',
     ];
     
     public $timestamps = false;
@@ -49,18 +50,20 @@ class MrContentManagement extends Model
 	 
 	  public function scopeContentActive($query)
 	    {
-	        return $query->where('mcm_show', 555);
+	        return $query->where(['mcm_show'=> 555,'mcm_is_delete'=>0]);
 	    }
 	 public function scopeContentCaseStudies($query) {
-	    return $query->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
+	    return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri')
+                    ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
 	    			 ->where([
 					'mcm_dm_id'	        => 55103,
-					'mcm_show'      	=> 555
+					'mcm_show'      	=> 555,
+                    'mcm_is_delete'     => 0,
                     ])
                     ->orderBy('mcm_id');
     }
     public function scopeContentMenu($query) {
-        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src')
+        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mm_create_at,mm_update_at')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_text_posts','mtp_id','=','mcm_mtp_id')
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
@@ -72,28 +75,32 @@ class MrContentManagement extends Model
                     'mcm_is_parent' 	=> 1,
                     'mtp_parent_id'	    => 0,
                     'mcm_parent_id'	    => 0,
+                    'mcm_is_delete'     => 0,
                     'dm_url'            => null,
                     'mcm_show'	        => 555,
-                    'mtp_show'	        => 555
+                    'mtp_show'	        => 555,
+                    'mtp_is_delete'     => 0,
                     ])
                     ->offset(1)
                     ->limit(4)
                     ;
     }
     public function scopeContentMenuPage($query,$id) {
-        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src')
+        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mm_create_at,mm_update_at')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_text_posts','mtp_id','=','mcm_mtp_id')
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
                      ->where([
                         'dm_id'   	        => $id,
                         'mtp_uri'        	=> 0,
-                        'mtp_show'	        => 555
+                        'mtp_show'	        => 555,
+                        'mtp_is_delete'     => 0,
+                        'mcm_is_delete'     => 0,
                         ])
                     ;
     }
     public function scopeContentMenuCaseStudies($query) {
-        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mc_id,mc_name,mc_initial,mc_parent_id')
+        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mc_id,mm_create_at,mm_update_at,mc_name,mc_initial,mc_parent_id')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_categories','mcm_mc_id','=','mc_id')
                      ->leftjoin('mr_text_posts','mtp_id','=','mcm_mtp_id')
@@ -106,7 +113,9 @@ class MrContentManagement extends Model
                     'mcm_is_parent' 	=> 1,
                     'mtp_parent_id' 	=> 5525003,
                     'mcm_show'	        => 555,
-                    'mtp_show'	        => 555
+                    'mcm_is_delete'     => 0,
+                    'mtp_show'	        => 555,
+                    'mtp_is_delete'     => 0,
                     ]);
     }
 }

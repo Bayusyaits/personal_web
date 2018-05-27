@@ -127,27 +127,33 @@ class MrContentManagementController extends Res
             switch($uri)  {
                 case 'menu' : 
                     $mcm = model('MrContentManagement')::contentmenu()->get(); 
+                    response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','get');
                 break;
                 case 'home'         : 
                     $mcm = model('MrContentManagement')::contentmenupage(55101)->first(); 
-                    $mcm = n2lbr_mtp($mcm);
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first');
                 break;
                 case 'about'        : 
                     $mcm = model('MrContentManagement')::contentmenupage(55102)->first(); 
-                    $mcm = n2lbr_mtp($mcm);
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first');
                 break;
                 case 'case-studies' : 
                     $mcm = model('MrContentManagement')::contentmenupage(55103)->first(); 
-                    $mcm = n2lbr_mtp($mcm);
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first');
                 break;
                 case 'contact'      : 
                     $mcm = model('MrContentManagement')::contentmenupage(55104)->first(); 
-                    $mcm = n2lbr_mtp($mcm);
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first');
                 break;
                 default: 
                     $mcm = model('MrContentManagement')::contentmenu()->get(); 
             }
 
+            $mcm =  array(
+                    'status'    => 'Success',
+                    'code'      => Res::HTTP_OK,
+                    'message'   => 'Request has been processed successfully on server',
+                    'data'      => $mcm);
         }else {
             $mcm =  array(
                     'status'    => 'Error',
@@ -205,7 +211,13 @@ class MrContentManagementController extends Res
                 $mcm; 
               break;
             }
-
+            $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','get');
+            $mcm =  array(
+                    'status'    => 'Success',
+                    'code'      => Res::HTTP_OK,
+                    'message'   => 'Request has been processed successfully on server',
+                    'data'      => $mcm
+                );
         }else {
             $mcm =  array(
                     'status'    => 'Error',

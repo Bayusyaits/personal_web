@@ -278,7 +278,7 @@ function dateTimeEn($date){
 function controller($name,$object=true) {
 	$str = "\App\Http\Controllers\\$name";
 	if($object) return new $str(true);
-	$str;
+	return $str;
 }
 function model($model = '') {
 	$src = "\App\Models\\$model";
@@ -288,18 +288,24 @@ function model($model = '') {
 
 	return $src;
 }
+
 function module($module){
 	$str = "\App\Models\\$module";
 	if(!class_exists($str)) return '';
 	return new $str;
 }
-function user(){
-	if(isset($_COOKIE['admin_auth_id']) || session('admin_auth_id')){
-		return controller('AuthController')->admin();
+
+function user($data = []){
+	if(isset($data) && isset($data['body']) && isset($data['body']['operation'])){
+		$user = model('Users');
+		return true;
+	}else {
+		return false;
 	}
-	if(isset($_COOKIE['general_auth_id']) || session('general_auth_id')){
-		return controller('AuthController')->general();
-	}
+}
+
+function api_404(){
+	return response()->view('errors.404',[],404);
 }
 
 function n2lbr_mtp($data = []) {

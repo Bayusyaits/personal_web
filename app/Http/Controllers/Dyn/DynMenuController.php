@@ -89,9 +89,16 @@ class DynMenuController extends Res
             }
 
 	        switch($uri)  {
-	            case 'nav-menu' : $dm = model('DynMenu')::active()->get(); break;
+	            case 'nav-menu' : 
+                $dm = model('DynMenu')::active()->get(); 
+                $dm = response_dyn_menu($dm,'','get');
+                break;
 	        }
-
+            $dm =  array(
+                    'status'    => 'Success',
+                    'code'      => Res::HTTP_OK,
+                    'message'   => 'Request has been processed successfully on server',
+                    'data'      => $dm);
     	}else {
             $dm =  array(
                     'status'    => 'Error',
@@ -107,13 +114,11 @@ class DynMenuController extends Res
     */ 
 
     public function getMenu(Request $request, $uri = "") {
+
         $dm =  array('status' => 'Error',
                         'code' => Res::HTTP_NOT_FOUND,
                         'message' => 'Not found',
                         'data' => 'Empty');
-        switch($uri)  {
-            case 'nav-menu' : $dm = model('DynMenu')::active()->get(); break;
-        }
-        return response()->json($dm,Res::HTTP_OK);
+        return response()->json($dm,Res::HTTP_NOT_FOUND);
     }
 }
