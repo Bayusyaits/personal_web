@@ -240,7 +240,7 @@ class MrContentManagementController extends Res
                     'message'   => 'Not found',
                     'data'      => 'Empty');
         
-        return response()->json($mcm,Res::HTTP_OK);
+        return response()->json($mcm,Res::HTTP_NOT_FOUND);
     }
 
     public function issueToken(ServerRequestInterface $request)

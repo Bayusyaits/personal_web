@@ -307,6 +307,9 @@ function user($data = []){
 function api_404(){
 	return response()->view('errors.404',[],404);
 }
+function api_405(){
+	return response()->view('errors.405',[],405);
+}
 
 function n2lbr_mtp($data = []) {
 

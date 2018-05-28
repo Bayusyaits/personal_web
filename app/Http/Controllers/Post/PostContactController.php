@@ -142,8 +142,8 @@ class PostContactController extends Res
                 $pc = array(
                     'status'  => 'Success',
                     'code'    => Res::HTTP_OK,
-                    'message' => 'Success',
-                    'data'    => 'Not Empty');
+                    'message' => 'Your message was successfully delivered',
+                    'data'    => 'Delivered');
                 }else {
                  $pc = array(
                     'status'    => 'Error',

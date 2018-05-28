@@ -87,7 +87,7 @@ class MrMediaController extends Res
                     $mm = model('MrMedia')::medialogosmedsos()->get();
             }
             $mm = response_mr_media($mm,'join|dyn_menu','get');
-            $mcm =  array(
+            $mm =  array(
                     'status'    => 'Success',
                     'code'      => Res::HTTP_OK,
                     'message'   => 'Request has been processed successfully on server',
@@ -104,10 +104,8 @@ class MrMediaController extends Res
     }
 
     public function getMedSos(Request $request, $uri = "") {
-        $mm =  array('status' => 'Error',
-                    'status_code' => Res::HTTP_NOT_FOUND,
-                    'message' => 'Not found',
-                    'data' => 'Empty');
-        return response()->json($mm,Res::HTTP_NOT_FOUND);
+        $mm =  model('MrMedia')::medialogosmedsos()->get();
+        $mm = response_mr_media($mm,'join|dyn_menu','get');
+        return response()->json($mm,Res::HTTP_OK);
     }
 }
