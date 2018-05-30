@@ -12,6 +12,7 @@ class Users extends Model
     protected $table = 'users';
     protected $primaryKey = 'id';
     protected $foreignKey = '';
+    protected $dates    = ['deleted_at'];
     protected $fillable = [
         'name',
         'email',
@@ -39,7 +40,8 @@ class Users extends Model
     				 	'email'		=>	$data['email'],
     				 	'hostname'	=>	$data['hostname'],
                         'ip_address'=>  Firewall::getIp(),
-                        'is_delete' =>  0
+                        'is_delete' =>  0,
+                        'deleted_at'=>  0
     				 	]);
     }
 

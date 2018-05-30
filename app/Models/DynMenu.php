@@ -11,6 +11,7 @@ class DynMenu extends Model
     protected $table = 'dyn_menu';
     protected $primaryKey = 'dm_id';
     protected $foreignKey = 'dm_tg_id';
+    protected $dates = ['dm_deleted_at'];
     protected $fillable = [
         'dm_name',
         'dm_url',
@@ -34,7 +35,8 @@ class DynMenu extends Model
                          ->leftJoin('table_groups','dm_tg_id','=','tg_id')
                          ->where([
                              'dm_tg_id' => 5501,
-                             'dm_show'  => 555
+                             'dm_show'  => 555,
+                             'dm_deleted_at'=>0
                              ]);
         }
 }

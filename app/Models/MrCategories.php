@@ -11,13 +11,13 @@ class MrCategories extends Model
     protected $table = 'mr_categories';
     protected $primaryKey = 'mc_id';
     protected $foreignKey = 'mc_dm_id';
+    protected $dates    = ['mc_deleted_at'];
     protected $fillable = [
         'mc_type',
         'mc_name',
         'mc_is_parent',
         'mc_parent_id',
         'mc_show',
-        'mc_is_delete',
     ];
     
     public $timestamps = false;
@@ -53,7 +53,7 @@ class MrCategories extends Model
                                 mc_is_parent,
                                 mc_parent_id,
                                 ')
-                        ->where(['mc_show'=> 555,'mc_is_delete'  => 0]);
+                        ->where(['mc_show'=> 555,'mc_deleted_at'  => 0]);
 	    }
 	 public function scopeFields($query) {
 	    return $query->selectRaw('
@@ -71,7 +71,7 @@ class MrCategories extends Model
                     'mc_type'	     => 'Field',
                     'mc_dm_id'	     => 55103,
 					'mc_show'	     => 555,
-                    'mc_is_delete'   => 0,
+                    'mc_deleted_at'   => 0,
 					]);
     }
     public function scopeCategories($query) {
@@ -88,7 +88,7 @@ class MrCategories extends Model
                      ->join('dyn_menu','mc_dm_id','=','dm_id')
 	    			 ->where([
 					'mc_show'	     => 555,
-                    'mc_is_delete'   => 0,
+                    'mc_deleted_at'   => 0,
 					]);
     }
     public function scopeSubjects($query) {
@@ -107,7 +107,7 @@ class MrCategories extends Model
                     'mc_type'       => 'Subject',
                     'mc_dm_id'      => 55104,
                     'mc_show'       => 555,
-                    'mc_is_delete'  => 0,
+                    'mc_deleted_at'  => 0,
                     ]);
     }
 

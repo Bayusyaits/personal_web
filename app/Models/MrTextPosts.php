@@ -20,6 +20,7 @@ class MrTextPosts extends Model
         'mtp_show',
     ];
     public $timestamps = false;
+    protected $dates = ['mtp_deleted_at'];
     const CREATED_AT = 'mtp_create_at';
     const UPDATED_AT = 'mtp_update_at';
 
@@ -48,6 +49,6 @@ class MrTextPosts extends Model
 	 
 	  public function scopePostsActive($query)
       {
-          return $query->where('mtp_show', 555);
+          return $query->where(['mtp_show'=> 555,'mtp_deleted_at'=>0]);
       }
 }

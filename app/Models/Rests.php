@@ -10,6 +10,7 @@ class Rests extends Model
     protected static $elq   = __CLASS__;
     protected $table        = 'rests';
     protected $primaryKey   = 'id';
+    protected $dates = ['deleted_at'];
     protected $fillable     = [
         'operation',
     ];
@@ -21,7 +22,7 @@ class Rests extends Model
     public function scopeIsExist($query, $operation)
     {
         return $query->selectRaw('operation')
-                     ->where(['operation' => $operation])
+                     ->where(['operation' => $operation,'deleted_at'=>0])
                      ->orderBy('id', 'desc');
     }
     //carbon custome datetime

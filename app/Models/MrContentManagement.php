@@ -10,6 +10,7 @@ class MrContentManagement extends Model
     protected static $elq = __CLASS__;
     protected $table = 'mr_content_management';
     protected $primaryKey = 'mcm_id';
+    protected $dates = ['mcm_deleted_at'];
     protected $foreignKey = [
 		'mcm_dm_id',
         'mcm_tg_id',
@@ -22,7 +23,7 @@ class MrContentManagement extends Model
         'mcm_parent_id',
         'mcm_salt',
         'mcm_show',
-        'mcm_is_delete',
+        'mcm_deleted_at',
     ];
     
     public $timestamps = false;
@@ -50,7 +51,7 @@ class MrContentManagement extends Model
 	 
 	  public function scopeContentActive($query)
 	    {
-	        return $query->where(['mcm_show'=> 555,'mcm_is_delete'=>0]);
+	        return $query->where(['mcm_show'=> 555,'mcm_deleted_at'=>0]);
 	    }
 	 public function scopeContentCaseStudies($query) {
 	    return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri')
@@ -58,7 +59,8 @@ class MrContentManagement extends Model
 	    			 ->where([
 					'mcm_dm_id'	        => 55103,
 					'mcm_show'      	=> 555,
-                    'mcm_is_delete'     => 0,
+                    'mcm_deleted_at'     => 0,
+                    'dm_deleted_at'     => 0,
                     ])
                     ->orderBy('mcm_id');
     }
@@ -75,11 +77,12 @@ class MrContentManagement extends Model
                     'mcm_is_parent' 	=> 1,
                     'mtp_parent_id'	    => 0,
                     'mcm_parent_id'	    => 0,
-                    'mcm_is_delete'     => 0,
+                    'mcm_deleted_at'    => 0,
                     'dm_url'            => null,
+                    'dm_deleted_at'     => 0,
                     'mcm_show'	        => 555,
                     'mtp_show'	        => 555,
-                    'mtp_is_delete'     => 0,
+                    'mtp_deleted_at'     => 0,
                     ])
                     ->offset(1)
                     ->limit(4)
@@ -92,10 +95,11 @@ class MrContentManagement extends Model
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
                      ->where([
                         'dm_id'   	        => $id,
+                        'dm_deleted_at'     => 0,
                         'mtp_uri'        	=> 0,
                         'mtp_show'	        => 555,
-                        'mtp_is_delete'     => 0,
-                        'mcm_is_delete'     => 0,
+                        'mtp_deleted_at'     => 0,
+                        'mcm_deleted_at'    => 0,
                         ])
                     ;
     }
@@ -108,14 +112,16 @@ class MrContentManagement extends Model
                      ->orderBy('mcm_id','desc')
 	    			 ->where([
                     'mtp_keyword'   	=> '[Content-Menu|Case-Studies]',
+                    'dm_deleted_at'     => 0,
                     'mtp_uri'        	=> 2,
                     'mtp_is_parent' 	=> 1,
                     'mcm_is_parent' 	=> 1,
+                    'mc_deleted_at'      => 0,
                     'mtp_parent_id' 	=> 5525003,
                     'mcm_show'	        => 555,
-                    'mcm_is_delete'     => 0,
+                    'mcm_deleted_at'    => 0,
                     'mtp_show'	        => 555,
-                    'mtp_is_delete'     => 0,
+                    'mtp_deleted_at'     => 0,
                     ]);
     }
 }

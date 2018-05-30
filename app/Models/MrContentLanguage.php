@@ -10,6 +10,7 @@ class MrContentLanguage extends Model
     protected static $elq = __CLASS__;
     protected $table = 'mr_content_language';
     protected $primaryKey = 'mcl_id';
+    protected $dates = ['mcl_deleted_at'];
     protected $foreignKey = 'mcl_dm_id';
     protected $fillable = [
         'mcl_keyword',
@@ -18,7 +19,6 @@ class MrContentLanguage extends Model
         'mcl_content_en',
         'mcl_salt',
         'mcl_show',
-        'mcl_is_delete',
     ];
     
     public $timestamps = false;
@@ -45,14 +45,14 @@ class MrContentLanguage extends Model
 	 
 	  public function scopeContentActive($query)
 	    {
-	        return $query->where(['mcl_show', 555,'mcl_is_delete'=>0]);
+	        return $query->where(['mcl_show', 555,'mcl_deleted_at'=>0]);
 	    }
 	 public function scopeContentWork($query) {
 	    return $query->join('dyn_menu','mcl_dm_id','=','dm_id')
 	    			 ->where([
 					'mcl_dm_id'	=> 55103,
 					'mcl_show'	=> 555,
-                    'mcl_is_delete'=>0
+                    'mcl_deleted_at'=>0
 					]);
     }
 }

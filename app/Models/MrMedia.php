@@ -10,6 +10,7 @@ class MrMedia extends Model
     protected static $elq = __CLASS__;
     protected $table = 'mr_media';
     protected $primaryKey = 'mm_id';
+    protected $dates = ['mm_deleted_at'];
     protected $foreignKey = 'mm_dm_id';
     protected $fillable = [
         'mm_keyword',
@@ -20,7 +21,7 @@ class MrMedia extends Model
         'mm_is_parent',
         'mm_parent_id',
         'mm_show',
-        'mm_is_delete',
+        'mm_is_delete'
     ];
     
     public $timestamps = false;
@@ -50,7 +51,7 @@ class MrMedia extends Model
 	  public function scopeMediaActive($query)
 	    {
 	        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_keyword,mm_create_at,mm_update_at')
-                       ->where(['mm_show'=> 555,'mm_is_delete'=>0]);
+                       ->where(['mm_show'=> 555,'mm_deleted_at'=>0]);
 	    }
 	 public function scopeMediaWork($query) {
 	    return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_keyword,mm_create_at,mm_update_at,dm_name,dm_initial,dm_keyword,dm_uri')
@@ -58,7 +59,7 @@ class MrMedia extends Model
 	    			 ->where([
 					'mm_dm_id'	     => 55103,
 					'mm_show'	     => 555,
-                    'mm_is_delete'   => 0,
+                    'mm_deleted_at'   => 0,
 					]);
     }
     public function scopeMediaLogosMedsos($query) {
@@ -66,7 +67,7 @@ class MrMedia extends Model
 	    			 ->where([
                     'mm_keyword'	 => '[Media-Logo|Medsos]',
 					'mm_show'	     => 555,
-                    'mm_is_delete'   => 0,
+                    'mm_deleted_at'   => 0,
 					]);
     }
 
@@ -76,7 +77,7 @@ class MrMedia extends Model
 	    			 ->where([
                     'mm_keyword'	=> '[Media-Logo]',
 					'mm_show'	    => 555,
-                    'mm_is_delete'  => 0,
+                    'mm_deleted_at'  => 0,
 					]);
     }
 }

@@ -10,6 +10,7 @@ class PostContact extends Model
     protected static $elq = __CLASS__;
     protected $table = 'post_contact';
     protected $primaryKey = 'pc_id';
+    protected $dates = ['pc_deleted_at'];
     protected $foreignKey = 'pc_dm_id';
     protected $fillable = [
        	'pc_mc_id',
