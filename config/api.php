@@ -123,7 +123,7 @@ return [
     |
     */
 
-    'debug' => env('API_DEBUG', true),
+    'debug' => env('API_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,11 +138,11 @@ return [
     */
 
     'errorFormat' => [
-        'message' => ':message',
+        // 'message' => ':message',
         'errors' => ':errors',
         'code' => ':code',
         'status_code' => ':status_code',
-        'debug' => ':debug',
+        // 'debug' => ':debug',
     ],
 
     /*

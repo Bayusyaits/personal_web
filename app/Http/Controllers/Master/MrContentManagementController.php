@@ -228,6 +228,63 @@ class MrContentManagementController extends Res
         return response()->json($mcm,Res::HTTP_OK);
     }
 
+    public function postSingleContentProject(Request $request, $uri = "") {
+        $mcm =  array('status'   => 'Error',
+                    'code'      => Res::HTTP_NOT_FOUND,
+                    'message'   => 'Not found',
+                    'data'      => 'Empty');
+        
+        $input = $request->all();
+        //from javascript
+        if(isset($input) && isset($input['password'])){
+            $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
+        }else {
+            $decrypted = 0;
+        }
+
+        if(isset($input['operation'])){
+            $input['operation'] = $input['operation'];
+        }else {
+            $input['operation'] = '';
+        }
+        
+        
+        if(isset($input) && $input['operation'] == 'Get Single Content Project' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')]) && !empty($uri)) {
+
+            $rests              = model('Rests')::isexist($input['operation'])->first();
+            
+            if(!isset($rests) && empty($rests)) {
+            
+                $user                   = Rest::create($input);         
+                $success['token']       =  $user->createToken($input['hostname'])->accessToken;
+                $success['operation']   =  $user->operation;
+            
+            }else {
+                $user                   = Auth::user(); 
+                // Creating a token without scopes...
+                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
+            }
+
+            $mcm = model('MrContentManagement')::singlecontentproject($uri)->first(); 
+            $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','first');
+
+            $mcm =  array(
+                    'status'    => 'Success',
+                    'code'      => Res::HTTP_OK,
+                    'message'   => 'Request has been processed successfully on server',
+                    'data'      => $mcm
+                );
+
+        }else {
+            $mcm =  array(
+                    'status'    => 'Error',
+                    'code'      => Res::HTTP_FORBIDDEN,
+                    'message'   => 'Forbidden',
+                    'data'      => 'Empty');
+        }
+        return response()->json($mcm,Res::HTTP_OK);
+    }
+
     /*
 		-Method Get
     */

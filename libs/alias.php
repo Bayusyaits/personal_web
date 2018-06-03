@@ -200,6 +200,52 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content['media_url'] = $data['mm_url'];
 			$content['media_create_at'] = $data['mm_create_at'];
 			$content['media_update_at'] = $data['mm_update_at'];		
+	}else if(isset($data) && !empty($data) && $for == 'join|dm_menu|mr_text_posts|mr_media|mr_categories' && $object == 'first'){
+			//mr_content_management
+			$content['content_id'] = $data['mcm_id'];
+			$content['content_menu_id'] = $data['mcm_dm_id'];
+			$content['content_category_id'] = $data['mcm_mc_id'];
+			$content['content_media_id'] = $data['mcm_mm_id'];
+			$content['content_text_id'] = $data['mcm_mtp_id'];
+			$content['content_create_at'] = $data['mcm_create_at'];
+			$content['content_parent_id'] = $data['mcm_parent_id'];
+			//dyn_menu
+			$content['menu_id'] = $data['dm_id'];
+			$content['menu_name']	= $data['dm_name'];
+			$content['menu_caption'] = $data['dm_initial'];
+			$content['menu_keyword'] = $data['dm_keyword'];
+			$content['menu_url'] = $data['dm_url'];
+			$content['menu_uri'] = $data['dm_uri'];
+			//mr_categories
+			$content['category_id'] = $data['mc_id'];
+			$content['category_menu_id'] = $data['mc_dm_id'];
+			$content['category_type'] = $data['mc_type'];
+			$content['category_name'] = $data['mc_name'];
+			$content['category_initial'] = $data['mc_initial'];	
+			//mr_text_post
+			$content['text_id'] = $data['mtp_id'];
+			$content['text_initial'] = $data['mtp_initial'];
+			$content['text_keyword'] = $data['mtp_keyword'];
+			$content['text_title_id'] = $data['mtp_title_id'];
+			$content['text_title_en'] = $data['mtp_title_en'];
+			$content['text_caption_en'] = nl2br(e($data['mtp_caption_en']));
+			$content['text_caption_id'] = nl2br(e($data['mtp_caption_id']));
+			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
+			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
+			$content['text_parent_id'] = $data['mtp_parent_id'];
+			$content['text_media_id'] = $data['mtp_mm_id'];
+			$content['text_url'] = $data['mtp_url'];
+			//mr_media
+			$content['media_id'] = $data['mm_id'];
+			$content['media_alt'] = $data['mm_alt'];
+			$content['media_initial'] = $data['mm_initial'];
+			$content['media_name'] = $data['mm_name'];
+			$content['media_parent_id'] = $data['mm_parent_id'];
+			$content['media_src'] = $data['mm_src'];
+			$content['media_url'] = $data['mm_url'];
+			$content['media_create_at'] = $data['mm_create_at'];
+			$content['media_update_at'] = $data['mm_update_at'];
+				
 	}else if(isset($data) && !empty($data) && $for == 'join|dm_menu|mr_text_posts|mr_media|mr_categories' && $object == 'get'){
 		foreach ($data as $key => $value) {
 			//mr_content_management

@@ -105,6 +105,13 @@ $api->version('v1',
             ]
         );
 
+        $api->post('/projects/{uri}', 
+            [
+                'uses'             =>   'Master\MrContentManagementController@postSingleContentProject',
+                'as'               =>   'postSingleContentProject'
+            ]
+        );
+
         $api->post('/pages/{uri}', 
             [
                 'uses'             =>  'Dyn\DynMenuController@postMenu',
