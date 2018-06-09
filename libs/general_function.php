@@ -75,44 +75,23 @@ function _session($name, $default=null){
 function _cookie($name, $default=null){
 	return isset($_COOKIE[$name]) && $_COOKIE[$name] ? $_COOKIE[$name] : $default;
 }
-if (! function_exists('fileSize')){
-	function fileSize($file) {
-		$size = $request->file($file)->getClientSize();
-		return $size;
-	}
-}
-if (! function_exists('fileDimensions')) {
-	function fileDimensions($file) {
-		return list($width, $height) = getimagesize("$file");
-	}
-}
-if ( ! function_exists('removeExt'))
-{
-function removeExt($string) {
 
-return preg_replace('/\\.[^.\\s]{3,4}$/', '', $string);
+function fileDimensions($file) {
+	return list($width, $height) = getimagesize("$file");
 }
+
+function removeExt($string) {
+	return preg_replace('/\\.[^.\\s]{3,4}$/', '', $string);
 }
-if ( ! function_exists('cleanCharsAndSpace'))
-{
+
 function cleanCharsAndSpace($string) {
-$search = array('/[^A-Za-z0-9\-]/', '_');
-$replace = array(' ', ' ');
-$subject = $string;
-return str_replace($search, $replace, $subject); 
+	$search = array('/[^A-Za-z0-9\-]/', '_');
+	$replace = array(' ', ' ');
+	$subject = $string;
+	return str_replace($search, $replace, $subject); 
 }
-}
-if ( ! function_exists('base64Image')){
- function base64Image($path)
-{ 
-$type = pathinfo($path, PATHINFO_EXTENSION);
-$data = file_get_contents($path);
-return 'data:image/' . $type . ';base64,' . base64_encode($data);
-}
-}
-if ( ! function_exists('generateToken'))
-{
-	function generateToken($length = null)
+
+function generateToken($length = null)
 	{
 	if(empty($length)){
     $length = 20;
@@ -124,69 +103,56 @@ if ( ! function_exists('generateToken'))
         $buf .= chr(mt_rand(0, 255));
     }
     return bin2hex($buf);
-	}
+}
 
+function generateRandomNumeric($length = null) {
+    if(empty($length)){
+    $length = 10;
+    }else{
+    $length = $length;
+    }
+    $numeric = '0123456789';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $numeric[rand(0, strlen($numeric) - 1)];
+    }
+    return $randomString;
 }
-if ( ! function_exists('generateRandomNumeric'))
-{
-  function generateRandomNumeric($length = null) {
-	    if(empty($length)){
-	    $length = 10;
-	    }else{
-	    $length = $length;
-	    }
-	    $numeric = '0123456789';
-	    $randomString = '';
-	    for ($i = 0; $i < $length; $i++) {
-	        $randomString .= $numeric[rand(0, strlen($numeric) - 1)];
-	    }
-	    return $randomString;
-	}
+
+function base64_image($path) { 
+	$type = pathinfo($path, PATHINFO_EXTENSION);
+	$data = file_get_contents($path);
+	return 'data:image/' . $type . ';base64,' . base64_encode($data);
 }
-if ( ! function_exists('base64_image')){
- function base64_image($path)
-{ 
-$type = pathinfo($path, PATHINFO_EXTENSION);
-$data = file_get_contents($path);
-return 'data:image/' . $type . ';base64,' . base64_encode($data);
+ 
+function generateRandomString($length = null) {
+    if(empty($length)){
+    $length = 10;
+    }else{
+    $length = $length;
+    }
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
 }
-}
-if ( ! function_exists('generateRandomString'))
-{
-    
-  function generateRandomString($length = null) {
-	    if(empty($length)){
-	    $length = 10;
-	    }else{
-	    $length = $length;
-	    }
-	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	    $randomString = '';
-	    for ($i = 0; $i < $length; $i++) {
-	        $randomString .= $characters[rand(0, strlen($characters) - 1)];
-	    }
-	    return $randomString;
-	}
-}
-if ( ! function_exists('removesSpecialChars'))
-{
+
 function removesSpecialChars($string) {
    $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
    $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 
    return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
 }
-}
-if ( ! function_exists('createHash'))
-{
+
+
 function createHash($stored)
-	{
-		$hash = password_hash(base64_encode(hash('sha256', $stored, true)), PASSWORD_DEFAULT);
-		return $hash;
-	}
+{
+	$hash = password_hash(base64_encode(hash('sha256', $stored, true)), PASSWORD_DEFAULT);
+	return $hash;
 }
-if ( ! function_exists('validateHash'))
-{	
+	
 function validateHash($stored, $hash_bcrypt)
 	{
 	$hash = $hash_bcrypt;
@@ -194,9 +160,7 @@ function validateHash($stored, $hash_bcrypt)
 		return true;
 		
 	}
-}
-if ( ! function_exists('dateToEn'))
-{
+
 //** Format Tanggal YYYY-MM-DD **//
 function dateToEn($date){
 	$date_en = date("Y-m-d H:i:s", $date);
@@ -213,18 +177,13 @@ function dateToEn($date){
 		return $date_en;
 	}
 }//function_date_to_en
-}// if_date_to_en
-if ( ! function_exists('dateToTime'))
-{
+
 //** Format Tanggal YYYY-MM-DD **//
 function dateToTime($date){
 	$time = date('Y-m-d H:i:s', strtotime($date));
 	return $time;
 }//function_date_to_en
-}// if_date_to_en
 
-if ( ! function_exists('dateToId'))
-{
 //** Format Tanggal DD-MM-YYYY **//
 function dateToId($date){
 	$date_id = date("Y-m-d H:i:s", $date);
@@ -235,10 +194,7 @@ function dateToId($date){
 		return $date_i;
 	}
 }//function_date_to_id
-}//if date_to_id
 
-if ( ! function_exists('dateTimeId'))
-{
 //** Format Tanggal DD-MM-YYYY **//
 function dateTimeId($date){
 	$date_id = date("Y-m-d H:i:s", $date);
@@ -254,9 +210,7 @@ function dateTimeId($date){
 		return $date_i;
 	}
 }//function_date_to_id
-}//if date_to_id
-if ( ! function_exists('dateTimeEn'))
-{
+
 //** Format Tanggal DD-MM-YYYY **//
 function dateTimeEn($date){
 	$date_id = date("Y-m-d H:i:s", $date);
@@ -274,12 +228,13 @@ function dateTimeEn($date){
 		return $date_i;
 	}
 }//function_date_to_id
-}//if date_to_id
+
 function controller($name,$object=true) {
 	$str = "\App\Http\Controllers\\$name";
 	if($object) return new $str(true);
 	return $str;
 }
+
 function model($model = '') {
 	$src = "\App\Models\\$model";
 

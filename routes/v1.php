@@ -105,6 +105,13 @@ $api->version('v1',
             ]
         );
 
+        $api->post('/portfolio/{uri}', 
+            [
+                'uses'             =>   'Master\MrContentManagementController@postContentProjects',
+                'as'               =>   'postContentProjects'
+            ]
+        );
+
         $api->post('/projects/{uri}', 
             [
                 'uses'             =>   'Master\MrContentManagementController@postSingleContentProject',

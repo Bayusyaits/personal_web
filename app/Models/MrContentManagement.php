@@ -53,17 +53,6 @@ class MrContentManagement extends Model
 	    {
 	        return $query->where(['mcm_show'=> 555,'mcm_deleted_at'=>0]);
 	    }
-	 public function scopeContentCaseStudies($query) {
-	    return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri')
-                    ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
-	    			 ->where([
-					'mcm_dm_id'	        => 55103,
-					'mcm_show'      	=> 555,
-                    'mcm_deleted_at'     => 0,
-                    'dm_deleted_at'     => 0,
-                    ])
-                    ->orderBy('mcm_id');
-    }
     public function scopeContentMenu($query) {
         return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mm_create_at,mm_update_at')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
@@ -104,7 +93,7 @@ class MrContentManagement extends Model
                     ;
     }
 
-    public function scopeSingleContentProject($query,$url) {
+    public function scopeSingleContentProject($query,$parent_id,$keyword,$url) {
         return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mc_id,mm_create_at,mm_update_at,mc_name,mc_initial,mc_parent_id')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_text_posts','mtp_id','=','mcm_mtp_id')
@@ -112,19 +101,19 @@ class MrContentManagement extends Model
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
                      ->where([
                         'mtp_url'           => $url,
-                        'mtp_keyword'       => '[Content-Menu|Case-Studies]',
+                        'mtp_keyword'       => $keyword,
                         'mtp_uri'           => 2,
                         'mtp_is_parent'     => 1,
                         'mcm_is_parent'     => 1,
                         'mc_deleted_at'      => 0,
-                        'mtp_parent_id'     => 5525003,
+                        'mtp_parent_id'     => $parent_id,
                         'mcm_show'          => 555,
                         'mcm_deleted_at'    => 0,
                         'mtp_show'          => 555,
                         ])
                     ;
     }
-    public function scopeContentMenuCaseStudies($query) {
+    public function scopeContentMenuProject($query,$parent_id = "",$keyword = "") {
         return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mc_id,mm_create_at,mm_update_at,mc_name,mc_initial,mc_parent_id')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_categories','mcm_mc_id','=','mc_id')
@@ -132,7 +121,7 @@ class MrContentManagement extends Model
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
                      ->orderBy('mcm_id','desc')
 	    			 ->where([
-                    'mtp_keyword'   	=> '[Content-Menu|Case-Studies]',
+                    'mtp_keyword'   	=> '[Content-Menu|Portfolio]',
                     'dm_deleted_at'     => 0,
                     'mtp_uri'        	=> 2,
                     'mtp_is_parent' 	=> 1,

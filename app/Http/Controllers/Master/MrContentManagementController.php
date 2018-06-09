@@ -137,12 +137,16 @@ class MrContentManagementController extends Res
                     $mcm = model('MrContentManagement')::contentmenupage(55102)->first(); 
                     $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first');
                 break;
-                case 'case-studies' : 
+                case 'portfolio' : 
                     $mcm = model('MrContentManagement')::contentmenupage(55103)->first(); 
                     $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first');
                 break;
                 case 'contact'      : 
                     $mcm = model('MrContentManagement')::contentmenupage(55104)->first(); 
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first');
+                break;
+                case 'case-studies' : 
+                    $mcm = model('MrContentManagement')::contentmenupage(55108)->first(); 
                     $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first');
                 break;
                 default: 
@@ -173,10 +177,18 @@ class MrContentManagementController extends Res
         
         $input = $request->all();
         //from javascript
-        if(isset($input) && isset($input['password'])){
+        if(isset($input) && isset($input['password']) && isset($input['role']) && $input['role'] == 'portfolio'){
+            $decrypted = cryptoJsAesDecrypt("[Content-Menu|Portfolio]", $input['password']);
+            $keyword   = "[Content-Menu|Portfolio]";
+            $parent_id = 5525003;
+        }elseif(isset($input) && isset($input['password']) && isset($input['role']) && $input['role'] == 'case studies'){
             $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
+            $keyword   = "[Content-Menu|Case-Studies]";
+            $parent_id = 5525009;
         }else {
             $decrypted = 0;
+            $keyword   = '';
+            $parent_id = 0;
         }
         
         if(isset($input['operation'])){
@@ -202,9 +214,9 @@ class MrContentManagementController extends Res
                 // $success['token']       = $user->createToken($input['hostname'])->accessToken;
             }
             if(isset($input['sort']) && !empty($input['sort'])){
-                $mcm = model('MrContentManagement')::contentmenucasestudies()->get();
+                $mcm = model('MrContentManagement')::contentmenuproject($parent_id,$keyword)->get();
             }else {
-                $mcm = model('MrContentManagement')::contentmenucasestudies()->get();
+                $mcm = model('MrContentManagement')::contentmenuproject($parent_id,$keyword)->get();
             }
             switch($uri)  {
             case 'projects'     : 
@@ -236,10 +248,18 @@ class MrContentManagementController extends Res
         
         $input = $request->all();
         //from javascript
-        if(isset($input) && isset($input['password'])){
+        if(isset($input) && isset($input['password']) && isset($input['role']) && $input['role'] == 'portfolio'){
+            $decrypted = cryptoJsAesDecrypt("[Content-Menu|Portfolio]", $input['password']);
+            $keyword   = "[Content-Menu|Portfolio]";
+            $parent_id = 5525003;
+        }elseif(isset($input) && isset($input['password']) && isset($input['role']) && $input['role'] == 'case studies'){
             $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
+            $keyword   = "[Content-Menu|Case-Studies]";
+            $parent_id = 5525009;
         }else {
             $decrypted = 0;
+            $keyword   = '';
+            $parent_id = 0;
         }
 
         if(isset($input['operation'])){
@@ -249,7 +269,7 @@ class MrContentManagementController extends Res
         }
         
         
-        if(isset($input) && $input['operation'] == 'Get Single Content Project' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')]) && !empty($uri)) {
+        if(isset($input) && $input['operation'] == 'Get Single Content Project' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')]) && !empty($uri) && !empty($keyword)) {
 
             $rests              = model('Rests')::isexist($input['operation'])->first();
             
@@ -265,15 +285,23 @@ class MrContentManagementController extends Res
                 // $success['token']       = $user->createToken($input['hostname'])->accessToken;
             }
 
-            $mcm = model('MrContentManagement')::singlecontentproject($uri)->first(); 
-            $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','first');
-
-            $mcm =  array(
+            $mcm = model('MrContentManagement')::singlecontentproject($parent_id,$keyword,$uri)->first(); 
+            
+            if(isset($mcm) && $mcm){
+                $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','first');
+                $mcm =  array(
                     'status'    => 'Success',
                     'code'      => Res::HTTP_OK,
                     'message'   => 'Request has been processed successfully on server',
                     'data'      => $mcm
                 );
+            }else {
+                $mcm =  array(
+                    'status'    => 'Error',
+                    'code'      => Res::HTTP_FORBIDDEN,
+                    'message'   => 'Forbidden',
+                    'data'      => 'Empty');
+            }
 
         }else {
             $mcm =  array(

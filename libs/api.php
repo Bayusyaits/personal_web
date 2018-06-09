@@ -45,6 +45,7 @@ function getClientQueryApi($data = []) {
         $query['grant_type']    = $form_params['grant_type'];
         $query['body']          = $body;
         $query['operation']     = $body['operation'];
+        $query['role']          = isset($body['role']) && !empty($body['role']) ? $body['role'] : '';
         $query['hostname']      = $data['hostname'];
         $query['body']['ip']    = $data['ip'];
         $query['username']      = $form_params['username'];
