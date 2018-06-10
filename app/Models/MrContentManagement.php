@@ -17,6 +17,7 @@ class MrContentManagement extends Model
         'mcm_mc_id',
         'mcm_mm_id',
         'mcm_mtp_id',
+        'mcm_mt_id',
     ];
     protected $fillable = [
         'mcm_is_parent',
@@ -35,6 +36,7 @@ class MrContentManagement extends Model
     }
     protected $fieldRules = [
         "mcm_id"=>["",""],
+        "mcm_mt_id"=>["",""],
         "mcm_dm_id"=>["",""],
         "mcm_tg_id"=>["",""],
         "mcm_mc_id"=>["",""],
@@ -54,7 +56,7 @@ class MrContentManagement extends Model
 	        return $query->where(['mcm_show'=> 555,'mcm_deleted_at'=>0]);
 	    }
     public function scopeContentMenu($query) {
-        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mm_create_at,mm_update_at')
+        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_headline_id,mtp_headline_en,mtp_tags,mtp_token,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mm_create_at,mm_update_at')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_text_posts','mtp_id','=','mcm_mtp_id')
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
@@ -78,7 +80,7 @@ class MrContentManagement extends Model
                     ;
     }
     public function scopeContentMenuPage($query,$id) {
-        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mm_create_at,mm_update_at')
+        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_headline_id,mtp_headline_en,mtp_tags,mtp_token,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mm_create_at,mm_update_at')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_text_posts','mtp_id','=','mcm_mtp_id')
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
@@ -94,11 +96,13 @@ class MrContentManagement extends Model
     }
 
     public function scopeSingleContentProject($query,$parent_id,$keyword,$url) {
-        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mc_id,mm_create_at,mm_update_at,mc_name,mc_initial,mc_parent_id')
+        return $query->selectRaw('mcm_id,mcm_mt_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_headline_id,mtp_headline_en,mtp_tags,mtp_token,mtp_parent_id,mtp_mm_id,mtp_url,mtp_create_at,mtp_update_at,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mc_id,mm_create_at,mm_update_at,mc_name,mc_initial,mc_parent_id,mt_id,mt_initial,mt_keyword,mt_show,mt_deleted_at,ms_id,ms_role,ms_product,ms_keyword,ms_formula,ms_results,ms_story,ms_summary,ms_background,ms_start_date,ms_finish_date')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_text_posts','mtp_id','=','mcm_mtp_id')
                      ->leftjoin('mr_categories','mcm_mc_id','=','mc_id')
                      ->leftjoin('mr_media','mm_id','=','mtp_mm_id')
+                     ->leftjoin('mr_templates','mt_id','=','mcm_mt_id')
+                     ->leftjoin('mr_stats','ms_mcm_id','=','mcm_id')
                      ->where([
                         'mtp_url'           => $url,
                         'mtp_keyword'       => $keyword,
@@ -110,11 +114,15 @@ class MrContentManagement extends Model
                         'mcm_show'          => 555,
                         'mcm_deleted_at'    => 0,
                         'mtp_show'          => 555,
+                        'mt_show'           => 555,
+                        'mt_deleted_at'     => 0,
+                        'ms_show'           => 555,
+                        'ms_deleted_at'     => 0,
                         ])
                     ;
     }
     public function scopeContentMenuProject($query,$parent_id = "",$keyword = "") {
-        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_parent_id,mtp_mm_id,mtp_url,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mc_id,mm_create_at,mm_update_at,mc_name,mc_initial,mc_parent_id')
+        return $query->selectRaw('mcm_id,mcm_dm_id,mcm_mc_id,mcm_mm_id,mcm_mtp_id,mcm_parent_id,mcm_create_at,dm_name,dm_initial,dm_keyword,dm_uri,mtp_id,mtp_initial,mtp_keyword,mtp_title_id,mtp_title_en,mtp_caption_id,mtp_caption_en,mtp_content_id,mtp_content_en,mtp_headline_id,mtp_headline_en,mtp_tags,mtp_token,mtp_parent_id,mtp_mm_id,mtp_url,mtp_create_at,mtp_update_at,mm_id,mm_alt,mm_initial,mm_name,mm_parent_id,mm_src,mc_id,mm_create_at,mm_update_at,mc_name,mc_initial,mc_parent_id')
                      ->leftjoin('dyn_menu','mcm_dm_id','=','dm_id')
                      ->leftjoin('mr_categories','mcm_mc_id','=','mc_id')
                      ->leftjoin('mr_text_posts','mtp_id','=','mcm_mtp_id')

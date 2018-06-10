@@ -11,7 +11,8 @@ class MrTextPosts extends Model
     protected $table = 'mr_text_posts';
     protected $primaryKey = 'mtp_id';
     protected $foreignKey = [
-		'mtp_dm_id','mtp_mm_id'
+		'mtp_dm_id',
+        'mtp_mm_id',
     ];
     protected $fillable = [
         'mtp_is_parent',
@@ -34,9 +35,13 @@ class MrTextPosts extends Model
         "mtp_title_en"      =>["",""],
         "mtp_caption_id"    =>["",""],
         "mtp_caption_en"    =>["",""],
+        "mtp_headline_id"   =>["",""],
+        "mtp_headline_en"   =>["",""],
         "mtp_content_id"    =>["",""],
         "mtp_content_en"    =>["",""],
+        "mtp_tags"          =>["",""],
         "mtp_uri"           =>["",""],
+        "mtp_token"         =>["",""],
         "mtp_url"           =>["",""],
         "mtp_is_parent"     =>["",""],
         "mtp_parent_id"     =>["",""],

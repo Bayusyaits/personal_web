@@ -288,7 +288,7 @@ class MrContentManagementController extends Res
             $mcm = model('MrContentManagement')::singlecontentproject($parent_id,$keyword,$uri)->first(); 
             
             if(isset($mcm) && $mcm){
-                $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','first');
+                $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories|mr_templates|mr_stats','first');
                 $mcm =  array(
                     'status'    => 'Success',
                     'code'      => Res::HTTP_OK,
