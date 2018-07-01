@@ -76,6 +76,12 @@ $api->version('v1',
             ]
         );
 
+         Route::get('/portfolio/{uri}', 
+            [
+                'uses'             =>   'Master\MrContentManagementController@getContentManagement',
+                'as'               =>   'getContentManagement'
+            ]
+        );
         // $api->get('/user',
         //     [
         //         'uses'             =>   'API\PostController@do_signin', 
@@ -104,7 +110,7 @@ $api->version('v1',
                 'as'               =>   'postContentProjects'
             ]
         );
-
+        
         $api->post('/portfolio/{uri}', 
             [
                 'uses'             =>   'Master\MrContentManagementController@postContentProjects',
@@ -119,6 +125,12 @@ $api->version('v1',
             ]
         );
 
+        $api->post('/related/{uri}',
+        		[
+        			'uses'        =>   'Master\MrContentManagementController@postRelatedProject',
+                	'as'          =>   'postRelatedProject'
+        		]
+        );
         $api->post('/pages/{uri}', 
             [
                 'uses'             =>  'Dyn\DynMenuController@postMenu',

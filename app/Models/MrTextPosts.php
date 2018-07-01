@@ -10,10 +10,7 @@ class MrTextPosts extends Model
     protected static $elq = __CLASS__;
     protected $table = 'mr_text_posts';
     protected $primaryKey = 'mtp_id';
-    protected $foreignKey = [
-		'mtp_dm_id',
-        'mtp_mm_id',
-    ];
+    protected $foreignKey = ['mtp_dm_id'];
     protected $fillable = [
         'mtp_is_parent',
         'mtp_parent_id',
@@ -28,7 +25,6 @@ class MrTextPosts extends Model
     protected $fieldRules = [
         "mtp_id"            =>["",""],
         "mtp_dm_id"         =>["",""],
-        "mtp_mm_id"         =>["",""],
         "mtp_initial"       =>["",""],
         "mtp_keyword"       =>["",""],
         "mtp_title_id"      =>["",""],

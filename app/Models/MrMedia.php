@@ -80,4 +80,13 @@ class MrMedia extends Model
                     'mm_deleted_at'  => 0,
 					]);
     }
+
+    public function scopeMediaParent($query, $id) {
+        return $query->selectRaw('mm_id,mm_dm_id,mm_name,mm_src,mm_initial,mm_alt,mm_url,mm_create_at,mm_update_at')
+                    ->where([
+                        'mm_parent_id'  => $id,
+                        'mm_show'       => 555,
+                        'mm_deleted_at'  => 0,
+                    ]);
+    }
 }

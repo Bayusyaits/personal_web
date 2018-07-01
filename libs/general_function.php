@@ -259,7 +259,19 @@ function user($data = []){
 	}
 }
 
-function api_404(){
+function explodeSearch($keywords = []) {
+	$explode = explode(',',$keywords);
+	foreach ($explode as $key => $value) {
+		# code...
+		if(isset($value[$key])) {
+			$explode[$key] = '%'.$value.'%';
+		}
+	}
+	return $explode;
+}
+
+
+function api_404() {
 	return response()->view('errors.404',[],404);
 }
 function api_405(){

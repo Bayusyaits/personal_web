@@ -12,6 +12,9 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
+    /*
+		ref: https://laracasts.com/discuss/channels/laravel/laravel-passport-revoke-and-prune-event-listener-is-not-doing-anything
+    */
     protected $listen = [
         'App\Events\Event' => [
             'App\Listeners\EventListener',

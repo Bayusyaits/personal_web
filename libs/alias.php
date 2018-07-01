@@ -159,8 +159,67 @@ function response_mr_categories($data = [], $for = '', $object = '') {
 	}
 	return $content;
 }
-function response_mr_content_management($data = [], $for = '', $object = ''){
+function response_mr_content_management($data = [], $for = '', $object = '', $parent = [], $related = []){
 	$content = [];
+	$media   = [];
+	$relate  = [];
+	//mr_media > parent_id
+	if(isset($parent) && !empty($parent)) {
+		foreach ($parent as $index => $val) {
+			$media[$index]['media_parents_id'] = $parent[$index]['mm_id'];
+			$media[$index]['media_parents_alt'] = $parent[$index]['mm_alt'];
+			$media[$index]['media_parents_initial'] = $parent[$index]['mm_initial'];
+			$media[$index]['media_parents_name'] = $parent[$index]['mm_name'];
+			$media[$index]['media_parents_parent_id'] = $parent[$index]['mm_parent_id'];
+			$media[$index]['media_parents_src'] = $parent[$index]['mm_src'];
+			$media[$index]['media_parents_url'] = $parent[$index]['mm_url'];
+			$media[$index]['media_parents_create_at'] = dateToEn($parent[$index]['mm_create_at']);
+			$media[$index]['media_parents_update_at'] = dateToEn($parent[$index]['mm_update_at']);	
+		}
+		$content['media_parents'] = $media;
+	}
+	if(isset($related) && !empty($related)) {
+		foreach ($related as $key => $value) {
+			//mr_content_management
+			$relate[$key]['content_id'] = $related[$key]['mcm_id'];
+			$relate[$key]['content_menu_id'] = $related[$key]['mcm_dm_id'];
+			$relate[$key]['content_category_id'] = $related[$key]['mcm_mc_id'];
+			$relate[$key]['content_media_id'] = $related[$key]['mcm_mm_id'];
+			$relate[$key]['content_text_id'] = $related[$key]['mcm_mtp_id'];
+			$relate[$key]['content_create_at'] = dateToEn($related[$key]['mcm_create_at']);
+			$relate[$key]['content_parent_id'] = $related[$key]['mcm_parent_id'];
+			//dyn_menu
+			$relate[$key]['menu_id'] = $related[$key]['dm_id'];
+			$relate[$key]['menu_name'] = $related[$key]['dm_name'];
+			$relate[$key]['menu_url'] = $related[$key]['dm_url'];
+			$relate[$key]['menu_uri'] = $related[$key]['dm_uri'];
+			$relate[$key]['menu_initial'] = $related[$key]['dm_initial'];
+			$relate[$key]['menu_keyword'] = $related[$key]['dm_keyword'];
+			//mr_categories
+			$relate[$key]['category_id'] = $related[$key]['mc_id'];
+			$relate[$key]['category_type'] = $related[$key]['mc_type'];
+			$relate[$key]['category_name'] = $related[$key]['mc_name'];
+			$relate[$key]['category_initial'] = $related[$key]['mc_initial'];
+			//mr_text_post
+			$relate[$key]['text_id'] = $related[$key]['mtp_id'];
+			$related[$key]['text_initial'] = $related[$key]['mtp_initial'];
+			$relate[$key]['text_keyword'] = $related[$key]['mtp_keyword'];
+			$relate[$key]['text_title_id'] = $related[$key]['mtp_title_id'];
+			$relate[$key]['text_title_en'] = $related[$key]['mtp_title_en'];
+			$relate[$key]['text_tags'] = $related[$key]['mtp_tags'];
+			$relate[$key]['text_url'] = $related[$key]['mtp_url'];
+			$relate[$key]['text_create_at'] = dateToEn($related[$key]['mtp_create_at']);
+			$relate[$key]['text_update_at'] = dateToEn($related[$key]['mtp_update_at']);
+			//mr_media
+			$relate[$key]['media_id'] = $related[$key]['mm_id'];
+			$relate[$key]['media_alt'] = $related[$key]['mm_alt'];
+			$relate[$key]['media_initial'] = $related[$key]['mm_initial'];
+			$relate[$key]['media_name'] = $related[$key]['mm_name'];
+			$relate[$key]['media_src'] = $related[$key]['mm_src'];		
+			$relate[$key]['media_url'] = $related[$key]['mm_url'];
+		}
+		$content['related_contents'] = $relate;
+	}
 	if(isset($data) && !empty($data) && $for == 'join|dm_menu|mr_text_posts|mr_media' && $object == 'first'){
 			//mr_content_management
 			$content['content_id'] = $data['mcm_id'];
@@ -188,7 +247,6 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
 			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
 			$content['text_parent_id'] = $data['mtp_parent_id'];
-			$content['text_media_id'] = $data['mtp_mm_id'];
 			$content['text_tags'] = $data['mtp_tags'];
 			$content['text_url'] = $data['mtp_url'];
 			$content['text_create_at'] = dateToEn($data['mtp_create_at']);
@@ -202,7 +260,8 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content['media_src'] = $data['mm_src'];
 			$content['media_url'] = $data['mm_url'];
 			$content['media_create_at'] = dateToEn($data['mm_create_at']);
-			$content['media_update_at'] = dateToEn($data['mm_update_at']);		
+			$content['media_update_at'] = dateToEn($data['mm_update_at']);	
+
 	}else if(isset($data) && !empty($data) && $for == 'join|dm_menu|mr_text_posts|mr_media|mr_categories' && $object == 'first'){
 			//mr_content_management
 			$content['content_id'] = $data['mcm_id'];
@@ -236,7 +295,6 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
 			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
 			$content['text_parent_id'] = $data['mtp_parent_id'];
-			$content['text_media_id'] = $data['mtp_mm_id'];
 			$content['text_tags'] = $data['mtp_tags'];
 			$content['text_url'] = $data['mtp_url'];
 			$content['text_create_at'] = dateToEn($data['mtp_create_at']);
@@ -289,7 +347,6 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
 			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
 			$content['text_parent_id'] = $data['mtp_parent_id'];
-			$content['text_media_id'] = $data['mtp_mm_id'];
 			$content['text_tags'] = $data['mtp_tags'];
 			$content['text_url'] = $data['mtp_url'];
 			$content['text_create_at'] = dateToEn($data['mtp_create_at']);
@@ -355,7 +412,6 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
 			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
 			$content['text_parent_id'] = $data['mtp_parent_id'];
-			$content['text_media_id'] = $data['mtp_mm_id'];
 			$content['text_tags'] = $data['mtp_tags'];
 			$content['text_url'] = $data['mtp_url'];
 			$content['text_create_at'] = dateToEn($data['mtp_create_at']);
@@ -405,7 +461,6 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content[$key]['text_content_en'] = nl2br(e($data[$key]['mtp_content_en']));
 			$content[$key]['text_content_id'] = nl2br(e($data[$key]['mtp_content_id']));
 			$content[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
-			$content[$key]['text_media_id'] = $data[$key]['mtp_mm_id'];
 			$content[$key]['text_tags'] = $data[$key]['mtp_tags'];
 			$content[$key]['text_url'] = $data[$key]['mtp_url'];
 			$content[$key]['text_create_at'] = dateToEn($data[$key]['mtp_create_at']);
@@ -459,7 +514,6 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content[$key]['text_content_en'] = nl2br(e($data[$key]['mtp_content_en']));
 			$content[$key]['text_content_id'] = nl2br(e($data[$key]['mtp_content_id']));
 			$content[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
-			$content[$key]['text_media_id'] = $data[$key]['mtp_mm_id'];
 			$content[$key]['text_tags'] = $data[$key]['mtp_tags'];
 			$content[$key]['text_url'] = $data[$key]['mtp_url'];
 			$content[$key]['text_create_at'] = dateToEn($data[$key]['mtp_create_at']);
@@ -526,7 +580,6 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content[$key]['text_content_en'] = nl2br(e($data[$key]['mtp_content_en']));
 			$content[$key]['text_content_id'] = nl2br(e($data[$key]['mtp_content_id']));
 			$content[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
-			$content[$key]['text_media_id'] = $data[$key]['mtp_mm_id'];
 			$content[$key]['text_tags'] = $data[$key]['mtp_tags'];
 			$content[$key]['text_url'] = $data[$key]['mtp_url'];
 			$content[$key]['text_create_at'] = dateToEn($data[$key]['mtp_create_at']);
@@ -570,7 +623,6 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content[$key]['text_content_en'] = nl2br(e($data[$key]['mtp_content_en']));
 			$content[$key]['text_content_id'] = nl2br(e($data[$key]['mtp_content_id']));
 			$content[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
-			$content[$key]['text_media_id'] = $data[$key]['mtp_mm_id'];
 			$content[$key]['text_tags'] = $data[$key]['mtp_tags'];
 			$content[$key]['text_url'] = $data[$key]['mtp_url'];
 			$content[$key]['text_create_at'] = dateToEn($data[$key]['mtp_create_at']);
@@ -688,6 +740,19 @@ function response_mr_content_management($data = [], $for = '', $object = ''){
 			$content['media_url'] = '';
 			$content['media_create_at'] = '';
 			$content['media_update_at'] = '';
+
+			$content['media_parents'] = '';
+			$content['media_parents_id'] = '';
+			$content['media_parents_alt'] = '';
+			$content['media_parents_initial'] = '';
+			$content['media_parents_name'] = '';
+			$content['media_parents_parent_id'] = '';
+			$content['media_parents_src'] = '';
+			$content['media_parents_url'] = '';
+			$content['media_parents_create_at'] = '';
+			$content['media_parents_update_at'] = '';
+
+			$content['related_contents'] = '';
 	}
 	return $content;
 }

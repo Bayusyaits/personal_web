@@ -251,11 +251,9 @@ class MrContentManagementController extends Res
         if(isset($input) && isset($input['password']) && isset($input['role']) && $input['role'] == 'portfolio'){
             $decrypted = cryptoJsAesDecrypt("[Content-Menu|Portfolio]", $input['password']);
             $keyword   = "[Content-Menu|Portfolio]";
-            $parent_id = 5525003;
         }elseif(isset($input) && isset($input['password']) && isset($input['role']) && $input['role'] == 'case studies'){
             $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
             $keyword   = "[Content-Menu|Case-Studies]";
-            $parent_id = 5525009;
         }else {
             $decrypted = 0;
             $keyword   = '';
@@ -285,22 +283,41 @@ class MrContentManagementController extends Res
                 // $success['token']       = $user->createToken($input['hostname'])->accessToken;
             }
 
-            $mcm = model('MrContentManagement')::singlecontentproject($parent_id,$keyword,$uri)->first(); 
+            $mcm = model('MrContentManagement')::singlecontentprojectstats($keyword,$uri)->first(); 
             
-            if(isset($mcm) && $mcm){
-                $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories|mr_templates|mr_stats','first');
+            if(!isset($mcm) && !$mcm){
+                $mcm = model('MrContentManagement')::singlecontentproject($keyword,$uri)->first();
+            }
+
+            if(isset($mcm) && $mcm && isset($mcm['mcm_mm_id']) && $mcm['mcm_mm_id'] != ''){
+                $mm = model('MrMedia')::MediaParent($mcm['mcm_mm_id'])->get();
+            }else {
+                $mm = [];
+            }
+
+            if(isset($mcm) && $mcm && isset($mcm['mc_name']) && $mcm['mc_name'] != '' && isset($mcm['mcm_id']) && $mcm['mcm_id'] && isset($mcm['mtp_tags']) && $mcm['mtp_tags']) {
+            	$mcm_related = model('MrContentManagement')::relatedcontentprojects($mcm['mc_name'],$mcm['mtp_tags'],$mcm['mcm_id'])->get();
+            }else {
+            	$mcm_related = [];
+            }
+
+            $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories|mr_templates|mr_stats','first',$mm,$mcm_related);
+
+            if(isset($mcm) && isset($mcm["content_id"]) && $mcm["content_id"] != "") {
+                
                 $mcm =  array(
                     'status'    => 'Success',
                     'code'      => Res::HTTP_OK,
                     'message'   => 'Request has been processed successfully on server',
                     'data'      => $mcm
                 );
+
             }else {
                 $mcm =  array(
                     'status'    => 'Error',
                     'code'      => Res::HTTP_FORBIDDEN,
                     'message'   => 'Forbidden',
-                    'data'      => 'Empty');
+                    'data'      => 'Empty'); 
             }
 
         }else {
@@ -313,6 +330,56 @@ class MrContentManagementController extends Res
         return response()->json($mcm,Res::HTTP_OK);
     }
 
+    public function postRelatedProject(Request $request, $uri = "") { 
+
+    	$mcm =  array('status'   => 'Error',
+                    'code'      => Res::HTTP_NOT_FOUND,
+                    'message'   => 'Not found',
+                    'data'      => 'Empty');
+        
+        $input = $request->all();
+        //from javascript
+        if(isset($input) && isset($input['password']) && isset($input['role']) && $input['role'] == 'portfolio'){
+            $decrypted = cryptoJsAesDecrypt("[Content-Menu|Portfolio]", $input['password']);
+            $keyword   = "[Content-Menu|Portfolio]";
+        }elseif(isset($input) && isset($input['password']) && isset($input['role']) && $input['role'] == 'case studies'){
+            $decrypted = cryptoJsAesDecrypt("[Content-Menu|Case-Studies]", $input['password']);
+            $keyword   = "[Content-Menu|Case-Studies]";
+        }else {
+            $decrypted = 0;
+            $keyword   = '';
+            $parent_id = 0;
+        }
+
+        if(isset($input['operation'])){
+            $input['operation'] = $input['operation'];
+        }else {
+            $input['operation'] = '';
+        }
+        
+        
+        if(isset($input) && $input['operation'] == 'Get Related Projects' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')]) && !empty($uri) && !empty($keyword)) {
+
+        	$rests              = model('Rests')::isexist($input['operation'])->first();
+            
+            if(!isset($rests) && empty($rests)) {
+            
+                $user                   = Rest::create($input);         
+                $success['token']       =  $user->createToken($input['hostname'])->accessToken;
+                $success['operation']   =  $user->operation;
+            
+            }else {
+                $user                   = Auth::user(); 
+                // Creating a token without scopes...
+                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
+            }
+
+    		$mcm = model('MrContentManagement')::relatedcontentprojects('Development','lorem')->get();
+    		$mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','get');
+    	
+    	}
+    }
+
     /*
 		-Method Get
     */
@@ -320,12 +387,19 @@ class MrContentManagementController extends Res
 
     public function getContentManagement(Request $request, $uri1 = "") {
         
-        $mcm =  array('status'   => 'Error',
-                    'code'      => Res::HTTP_NOT_FOUND,
-                    'message'   => 'Not found',
-                    'data'      => 'Empty');
+        $explode = explode(',','applications');
+	    	if(isset($explode[0])) {
+				foreach ($explode as $key => $value) {
+					# code...
+						$tags[$key] = $value.'%';
+				}
+			}else {
+				$tags = 'halo';
+			} 
+			return $tags;
+
         
-        return response()->json($mcm,Res::HTTP_NOT_FOUND);
+        return response()->json($mcm_related,Res::HTTP_NOT_FOUND);
     }
 
     public function issueToken(ServerRequestInterface $request)
