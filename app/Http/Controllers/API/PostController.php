@@ -19,7 +19,7 @@ class PostController extends Controller
         return response()->json([
             'response' => 'success',
             'result' => [
-                'token' => 'bayu',
+                'token' => 'halo',
             ],
         ]);
     }

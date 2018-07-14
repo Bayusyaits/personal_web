@@ -14,7 +14,7 @@ class MrCategories extends Model
     protected $dates    = ['mc_deleted_at'];
     protected $fillable = [
         'mc_type',
-        'mc_name',
+        'mc_mcl_initial',
         'mc_is_parent',
         'mc_parent_id',
         'mc_show',
@@ -31,7 +31,7 @@ class MrCategories extends Model
         "mc_id"=>["",""],
         "mc_dm_id"=>["",""],
         "mc_type"=>["required",""],
-        "mc_name"=>["required",""],
+        "mc_mcl_initial"=>["required",""],
         "mc_is_parent"=>["",""],
         "mc_parent_id"=>["",""],
         "mc_show"=>["",""],
@@ -48,30 +48,36 @@ class MrCategories extends Model
                                 mc_id,
                                 mc_dm_id,
                                 mc_type,
-                                mc_name,
+                                mc_mcl_initial,
                                 mc_initial,
                                 mc_is_parent,
                                 mc_parent_id,
-                                ')
-                        ->where(['mc_show'=> 555,'mc_deleted_at'  => 0]);
+                                mcl_mc_table.mcl_content_id as mc_content_id,
+                                mcl_mc_table.mcl_content_en as mc_content_en')
+                        ->leftjoin('mr_content_language as mcl_mc_table','mcl_mc_table.mcl_initial','=','mc_mcl_initial')
+                        ->where(['mc_show'=> 555,'mc_deleted_at'  => 0,'mcl_deleted_at'     => 0]);
 	    }
 	 public function scopeFields($query) {
 	    return $query->selectRaw('
                                 mc_id,
                                 mc_dm_id,
                                 mc_type,
-                                mc_name,
+                                mc_mcl_initial,
                                 mc_initial,
                                 mc_is_parent,
                                 mc_parent_id,
                                 dm_id,
-                                dm_name')
+                                dm_name,
+                                mcl_mc_table.mcl_content_id as mc_content_id,
+                                mcl_mc_table.mcl_content_en as mc_content_en')
                      ->leftjoin('dyn_menu','mc_dm_id','=','dm_id')
+                     ->leftjoin('mr_content_language as mcl_mc_table','mcl_mc_table.mcl_initial','=','mc_mcl_initial')
 	    			 ->where([
                     'mc_type'	     => 'Field',
                     'mc_dm_id'	     => 55103,
 					'mc_show'	     => 555,
                     'mc_deleted_at'   => 0,
+                    'mcl_deleted_at'     => 0,
 					]);
     }
     public function scopeCategories($query) {
@@ -79,16 +85,20 @@ class MrCategories extends Model
                                 mc_id,
                                 mc_dm_id,
                                 mc_type,
-                                mc_name,
+                                mc_mcl_initial,
                                 mc_initial,
                                 mc_is_parent,
                                 mc_parent_id,
                                 dm_id,
-                                dm_name')
+                                dm_name,
+                                mcl_mc_table.mcl_content_id as mc_content_id,
+                                mcl_mc_table.mcl_content_en as mc_content_en')
                      ->join('dyn_menu','mc_dm_id','=','dm_id')
+                    ->leftjoin('mr_content_language as mcl_mc_table','mcl_mc_table.mcl_initial','=','mc_mcl_initial')
 	    			 ->where([
 					'mc_show'	     => 555,
                     'mc_deleted_at'   => 0,
+                    'mcl_deleted_at'     => 0
 					]);
     }
     public function scopeSubjects($query) {
@@ -96,18 +106,22 @@ class MrCategories extends Model
                                 mc_id,
                                 mc_dm_id,
                                 mc_type,
-                                mc_name,
+                                mc_mcl_initial,
                                 mc_initial,
                                 mc_is_parent,
                                 mc_parent_id,
                                 dm_id,
-                                dm_name')
+                                dm_name,
+                                mcl_mc_table.mcl_content_id as mc_content_id,
+                                mcl_mc_table.mcl_content_en as mc_content_en')
                      ->join('dyn_menu','mc_dm_id','=','dm_id')
+                     ->leftjoin('mr_content_language as mcl_mc_table','mcl_mc_table.mcl_initial','=','mc_mcl_initial')
                      ->where([
                     'mc_type'       => 'Subject',
                     'mc_dm_id'      => 55104,
                     'mc_show'       => 555,
                     'mc_deleted_at'  => 0,
+                    'mcl_deleted_at'     => 0
                     ]);
     }
 

@@ -11,14 +11,11 @@ class MrContentLanguage extends Model
     protected $table = 'mr_content_language';
     protected $primaryKey = 'mcl_id';
     protected $dates = ['mcl_deleted_at'];
-    protected $foreignKey = 'mcl_dm_id';
     protected $fillable = [
-        'mcl_keyword',
-        'mcl_name',
+        'mcl_initial',
         'mcl_content_id',
         'mcl_content_en',
         'mcl_salt',
-        'mcl_show',
     ];
     
     public $timestamps = false;
@@ -30,13 +27,10 @@ class MrContentLanguage extends Model
     }
     protected $fieldRules = [
         "mcl_id"=>["",""],
-        "mcl_dm_id"=>["",""],
-        "mcl_keyword"=>["required",""],
-        "mcl_name"=>["required",""],
+        "mcl_initial"=>["required",""],
         "mcl_content_id"=>["required",""],
         "mcl_content_en"=>["",""],
         "mcl_salt"=>["",""],
-        "mcl_show"=>["required",""],
     ];
 
 	/*
@@ -45,14 +39,6 @@ class MrContentLanguage extends Model
 	 
 	  public function scopeContentActive($query)
 	    {
-	        return $query->where(['mcl_show', 555,'mcl_deleted_at'=>0]);
+	        return $query->where(['mcl_deleted_at'=>0]);
 	    }
-	 public function scopeContentWork($query) {
-	    return $query->join('dyn_menu','mcl_dm_id','=','dm_id')
-	    			 ->where([
-					'mcl_dm_id'	=> 55103,
-					'mcl_show'	=> 555,
-                    'mcl_deleted_at'=>0
-					]);
-    }
 }

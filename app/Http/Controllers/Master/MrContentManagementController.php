@@ -218,7 +218,7 @@ class MrContentManagementController extends Res
                 $mm = [];
             }
 
-            $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories|mr_templates|mr_stats','first',$mm,$input['lang']);
+            $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories|mr_templates|mr_stats','first',$mm,[],$input['lang']);
 
 
             if(isset($mcm) && isset($mcm["content_id"]) && $mcm["content_id"] != "") {
@@ -376,8 +376,8 @@ class MrContentManagementController extends Res
                 $mm = [];
             }
 
-            if(isset($mcm) && $mcm && isset($mcm['mc_name']) && $mcm['mc_name'] != '' && isset($mcm['mcm_id']) && $mcm['mcm_id'] && isset($mcm['mtp_tags']) && $mcm['mtp_tags']) {
-            	$mcm_related = model('MrContentManagement')::relatedcontentprojects($mcm['mc_name'],$mcm['mtp_tags'],$mcm['mcm_id'])->get();
+            if(isset($mcm) && $mcm && isset($mcm['mc_id']) && $mcm['mc_id'] != '' && isset($mcm['mcm_id']) && $mcm['mcm_id'] && isset($mcm['mtp_tags']) && $mcm['mtp_tags']) {
+            	$mcm_related = model('MrContentManagement')::relatedcontentprojects($mcm['mc_id'],$mcm['mtp_tags'],$mcm['mcm_id'])->get();
             }else {
             	$mcm_related = [];
             }

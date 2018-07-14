@@ -1,13 +1,17 @@
 <?php
 
 //aliases
-function response_dyn_menu($data = [], $for = '', $object = ''){
+function response_dyn_menu($data = [], $for = '', $object = '',$lang = 'en'){
 	$content = [];
+	$dm_name 	 = 'dm_content_en';
+	if(isset($lang) && $lang == 'id') {
+		$dm_name 	 = 'dm_content_id';
+	}
 	if(isset($data) && !empty($data) && $for == '' && $object == 'get'){
 		foreach ($data as $key => $value) {
 			# code...
 			$content[$key]['menu_id'] = $data[$key]['dm_id'];
-			$content[$key]['menu_name'] = $data[$key]['dm_name'];
+			$content[$key]['menu_name'] = $data[$key][$dm_name];
 			$content[$key]['menu_url'] = $data[$key]['dm_url'];
 			$content[$key]['menu_uri'] = $data[$key]['dm_uri'];
 			$content[$key]['menu_initial'] = $data[$key]['dm_initial'];
@@ -25,8 +29,12 @@ function response_dyn_menu($data = [], $for = '', $object = ''){
 }
 
 //aliases
-function response_mr_media($data = [], $for = '', $object = ''){
+function response_mr_media($data = [], $for = '', $object = '',$lang = 'en'){
 	$content = [];
+	$dm_name 	 = 'dm_content_en';
+	if(isset($lang) && $lang == 'id') {
+		$dm_name 	 = 'dm_content_id';
+	}
 	if(isset($data) && !empty($data) && $for == 'join|dyn_menu' && $object == 'get'){
 		foreach ($data as $key => $value) {
 			# code...
@@ -42,7 +50,7 @@ function response_mr_media($data = [], $for = '', $object = ''){
 			$content[$key]['media_update_at'] = dateToEn($data[$key]['mm_update_at']);	
 			//dyn_menu
 			$content[$key]['menu_id'] = $data[$key]['dm_id'];
-			$content[$key]['menu_name'] = $data[$key]['dm_name'];
+			$content[$key]['menu_name'] = $data[$key][$dm_name];
 			$content[$key]['menu_url'] = $data[$key]['dm_url'];
 			$content[$key]['menu_uri'] = $data[$key]['dm_uri'];
 			$content[$key]['menu_initial'] = $data[$key]['dm_initial'];
@@ -63,7 +71,7 @@ function response_mr_media($data = [], $for = '', $object = ''){
 			$content['media_update_at'] = dateToEn($data['mm_update_at']);
 			//dyn_menu
 			$content['menu_id'] = $data['dm_id'];
-			$content['menu_name']	= $data['dm_name'];
+			$content['menu_name']	= $data[$dm_name];
 			$content['menu_caption'] = $data['dm_initial'];
 			$content['menu_keyword'] = $data['dm_keyword'];
 			$content['menu_url'] = $data['dm_url'];
@@ -120,20 +128,26 @@ function response_mr_media($data = [], $for = '', $object = ''){
 	return $content;
 }
 
-function response_mr_categories($data = [], $for = '', $object = '') {
+function response_mr_categories($data = [], $for = '', $object = '', $lang = 'en'){
 	$content = [];
+	$mcl_content = 'mc_content_en';
+	$dm_name 	 = 'dm_content_en';
+	if(isset($lang) && $lang == 'id') {
+		$mcl_content = 'mc_content_id';
+		$dm_name 	 = 'dm_content_id';
+	}
 	if(isset($data) && !empty($data) && $for == 'join|dm_menu' && $object == 'get'){
 		foreach ($data as $key => $value) {
 			# code...
 			$content[$key]['category_id'] = $data[$key]['mc_id'];
 			$content[$key]['category_menu_id'] = $data[$key]['mc_dm_id'];
 			$content[$key]['category_type'] = $data[$key]['mc_type'];
-			$content[$key]['category_name'] = $data[$key]['mc_name'];
+			$content[$key]['category_name'] = $data[$key][$mcl_content];
 			$content[$key]['category_initial'] = $data[$key]['mc_initial'];
 			$content[$key]['category_parent'] = $data[$key]['mc_is_parent'];
 			$content[$key]['category_parent_id']= $data[$key]['mc_parent_id'];
 			$content[$key]['menu_id'] 			= $data[$key]['dm_id'];
-			$content[$key]['menu_name'] 		= $data[$key]['dm_name'];
+			$content[$key]['menu_name'] 		= $data[$key][$dm_name];
 		}
 	}if(isset($data) && !empty($data)){
 		foreach ($data as $key => $value) {
@@ -141,7 +155,7 @@ function response_mr_categories($data = [], $for = '', $object = '') {
 			$content[$key]['category_id'] = $data[$key]['mc_id'];
 			$content[$key]['category_menu_id'] = $data[$key]['mc_dm_id'];
 			$content[$key]['category_type'] = $data[$key]['mc_type'];
-			$content[$key]['category_name'] = $data[$key]['mc_name'];
+			$content[$key]['category_name'] = $data[$key][$mcl_content];
 			$content[$key]['category_initial'] = $data[$key]['mc_initial'];
 			$content[$key]['category_parent'] = $data[$key]['mc_is_parent'];
 			$content[$key]['category_parent_id']= $data[$key]['mc_parent_id'];
@@ -166,10 +180,14 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 	$mtp_caption = 'mtp_caption_en';
 	$mtp_content = 'mtp_content_en';
 	$mtp_title 	 = 'mtp_title_en';
+	$mcl_content = 'mc_content_en';
+	$dm_name 	 = 'dm_content_en';
 	if(isset($lang) && $lang == 'id') {
 		$mtp_caption = 'mtp_caption_id';
 		$mtp_content = 'mtp_content_id';
 		$mtp_title 	 = 'mtp_title_id';
+		$mcl_content = 'mc_content_id';
+		$dm_name 	 = 'dm_content_id';
 	}
 	//mr_media > parent_id
 	if(isset($parent) && !empty($parent)) {
@@ -198,7 +216,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$relate[$key]['content_parent_id'] = $related[$key]['mcm_parent_id'];
 			//dyn_menu
 			$relate[$key]['menu_id'] = $related[$key]['dm_id'];
-			$relate[$key]['menu_name'] = $related[$key]['dm_name'];
+			$relate[$key]['menu_name'] = $related[$key][$dm_name];
 			$relate[$key]['menu_url'] = $related[$key]['dm_url'];
 			$relate[$key]['menu_uri'] = $related[$key]['dm_uri'];
 			$relate[$key]['menu_initial'] = $related[$key]['dm_initial'];
@@ -206,7 +224,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			//mr_categories
 			$relate[$key]['category_id'] = $related[$key]['mc_id'];
 			$relate[$key]['category_type'] = $related[$key]['mc_type'];
-			$relate[$key]['category_name'] = $related[$key]['mc_name'];
+			$relate[$key]['category_name'] = $related[$key][$mcl_content];
 			$relate[$key]['category_initial'] = $related[$key]['mc_initial'];
 			//mr_text_post
 			$relate[$key]['text_id'] = $related[$key]['mtp_id'];
@@ -238,7 +256,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['content_parent_id'] = $data['mcm_parent_id'];
 			//dyn_menu
 			$content['menu_id'] = $data['dm_id'];
-			$content['menu_name']	= $data['dm_name'];
+			$content['menu_name']	= $data[$dm_name];
 			$content['menu_caption'] = $data['dm_initial'];
 			$content['menu_keyword'] = $data['dm_keyword'];
 			$content['menu_url'] = $data['dm_url'];
@@ -277,7 +295,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['content_parent_id'] = $data['mcm_parent_id'];
 			//dyn_menu
 			$content['menu_id'] = $data['dm_id'];
-			$content['menu_name']	= $data['dm_name'];
+			$content['menu_name']	= $data[$dm_name];
 			$content['menu_caption'] = $data['dm_initial'];
 			$content['menu_keyword'] = $data['dm_keyword'];
 			$content['menu_url'] = $data['dm_url'];
@@ -286,7 +304,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['category_id'] = $data['mc_id'];
 			$content['category_menu_id'] = $data['mc_dm_id'];
 			$content['category_type'] = $data['mc_type'];
-			$content['category_name'] = $data['mc_name'];
+			$content['category_name'] = $data[$mcl_content];
 			$content['category_initial'] = $data['mc_initial'];	
 			//mr_text_post
 			$content['text_id'] = $data['mtp_id'];
@@ -326,7 +344,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['content_parent_id'] = $data['mcm_parent_id'];
 			//dyn_menu
 			$content['menu_id'] = $data['dm_id'];
-			$content['menu_name']	= $data['dm_name'];
+			$content['menu_name']	= $data[$dm_name];
 			$content['menu_caption'] = $data['dm_initial'];
 			$content['menu_keyword'] = $data['dm_keyword'];
 			$content['menu_url'] = $data['dm_url'];
@@ -335,7 +353,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['category_id'] = $data['mc_id'];
 			$content['category_menu_id'] = $data['mc_dm_id'];
 			$content['category_type'] = $data['mc_type'];
-			$content['category_name'] = $data['mc_name'];
+			$content['category_name'] = $data[$mcl_content];
 			$content['category_initial'] = $data['mc_initial'];	
 			//mr_text_post
 			$content['text_id'] = $data['mtp_id'];
@@ -388,7 +406,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['content_parent_id'] = $data['mcm_parent_id'];
 			//dyn_menu
 			$content['menu_id'] = $data['dm_id'];
-			$content['menu_name']	= $data['dm_name'];
+			$content['menu_name']	= $data[$dm_name];
 			$content['menu_caption'] = $data['dm_initial'];
 			$content['menu_keyword'] = $data['dm_keyword'];
 			$content['menu_url'] = $data['dm_url'];
@@ -397,7 +415,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['category_id'] = $data['mc_id'];
 			$content['category_menu_id'] = $data['mc_dm_id'];
 			$content['category_type'] = $data['mc_type'];
-			$content['category_name'] = $data['mc_name'];
+			$content['category_name'] = $data[$mcl_content];
 			$content['category_initial'] = $data['mc_initial'];	
 			//mr_text_post
 			$content['text_id'] = $data['mtp_id'];
@@ -434,7 +452,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['content_parent_id'] = $data[$key]['mcm_parent_id'];
 			//dyn_menu
 			$content[$key]['menu_id'] = $data[$key]['dm_id'];
-			$content[$key]['menu_name'] = $data[$key]['dm_name'];
+			$content[$key]['menu_name'] = $data[$key][$dm_name];
 			$content[$key]['menu_url'] = $data[$key]['dm_url'];
 			$content[$key]['menu_uri'] = $data[$key]['dm_uri'];
 			$content[$key]['menu_initial'] = $data[$key]['dm_initial'];
@@ -443,7 +461,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['category_id'] = $data[$key]['mc_id'];
 			$content[$key]['category_menu_id'] = $data[$key]['mc_dm_id'];
 			$content[$key]['category_type'] = $data[$key]['mc_type'];
-			$content[$key]['category_name'] = $data[$key]['mc_name'];
+			$content[$key]['category_name'] = $data[$key][$mcl_content];
 			$content[$key]['category_initial'] = $data[$key]['mc_initial'];
 			//mr_text_post
 			$content[$key]['text_id'] = $data[$key]['mtp_id'];
@@ -484,7 +502,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['content_parent_id'] = $data[$key]['mcm_parent_id'];
 			//dyn_menu
 			$content[$key]['menu_id'] = $data[$key]['dm_id'];
-			$content[$key]['menu_name'] = $data[$key]['dm_name'];
+			$content[$key]['menu_name'] = $data[$key][$dm_name];
 			$content[$key]['menu_url'] = $data[$key]['dm_url'];
 			$content[$key]['menu_uri'] = $data[$key]['dm_uri'];
 			$content[$key]['menu_initial'] = $data[$key]['dm_initial'];
@@ -493,7 +511,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['category_id'] = $data[$key]['mc_id'];
 			$content[$key]['category_menu_id'] = $data[$key]['mc_dm_id'];
 			$content[$key]['category_type'] = $data[$key]['mc_type'];
-			$content[$key]['category_name'] = $data[$key]['mc_name'];
+			$content[$key]['category_name'] = $data[$key][$mcl_content];
 			$content[$key]['category_initial'] = $data[$key]['mc_initial'];
 			//mr_text_post
 			$content[$key]['text_id'] = $data[$key]['mtp_id'];
@@ -547,7 +565,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['content_parent_id'] = $data[$key]['mcm_parent_id'];
 			//dyn_menu
 			$content[$key]['menu_id'] = $data[$key]['dm_id'];
-			$content[$key]['menu_name'] = $data[$key]['dm_name'];
+			$content[$key]['menu_name'] = $data[$key][$dm_name];
 			$content[$key]['menu_url'] = $data[$key]['dm_url'];
 			$content[$key]['menu_uri'] = $data[$key]['dm_uri'];
 			$content[$key]['menu_initial'] = $data[$key]['dm_initial'];
@@ -556,7 +574,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['category_id'] = $data[$key]['mc_id'];
 			$content[$key]['category_menu_id'] = $data[$key]['mc_dm_id'];
 			$content[$key]['category_type'] = $data[$key]['mc_type'];
-			$content[$key]['category_name'] = $data[$key]['mc_name'];
+			$content[$key]['category_name'] = $data[$key][$mcl_content];
 			$content[$key]['category_initial'] = $data[$key]['mc_initial'];
 			//mr_text_post
 			$content[$key]['text_id'] = $data[$key]['mtp_id'];
@@ -593,7 +611,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['content_parent_id'] = $data[$key]['mcm_parent_id'];
 			//dyn_menu
 			$content[$key]['menu_id'] = $data[$key]['dm_id'];
-			$content[$key]['menu_name'] = $data[$key]['dm_name'];
+			$content[$key]['menu_name'] = $data[$key][$dm_name];
 			$content[$key]['menu_url'] = $data[$key]['dm_url'];
 			$content[$key]['menu_uri'] = $data[$key]['dm_uri'];
 			$content[$key]['menu_initial'] = $data[$key]['dm_initial'];
@@ -633,7 +651,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['content_parent_id'] = $data[$key]['mcm_parent_id'];
 			//dyn_menu
 			$content[$key]['menu_id'] = $data[$key]['dm_id'];
-			$content[$key]['menu_name'] = $data[$key]['dm_name'];
+			$content[$key]['menu_name'] = $data[$key][$dm_name];
 			$content[$key]['menu_url'] = $data[$key]['dm_url'];
 			$content[$key]['menu_uri'] = $data[$key]['dm_uri'];
 			$content[$key]['menu_initial'] = $data[$key]['dm_initial'];

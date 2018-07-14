@@ -68,7 +68,7 @@ class DynMenuController extends Res
             $input['operation'] = '';
         }
         
-        if(isset($input) && $input['operation'] == 'Get all nav menu' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        if(isset($input) && $input['operation'] == 'Get all nav menu' && isset($input['lang']) && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
         	// $input['operation'] = bcrypt($input['operation']);
 
 	        $rests 				= model('Rests')::isexist($input['operation'])->first();
@@ -91,7 +91,7 @@ class DynMenuController extends Res
 	        switch($uri)  {
 	            case 'nav-menu' : 
                 $dm = model('DynMenu')::active()->get(); 
-                $dm = response_dyn_menu($dm,'','get');
+                $dm = response_dyn_menu($dm,'','get',$input['lang']);
                 break;
 	        }
             $dm =  array(
