@@ -39,9 +39,9 @@ class RestController extends Res
                         'code' => Res::HTTP_NOT_FOUND,
                         'message' => 'Not found',
                         'data' => 'Empty');
-
+        $headers = getRequestHeaders();
         
-        if(isset($req) && isset($req['form_params']) && isset($req['body'])) {
+        if(isset($req) && isset($req['form_params']) && isset($req['body']) && isset($headers) && isset($headers["Authorization"]) && !empty($headers["Authorization"])) {
 
         	$string = str_replace('api/v1/', '', $request->path());
             $body                   = $req['body'];
@@ -56,7 +56,7 @@ class RestController extends Res
             if($request->getStatusCode() == 200)
                 $response           = json_decode($request->getBody()->getContents(),true);
 
-        }else if(isset($req) && isset($req['body'])) {
+        }else if(isset($req) && isset($req['body']) && isset($headers) && isset($headers["Authorization"]) && !empty($headers["Authorization"])) {
 
             $string = str_replace('api/v1/', '', $request->path());
             $body                   = $req['body'];

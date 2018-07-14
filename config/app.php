@@ -179,7 +179,10 @@ return [
         Logaretm\Transformers\Providers\TransformerServiceProvider::class,
 
         //passport token api
-        Laravel\Passport\PassportServiceProvider::class
+        Laravel\Passport\PassportServiceProvider::class,
+        //composer require optimus/api-consumer 0.2.*
+        Optimus\ApiConsumer\Provider\LaravelServiceProvider::class
+
 
     ],
 

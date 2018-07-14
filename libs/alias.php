@@ -159,10 +159,18 @@ function response_mr_categories($data = [], $for = '', $object = '') {
 	}
 	return $content;
 }
-function response_mr_content_management($data = [], $for = '', $object = '', $parent = [], $related = []){
+function response_mr_content_management($data = [], $for = '', $object = '', $parent = [], $related = [], $lang = 'en'){
 	$content = [];
 	$media   = [];
 	$relate  = [];
+	$mtp_caption = 'mtp_caption_en';
+	$mtp_content = 'mtp_content_en';
+	$mtp_title 	 = 'mtp_title_en';
+	if(isset($lang) && $lang == 'id') {
+		$mtp_caption = 'mtp_caption_id';
+		$mtp_content = 'mtp_content_id';
+		$mtp_title 	 = 'mtp_title_id';
+	}
 	//mr_media > parent_id
 	if(isset($parent) && !empty($parent)) {
 		foreach ($parent as $index => $val) {
@@ -204,8 +212,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$relate[$key]['text_id'] = $related[$key]['mtp_id'];
 			$related[$key]['text_initial'] = $related[$key]['mtp_initial'];
 			$relate[$key]['text_keyword'] = $related[$key]['mtp_keyword'];
-			$relate[$key]['text_title_id'] = $related[$key]['mtp_title_id'];
-			$relate[$key]['text_title_en'] = $related[$key]['mtp_title_en'];
+			$relate[$key]['text_title'] = $related[$key][$mtp_title];
 			$relate[$key]['text_tags'] = $related[$key]['mtp_tags'];
 			$relate[$key]['text_url'] = $related[$key]['mtp_url'];
 			$relate[$key]['text_create_at'] = dateToEn($related[$key]['mtp_create_at']);
@@ -240,12 +247,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_id'] = $data['mtp_id'];
 			$content['text_initial'] = $data['mtp_initial'];
 			$content['text_keyword'] = $data['mtp_keyword'];
-			$content['text_title_id'] = $data['mtp_title_id'];
-			$content['text_title_en'] = $data['mtp_title_en'];
-			$content['text_caption_en'] = nl2br(e($data['mtp_caption_en']));
-			$content['text_caption_id'] = nl2br(e($data['mtp_caption_id']));
-			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
-			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
+			$content['text_title'] = $data[$mtp_title];
+			$content['text_caption'] = nl2br(e($data[$mtp_caption]));
+			$content['text_content'] = nl2br(e($data[$mtp_content]));
 			$content['text_parent_id'] = $data['mtp_parent_id'];
 			$content['text_tags'] = $data['mtp_tags'];
 			$content['text_url'] = $data['mtp_url'];
@@ -288,12 +292,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_id'] = $data['mtp_id'];
 			$content['text_initial'] = $data['mtp_initial'];
 			$content['text_keyword'] = $data['mtp_keyword'];
-			$content['text_title_id'] = $data['mtp_title_id'];
-			$content['text_title_en'] = $data['mtp_title_en'];
-			$content['text_caption_en'] = nl2br(e($data['mtp_caption_en']));
-			$content['text_caption_id'] = nl2br(e($data['mtp_caption_id']));
-			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
-			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
+			$content['text_title'] = $data[$mtp_title];
+			$content['text_caption'] = nl2br(e($data[$mtp_caption]));
+			$content['text_content'] = nl2br(e($data[$mtp_content]));
 			$content['text_parent_id'] = $data['mtp_parent_id'];
 			$content['text_tags'] = $data['mtp_tags'];
 			$content['text_url'] = $data['mtp_url'];
@@ -340,12 +341,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_id'] = $data['mtp_id'];
 			$content['text_initial'] = $data['mtp_initial'];
 			$content['text_keyword'] = $data['mtp_keyword'];
-			$content['text_title_id'] = $data['mtp_title_id'];
-			$content['text_title_en'] = $data['mtp_title_en'];
-			$content['text_caption_en'] = nl2br(e($data['mtp_caption_en']));
-			$content['text_caption_id'] = nl2br(e($data['mtp_caption_id']));
-			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
-			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
+			$content['text_title'] = $data[$mtp_title];
+			$content['text_caption'] = nl2br(e($data[$mtp_caption]));
+			$content['text_content'] = nl2br(e($data[$mtp_content]));
 			$content['text_parent_id'] = $data['mtp_parent_id'];
 			$content['text_tags'] = $data['mtp_tags'];
 			$content['text_url'] = $data['mtp_url'];
@@ -405,12 +403,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_id'] = $data['mtp_id'];
 			$content['text_initial'] = $data['mtp_initial'];
 			$content['text_keyword'] = $data['mtp_keyword'];
-			$content['text_title_id'] = $data['mtp_title_id'];
-			$content['text_title_en'] = $data['mtp_title_en'];
-			$content['text_caption_en'] = nl2br(e($data['mtp_caption_en']));
-			$content['text_caption_id'] = nl2br(e($data['mtp_caption_id']));
-			$content['text_content_en'] = nl2br(e($data['mtp_content_en']));
-			$content['text_content_id'] = nl2br(e($data['mtp_content_id']));
+			$content['text_title'] = $data[$mtp_title];
+			$content['text_caption'] = nl2br(e($data[$mtp_caption]));
+			$content['text_content'] = nl2br(e($data[$mtp_content]));
 			$content['text_parent_id'] = $data['mtp_parent_id'];
 			$content['text_tags'] = $data['mtp_tags'];
 			$content['text_url'] = $data['mtp_url'];
@@ -454,12 +449,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['text_id'] = $data[$key]['mtp_id'];
 			$content[$key]['text_initial'] = $data[$key]['mtp_initial'];
 			$content[$key]['text_keyword'] = $data[$key]['mtp_keyword'];
-			$content[$key]['text_title_id'] = $data[$key]['mtp_title_id'];
-			$content[$key]['text_title_en'] = $data[$key]['mtp_title_en'];
-			$content[$key]['text_caption_en'] = nl2br(e($data[$key]['mtp_caption_en']));
-			$content[$key]['text_caption_id'] = nl2br(e($data[$key]['mtp_caption_id']));
-			$content[$key]['text_content_en'] = nl2br(e($data[$key]['mtp_content_en']));
-			$content[$key]['text_content_id'] = nl2br(e($data[$key]['mtp_content_id']));
+			$content[$key]['text_title'] = $data[$key][$mtp_title];
+			$content[$key]['text_caption'] = nl2br(e($data[$key][$mtp_caption]));
+			$content[$key]['text_content'] = nl2br(e($data[$key][$mtp_content]));
 			$content[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
 			$content[$key]['text_tags'] = $data[$key]['mtp_tags'];
 			$content[$key]['text_url'] = $data[$key]['mtp_url'];
@@ -507,12 +499,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['text_id'] = $data[$key]['mtp_id'];
 			$content[$key]['text_initial'] = $data[$key]['mtp_initial'];
 			$content[$key]['text_keyword'] = $data[$key]['mtp_keyword'];
-			$content[$key]['text_title_id'] = $data[$key]['mtp_title_id'];
-			$content[$key]['text_title_en'] = $data[$key]['mtp_title_en'];
-			$content[$key]['text_caption_en'] = nl2br(e($data[$key]['mtp_caption_en']));
-			$content[$key]['text_caption_id'] = nl2br(e($data[$key]['mtp_caption_id']));
-			$content[$key]['text_content_en'] = nl2br(e($data[$key]['mtp_content_en']));
-			$content[$key]['text_content_id'] = nl2br(e($data[$key]['mtp_content_id']));
+			$content[$key]['text_title'] = $data[$key][$mtp_title];
+			$content[$key]['text_caption'] = nl2br(e($data[$key][$mtp_caption]));
+			$content[$key]['text_content'] = nl2br(e($data[$key][$mtp_content]));
 			$content[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
 			$content[$key]['text_tags'] = $data[$key]['mtp_tags'];
 			$content[$key]['text_url'] = $data[$key]['mtp_url'];
@@ -573,12 +562,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['text_id'] = $data[$key]['mtp_id'];
 			$content[$key]['text_initial'] = $data[$key]['mtp_initial'];
 			$content[$key]['text_keyword'] = $data[$key]['mtp_keyword'];
-			$content[$key]['text_title_id'] = $data[$key]['mtp_title_id'];
-			$content[$key]['text_title_en'] = $data[$key]['mtp_title_en'];
-			$content[$key]['text_caption_en'] = nl2br(e($data[$key]['mtp_caption_en']));
-			$content[$key]['text_caption_id'] = nl2br(e($data[$key]['mtp_caption_id']));
-			$content[$key]['text_content_en'] = nl2br(e($data[$key]['mtp_content_en']));
-			$content[$key]['text_content_id'] = nl2br(e($data[$key]['mtp_content_id']));
+			$content[$key]['text_title'] = $data[$key][$mtp_title];
+			$content[$key]['text_caption'] = nl2br(e($data[$key][$mtp_caption]));
+			$content[$key]['text_content'] = nl2br(e($data[$key][$mtp_content]));
 			$content[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
 			$content[$key]['text_tags'] = $data[$key]['mtp_tags'];
 			$content[$key]['text_url'] = $data[$key]['mtp_url'];
@@ -616,12 +602,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['text_id'] = $data[$key]['mtp_id'];
 			$content[$key]['text_initial'] = $data[$key]['mtp_initial'];
 			$content[$key]['text_keyword'] = $data[$key]['mtp_keyword'];
-			$content[$key]['text_title_id'] = $data[$key]['mtp_title_id'];
-			$content[$key]['text_title_en'] = $data[$key]['mtp_title_en'];
-			$content[$key]['text_caption_en'] = nl2br(e($data[$key]['mtp_caption_en']));
-			$content[$key]['text_caption_id'] = nl2br(e($data[$key]['mtp_caption_id']));
-			$content[$key]['text_content_en'] = nl2br(e($data[$key]['mtp_content_en']));
-			$content[$key]['text_content_id'] = nl2br(e($data[$key]['mtp_content_id']));
+			$content[$key]['text_title'] = $data[$key][$mtp_title];
+			$content[$key]['text_caption'] = nl2br(e($data[$key][$mtp_caption]));
+			$content[$key]['text_content'] = nl2br(e($data[$key][$mtp_content]));
 			$content[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
 			$content[$key]['text_tags'] = $data[$key]['mtp_tags'];
 			$content[$key]['text_url'] = $data[$key]['mtp_url'];
@@ -718,12 +701,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_id'] = '';
 			$content['text_initial'] = '';
 			$content['text_keyword'] = '';
-			$content['text_title_id'] = '';
-			$content['text_title_en'] = '';
-			$content['text_caption_en'] = '';
-			$content['text_caption_id'] = '';
-			$content['text_content_en'] = '';
-			$content['text_content_id'] = '';
+			$content['text_title'] = '';
+			$content['text_caption'] = '';
+			$content['text_content'] = '';
 			$content['text_parent_id'] = '';
 			$content['text_media_id'] = '';
 			$content['text_tags'] = '';

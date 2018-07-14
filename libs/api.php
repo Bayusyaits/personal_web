@@ -14,6 +14,18 @@ function isActiveUser($data = []) {
     }
 }
 
+function getRequestHeaders() {
+    $headers = array();
+    foreach($_SERVER as $key => $value) {
+        if (substr($key, 0, 5) <> 'HTTP_') {
+            continue;
+        }
+        $header = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
+        $headers[$header] = $value;
+    }
+    return $headers;
+}
+
 function getUrlApi() {
 
 	if(app('env') == 'production'){
@@ -46,6 +58,7 @@ function getClientQueryApi($data = []) {
         $query['body']          = $body;
         $query['operation']     = $body['operation'];
         $query['role']          = isset($body['role']) && !empty($body['role']) ? $body['role'] : '';
+        $query['lang']          = isset($body['lang']) && !empty($body['lang']) ? $body['lang'] : 'en';
         $query['hostname']      = $data['hostname'];
         $query['body']['ip']    = $data['ip'];
         $query['username']      = $form_params['username'];
