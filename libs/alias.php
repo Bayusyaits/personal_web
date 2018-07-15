@@ -182,12 +182,16 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 	$mtp_title 	 = 'mtp_title_en';
 	$mcl_content = 'mc_content_en';
 	$dm_name 	 = 'dm_content_en';
+	$ms_body 	 = 'ms_body_en';
+	$ms_punch 	 = 'ms_punch_en';
 	if(isset($lang) && $lang == 'id') {
 		$mtp_caption = 'mtp_caption_id';
 		$mtp_content = 'mtp_content_id';
 		$mtp_title 	 = 'mtp_title_id';
 		$mcl_content = 'mc_content_id';
 		$dm_name 	 = 'dm_content_id';
+		$ms_body 	 = 'ms_body_id';
+		$ms_punch 	 = 'ms_punch_id';
 	}
 	//mr_media > parent_id
 	if(isset($parent) && !empty($parent)) {
@@ -384,10 +388,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['statistic_keyword'] = $data['ms_keyword'];
 			$content['statistic_formula'] = $data['ms_formula'];
 			$content['statistic_results'] = $data['ms_results'];
-			$content['statistic_story'] = nl2br(e($data['ms_story']));
 			$content['statistic_formula'] = $data['ms_formula'];
-			$content['statistic_summary'] = $data['ms_summary'];
-			$content['statistic_background'] = nl2br(e($data['ms_background']));
+			$content['statistic_punch_text'] = $data[$ms_punch];
+			$content['statistic_body_text'] = nl2br(e($data[$ms_body]));
 			$content['statistic_role'] = $data['ms_role'];
 			$content['statistic_product'] = $data['ms_product'];
 			$content['statistic_start_project'] = dateToEn($data['ms_start_date']);
@@ -543,10 +546,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['statistic_keyword'] = $data[$key]['ms_keyword'];
 			$content[$key]['statistic_formula'] = $data[$key]['ms_formula'];
 			$content[$key]['statistic_results'] = $data[$key]['ms_results'];
-			$content[$key]['statistic_story'] = nl2br(e($data[$key]['ms_story']));
 			$content[$key]['statistic_formula'] = $data[$key]['ms_formula'];
-			$content[$key]['statistic_summary'] = $data[$key]['ms_summary'];
-			$content[$key]['statistic_background'] = nl2br(e($data[$key]['ms_background']));
+			$content[$key]['statistic_punch_text'] = $data[$key][$ms_punch];
+			$content[$key]['statistic_body_text'] = nl2br(e($data[$key][$ms_body]));
 			$content[$key]['statistic_role'] = $data[$key]['ms_role'];
 			$content[$key]['statistic_product'] = $data[$key]['ms_product'];
 			$content[$key]['statistic_start_project'] = dateToEn($data[$key]['ms_start_date']);
@@ -682,10 +684,9 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['statistic_keyword'] = '';
 			$content['statistic_formula'] = '';
 			$content['statistic_results'] = '';
-			$content['statistic_story'] = '';
 			$content['statistic_formula'] = '';
-			$content['statistic_summary'] = '';
-			$content['statistic_background'] = '';
+			$content['statistic_punch_text'] = '';
+			$content['statistic_body_text'] = '';
 			$content['statistic_role'] = '';
 			$content['statistic_product'] = '';
 			$content['statistic_start_project'] = '';
