@@ -278,6 +278,16 @@ function api_405(){
 	return response()->view('errors.405',[],405);
 }
 
+function remove_http($url) {
+   $disallowed = array('http://', 'https://');
+   foreach($disallowed as $d) {
+      if(strpos($url, $d) === 0) {
+         return str_replace($d, '', $url);
+      }
+   }
+   return $url;
+}
+
 function n2lbr_mtp($data = []) {
 
 	if(isset($data)) {
