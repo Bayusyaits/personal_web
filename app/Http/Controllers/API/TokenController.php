@@ -13,39 +13,39 @@ use Config;
 
 class TokenController extends Controller
 {
-	// public function __construct() {
-	// 	$this->user = new RegistrationData;
-	// }
- //    public function auth(Request $request)
- //    {
- //    	Config::set('auth.providers.users.model', \App\Models\RegistrationData::class);
- //        // grab credentials from the request
- //        $credentials = $request->only('rd_email', 'rd_password');
+	public function __construct() {
+		$this->user = new RegistrationData;
+	}
+    public function auth(Request $request)
+    {
+    	Config::set('auth.providers.users.model', \App\Models\RegistrationData::class);
+        // grab credentials from the request
+        $credentials = $request->only('rd_email', 'rd_password');
         
- //        $validator = Validator::make($credentials,array(
-	//     'rd_email'=>'required|email|max:255',
-	//     'rd_password'=>'required|min:6'
-	//     ));
+        $validator = Validator::make($credentials,array(
+	    'rd_email'=>'required|email|max:255',
+	    'rd_password'=>'required|min:6'
+	    ));
 		
-	// 	if($validator->fails()) {
-	// 		return response()->json(
-	// 		['code'=>1,
-	// 		 'message'=>'Validation failed',
-	// 		 'errors'=>$validator->errors()	
-	// 		],422);
-	// 	}
-	// 	$token = JWTAuth::attempt($credentials);
-	// 	if($token) {
-	// 		return response()->json(['token'=>$token]);
-	// 	}else{
-	// 		return response()->json(
-	// 		['code'=>2,
-	// 		 'message'=>'Invalid Cresidentials'
-	// 		],401);
-	// 	}
+		if($validator->fails()) {
+			return response()->json(
+			['code'=>1,
+			 'message'=>'Validation failed',
+			 'errors'=>$validator->errors()	
+			],422);
+		}
+		$token = JWTAuth::attempt($credentials);
+		if($token) {
+			return response()->json(['token'=>$token]);
+		}else{
+			return response()->json(
+			['code'=>2,
+			 'message'=>'Invalid Cresidentials'
+			],401);
+		}
 
- //        // all good so return the token
- //    }
+        // all good so return the token
+    }
     
     public function token(Request $request)
     {

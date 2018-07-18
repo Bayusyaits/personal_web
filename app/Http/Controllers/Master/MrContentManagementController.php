@@ -213,7 +213,6 @@ class MrContentManagementController extends Res
 
             $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories|mr_templates|mr_stats','first',$mm,[],$input['lang']);
 
-
             if(isset($mcm) && isset($mcm["content_id"]) && $mcm["content_id"] != "") {
                 
                 $mcm =  array(
@@ -270,7 +269,7 @@ class MrContentManagementController extends Res
         }
         
         if(isset($input) && $input['operation'] == 'Get content projects' && isset($input['lang']) && request('hostname')) {
-            // $input['operation'] = bcrypt($input['operation']);
+
 
             $rests              = model('Rests')::isexist($input['operation'])->first();
             
@@ -340,7 +339,7 @@ class MrContentManagementController extends Res
             $input['operation'] = '';
         }
         
-        
+
         if(isset($input) && $input['operation'] == 'Get Single Content Project' && isset($input['lang']) && request('hostname') && !empty($uri) && !empty($keyword)) {
 
             $rests              = model('Rests')::isexist($input['operation'])->first();
