@@ -20,6 +20,11 @@ Route::group(['middleware' => ['api','cors']], function () {
     });
 });
 
+
+Route::group(['middleware'=>'auth.api'], function() {
+	Route::post('get-details','API\PassportController@getDetails');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return 'halo';
 });

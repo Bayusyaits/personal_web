@@ -39,26 +39,50 @@ class RestController extends Res
                         'code' => Res::HTTP_NOT_FOUND,
                         'message' => 'Not found',
                         'data' => 'Empty');
-
+        $headers = getRequestHeaders();
         
-        if(isset($req) && isset($req['form_params']) && isset($req['body'])) {
+        if(isset($headers["Origin"])) {
+            $hostname  = remove_http($headers["Origin"]);
+        }else {
+            $hostname  = '';
+        }
+        //hostname 'bayusyaits.com'.
+        
+        if(isset($headers['Secret'])) {
+            $req['secret_key'] = cryptoJsAesDecrypt($hostname, $headers['Secret']);
+        }else {
+            $req['secret_key'] = 0;
+        }
 
-        	$string = str_replace('api/v1/', '', $request->path());
+        return $req['secret_key'];
+
+        if(isset($req) && isset($req["form_params"]) && isset($req["body"]) && isset($headers) && isset($headers["Authorization"]) && !empty($headers["Authorization"]) && isset($headers["Host"]) && isset($headers["Origin"])) {
+
+            $string                 = str_replace('api/v1/', '', $request->path());
             $body                   = $req['body'];
+            $form                   = $req['form_params'];
             $req['operation']       = $body['operation'];
-            $req['hostname']        = $request->root();
+            $req['hostname']        = $hostname;
             $req['ip']              = $request->ip();
             $query                  = getClientQueryApi($req);
             $url                    = getUrlApi().$string;
             $client                 = new Client(getClientHeadersApi($req));
             $request                = $client->post($url, ['query' => $query]);
 
-            if($request->getStatusCode() == 200)
+            if($request->getStatusCode() == 200) {
                 $response           = json_decode($request->getBody()->getContents(),true);
+            }else {
+                $response = array(
+                        'status'    => 'Error',
+                        'code'      => Res::HTTP_FORBIDDEN,
+                        'message'   => 'Forbidden',
+                        'data'      => 'Empty'); 
+            }
 
-        }else if(isset($req) && isset($req['body'])) {
+        }else if(isset($req) && isset($req['body']) && isset($headers) && isset($headers["Authorization"]) && !empty($headers["Authorization"])) {
 
-            $string = str_replace('api/v1/', '', $request->path());
+            $hostname               = remove_http($headers["Origin"]);
+            $string                 = str_replace('api/v1/', '', $request->path());
             $body                   = $req['body'];
             $req['operation']       = $body['operation'];
             $req['hostname']        = $request->root();
@@ -66,8 +90,15 @@ class RestController extends Res
             $client                 = new Client(getClientHeadersApi($req));
             $request                = $client->post($url, ['query' => $req]);
 
-            if($request->getStatusCode() == 200)
+            if($request->getStatusCode() == 200) {
                 $response           = json_decode($request->getBody()->getContents(),true);
+            }else {
+                $response = array(
+                        'status'    => 'Error',
+                        'code'      => Res::HTTP_FORBIDDEN,
+                        'message'   => 'Forbidden',
+                        'data'      => 'Empty'); 
+            }
 
         }else {
             $response = array(

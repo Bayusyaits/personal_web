@@ -59,7 +59,7 @@ class MrMediaController extends Res
             $input['operation'] = '';
         }
         
-        if(isset($input) && $input['operation'] == 'Get all media' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        if(isset($input) && $input['operation'] == 'Get all media' && request('hostname')) {
             // $input['operation'] = bcrypt($input['operation']);
 
             $rests              = model('Rests')::isexist($input['operation'])->first();

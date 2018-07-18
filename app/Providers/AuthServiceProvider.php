@@ -50,9 +50,9 @@ class AuthServiceProvider extends ServiceProvider
 
       Passport::enableImplicitGrant();
       
-      Passport::tokensExpireIn(now()->addDays(15));
+      Passport::tokensExpireIn(\Carbon\Carbon::now()->addDays(15));
 
-      Passport::refreshTokensExpireIn(now()->addDays(30));
+      Passport::refreshTokensExpireIn(\Carbon\Carbon::now()->addDays(30));
    }
  
 }

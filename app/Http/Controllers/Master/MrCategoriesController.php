@@ -66,7 +66,7 @@ class MrCategoriesController extends Res
             $decrypted  = cryptoJsAesDecrypt("[Categories]", $input['password']);
         }
         
-        if(isset($input) && $input['operation'] == 'Get all categories' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        if(isset($input) && $input['operation'] == 'Get all categories' && isset($input['lang']) && request('hostname')) {
             // $input['operation'] = bcrypt($input['operation']);
 
             $rests              = model('Rests')::isexist($input['operation'])->first();
@@ -99,7 +99,7 @@ class MrCategoriesController extends Res
                 default: 
                     $mc = model('MrCategories')::categories()->get();
             }
-            $mc = response_mr_categories($mc,'join|dm_menu','get');
+            $mc = response_mr_categories($mc,'join|dm_menu','get',$input['lang']);
             $mc = array(
                         'status'    => 'Success',
                         'code'      => Res::HTTP_OK,

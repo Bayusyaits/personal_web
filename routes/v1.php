@@ -97,6 +97,14 @@ $api->version('v1',
             ]
         );
 
+        //posts
+        $api->post('/single-page/{uri}', 
+            [
+                'uses'             =>   'Master\MrContentManagementController@postSinglePageContent', 
+                'as'               =>   'postSinglePageContent'
+            ]
+        );
+
         $api->post('/client/token', 
             [
                 'uses'             =>   'Master\MrContentManagementController@issueToken', 

@@ -110,7 +110,7 @@ class PostContactController extends Res
             $input['operation'] = '';
         }
         
-        if(isset($input) && isset($body) && $input['operation'] == 'Add new message' && Auth::attempt(['email' => request('username'), 'password' => $decrypted , 'hostname' => request('hostname')])) {
+        if(isset($input) && isset($body) && $input['operation'] == 'Add new message' && request('hostname')) {
             // $input['operation'] = bcrypt($input['operation']);
 
             $rests              = model('Rests')::isexist($input['operation'])->first();
