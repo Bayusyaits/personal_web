@@ -54,8 +54,6 @@ class RestController extends Res
             $req['secret_key'] = 0;
         }
 
-        return $req['secret_key'];
-
         if(isset($req) && isset($req["form_params"]) && isset($req["body"]) && isset($headers) && isset($headers["Authorization"]) && !empty($headers["Authorization"]) && isset($headers["Host"]) && isset($headers["Origin"])) {
 
             $string                 = str_replace('api/v1/', '', $request->path());
