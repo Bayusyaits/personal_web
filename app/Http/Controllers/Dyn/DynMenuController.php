@@ -56,10 +56,11 @@ class DynMenuController extends Res
 		
         $input = $request->all();
         //from javascript
-        if(isset($input) && isset($input['password'])){
-            $decrypted = cryptoJsAesDecrypt("[Nav-Menu]", $input['password']);
+        if(isset($input) && isset($input['keyword'])){
+            //[Nav-Menu]
+            $keyword = '['.$input['keyword'].']';
         }else {
-            $decrypted = 0;
+            $keyword = '';
         }
 
         if(isset($input['operation'])){
@@ -79,14 +80,7 @@ class DynMenuController extends Res
 		        $success['token'] 		=  $user->createToken($input['hostname'])->accessToken;
 		        $success['operation'] 	=  $user->operation;
 			
-			}else {
-                $user                   = Auth::user(); 
-                // Creating a token without scopes...
-                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
-
-                // Creating a token with scopes...
-                // $token = $user->createToken('My Token', ['place-orders'])->accessToken;
-            }
+			}
 
 	        switch($uri)  {
 	            case 'nav-menu' : 

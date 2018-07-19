@@ -35,7 +35,7 @@ class RestController extends Res
         $content = $request->getContent();
         $req = json_decode($content,true);
 
-        $response = array('status' => 'Error',
+        $response = array('status' => 'ada',
                         'code' => Res::HTTP_NOT_FOUND,
                         'message' => 'Not found',
                         'data' => 'Empty');
@@ -57,10 +57,8 @@ class RestController extends Res
         if(isset($req) && isset($req["form_params"]) && isset($req["body"]) && isset($headers) && isset($headers["Authorization"]) && !empty($headers["Authorization"]) && isset($headers["Host"]) && isset($headers["Origin"])) {
 
             $string                 = str_replace('api/v1/', '', $request->path());
-            $body                   = $req['body'];
-            $form                   = $req['form_params'];
-            $req['operation']       = $body['operation'];
             $req['hostname']        = $hostname;
+            $req['form_params']     = $req['form_params'];
             $req['ip']              = $request->ip();
             $query                  = getClientQueryApi($req);
             $url                    = getUrlApi().$string;
@@ -81,8 +79,6 @@ class RestController extends Res
 
             $hostname               = remove_http($headers["Origin"]);
             $string                 = str_replace('api/v1/', '', $request->path());
-            $body                   = $req['body'];
-            $req['operation']       = $body['operation'];
             $req['hostname']        = $request->root();
             $url                    = getUrlApi().$string;
             $client                 = new Client(getClientHeadersApi($req));

@@ -46,11 +46,11 @@ class MrMediaController extends Res
         
         $input = $request->all();
         //from javascript
-        
-        if(isset($input) && isset($input['password'])){
-            $decrypted = cryptoJsAesDecrypt("[Media]", $input['password']);
+        if(isset($input) && isset($input['keyword'])){
+            //Media
+            $keyword = '['.$input['keyword'].']';
         }else {
-            $decrypted = 0;
+            $keyword = '';
         }
 
         if(isset($input['operation'])){
@@ -70,13 +70,6 @@ class MrMediaController extends Res
                 $success['token']       = $user->createToken($input['hostname'])->accessToken;
                 $success['operation']   = $user->operation;
             
-            }else {
-                $user                   = Auth::user(); 
-                // Creating a token without scopes...
-                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
-
-                // Creating a token with scopes...
-                // $token = $user->createToken('My Token', ['place-orders'])->accessToken;
             }
 
             switch($uri)  {

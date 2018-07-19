@@ -92,10 +92,11 @@ class PostContactController extends Res
         
         $input = $request->all();
         //from javascript
-        if(isset($input) && isset($input['password'])){
-            $decrypted = cryptoJsAesDecrypt("[Post-Contact|Message]", $input['password']);
+        if(isset($input) && isset($input['keyword'])){
+            //[Post-Contact|Message]
+            $keyword = '['.$input['keyword'].']';
         }else {
-            $decrypted = 0;
+            $keyword = '';
         }
 
         if(isset($input) && isset($input['body'])) {
@@ -122,12 +123,6 @@ class PostContactController extends Res
                 $success['operation']   =  $user->operation;
                 $success['name']        =  $user->name;
             
-            }else {
-                $user                   = Auth::user(); 
-                // Creating a token without scopes...
-                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
-                //hapus token
-                // $success['token'] = $user->token()->revoke();
             }
 
             

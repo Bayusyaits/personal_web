@@ -62,10 +62,10 @@ function getClientQueryApi($data = []) {
         $query['operation']     = $body['operation'];
         $query['role']          = isset($body['role']) && !empty($body['role']) ? $body['role'] : '';
         $query['lang']          = isset($body['lang']) && !empty($body['lang']) ? $body['lang'] : 'en';
+        $query['keyword']       = isset($body['keyword']) && !empty($body['keyword']) ? $body['keyword'] : '';
         $query['hostname']      = $data['hostname'];
         $query['client_secret'] = $data['secret_key'];
         $query['body']['ip']    = $data['ip'];
-        $query['email']         = $form_params['email'];
 
         return $query;
 

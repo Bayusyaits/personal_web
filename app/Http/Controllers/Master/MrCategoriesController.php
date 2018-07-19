@@ -45,11 +45,13 @@ class MrCategoriesController extends Res
         
         $input = $request->all();
         $url = $request->url();
-        //from javascript
-        if(isset($input) && isset($input['password'])){
-            $input['password'] = $input['password'];
+
+         //from javascript
+        if(isset($input) && isset($input['keyword']) && !empty($uri)) {
+            //[Categories-Fields] || [Categories-Subjects]
+            $keyword = '['.$input['keyword'].']';
         }else {
-            $input['password'] = null;
+            $keyword = '';
         }
 
         if(isset($input['operation'])){
@@ -57,15 +59,8 @@ class MrCategoriesController extends Res
         }else {
             $input['operation'] = '';
         }
-        
-        if($uri         == 'fields'){
-            $decrypted  = cryptoJsAesDecrypt("[Categories-Fields]", $input['password']);
-        }else if($uri   == 'subjects'){
-            $decrypted  = cryptoJsAesDecrypt("[Categories-Subjects]", $input['password']);
-        }else {
-            $decrypted  = cryptoJsAesDecrypt("[Categories]", $input['password']);
-        }
-        
+       
+       
         if(isset($input) && $input['operation'] == 'Get all categories' && isset($input['lang']) && request('hostname')) {
             // $input['operation'] = bcrypt($input['operation']);
 
@@ -77,13 +72,6 @@ class MrCategoriesController extends Res
                 $success['token']       = $user->createToken($input['hostname'])->accessToken;
                 $success['operation']   = $user->operation;
             
-            }else {
-                $user                   = Auth::user(); 
-                // Creating a token without scopes...
-                // $success['token']       = $user->createToken($input['hostname'])->accessToken;
-
-                // Creating a token with scopes...
-                // $token = $user->createToken('My Token', ['place-orders'])->accessToken;
             }
 
             switch($uri)  {
