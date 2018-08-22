@@ -136,9 +136,11 @@ class MrContentManagementController extends Res
                     $mcm = model('MrContentManagement')::contentmenupage(55103)->first(); 
                     $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first',[],[],$input['lang']);
                 break;
-                case 'contact'      : 
+                case 'blog'      : 
                     $mcm = model('MrContentManagement')::contentmenupage(55104)->first(); 
-                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first',[],[],$input['lang']);
+                break;
+                case 'contact'      : 
+                    $mcm = model('MrContentManagement')::contentmenupage(55105)->first(); 
                 break;
                 case 'case-studies' : 
                     $mcm = model('MrContentManagement')::contentmenupage(55108)->first(); 
@@ -146,6 +148,7 @@ class MrContentManagementController extends Res
                 break;
                 default: 
                     $mcm = model('MrContentManagement')::contentmenu()->get(); 
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','get',[],[],$input['lang']);
             }
 
             $mcm =  array(

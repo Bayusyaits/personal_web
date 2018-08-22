@@ -32,15 +32,17 @@ function response_dyn_menu($data = [], $for = '', $object = '',$lang = 'en'){
 function response_mr_media($data = [], $for = '', $object = '',$lang = 'en'){
 	$content = [];
 	$dm_name 	 = 'dm_content_en';
+	$mm_alt 	 = 'mm_alt_en';
 	if(isset($lang) && $lang == 'id') {
 		$dm_name 	 = 'dm_content_id';
+		$mm_alt 	 = 'mm_alt_id';
 	}
 	if(isset($data) && !empty($data) && $for == 'join|dyn_menu' && $object == 'get'){
 		foreach ($data as $key => $value) {
 			# code...
 			//mr_media
 			$content[$key]['media_id'] = $data[$key]['mm_id'];
-			$content[$key]['media_alt'] = $data[$key]['mm_alt'];
+			$content[$key]['media_alt'] = $data[$key][$mm_alt];
 			$content[$key]['media_initial'] = $data[$key]['mm_initial'];
 			$content[$key]['media_name'] = $data[$key]['mm_name'];
 			$content[$key]['media_parent_id'] = $data[$key]['mm_parent_id'];
@@ -61,7 +63,7 @@ function response_mr_media($data = [], $for = '', $object = '',$lang = 'en'){
 			# code...
 			//mr_media
 			$content['media_id'] = $data['mm_id'];
-			$content['media_alt'] = $data['mm_alt'];
+			$content['media_alt'] = $data[$mm_alt];
 			$content['media_initial'] = $data['mm_initial'];
 			$content['media_name'] = $data['mm_name'];
 			$content['media_parent_id'] = $data['mm_parent_id'];
@@ -82,7 +84,7 @@ function response_mr_media($data = [], $for = '', $object = '',$lang = 'en'){
 			# code...
 			//mr_media
 			$content[$key]['media_id'] = $data[$key]['mm_id'];
-			$content[$key]['media_alt'] = $data[$key]['mm_alt'];
+			$content[$key]['media_alt'] = $data[$key][$mm_alt];
 			$content[$key]['media_initial'] = $data[$key]['mm_initial'];
 			$content[$key]['media_name'] = $data[$key]['mm_name'];
 			$content[$key]['media_parent_id'] = $data[$key]['mm_parent_id'];
@@ -96,7 +98,7 @@ function response_mr_media($data = [], $for = '', $object = '',$lang = 'en'){
 			# code...
 			//mr_media
 			$content['media_id'] = $data['mm_id'];
-			$content['media_alt'] = $data['mm_alt'];
+			$content['media_alt'] = $data[$mm_alt];
 			$content['media_initial'] = $data['mm_initial'];
 			$content['media_name'] = $data['mm_name'];
 			$content['media_parent_id'] = $data['mm_parent_id'];
@@ -184,6 +186,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 	$dm_name 	 = 'dm_content_en';
 	$ms_body 	 = 'ms_body_en';
 	$ms_punch 	 = 'ms_punch_en';
+	$mm_alt 	 = 'mm_alt_en';
 	if(isset($lang) && $lang == 'id') {
 		$mtp_caption = 'mtp_caption_id';
 		$mtp_content = 'mtp_content_id';
@@ -192,12 +195,13 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 		$dm_name 	 = 'dm_content_id';
 		$ms_body 	 = 'ms_body_id';
 		$ms_punch 	 = 'ms_punch_id';
+		$mm_alt 	 = 'mm_alt_id';
 	}
 	//mr_media > parent_id
 	if(isset($parent) && !empty($parent)) {
 		foreach ($parent as $index => $val) {
 			$media[$index]['media_parents_id'] = $parent[$index]['mm_id'];
-			$media[$index]['media_parents_alt'] = $parent[$index]['mm_alt'];
+			$media[$index]['media_parents_alt'] = $parent[$index][$mm_alt];
 			$media[$index]['media_parents_initial'] = $parent[$index]['mm_initial'];
 			$media[$index]['media_parents_name'] = $parent[$index]['mm_name'];
 			$media[$index]['media_parents_parent_id'] = $parent[$index]['mm_parent_id'];
@@ -241,7 +245,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$relate[$key]['text_update_at'] = dateToEn($related[$key]['mtp_update_at']);
 			//mr_media
 			$relate[$key]['media_id'] = $related[$key]['mm_id'];
-			$relate[$key]['media_alt'] = $related[$key]['mm_alt'];
+			$relate[$key]['media_alt'] = $related[$key][$mm_alt];
 			$relate[$key]['media_initial'] = $related[$key]['mm_initial'];
 			$relate[$key]['media_name'] = $related[$key]['mm_name'];
 			$relate[$key]['media_src'] = $related[$key]['mm_src'];		
@@ -279,7 +283,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_update_at'] = dateToEn($data['mtp_update_at']);
 			//mr_media
 			$content['media_id'] = $data['mm_id'];
-			$content['media_alt'] = $data['mm_alt'];
+			$content['media_alt'] = $data[$mm_alt];
 			$content['media_initial'] = $data['mm_initial'];
 			$content['media_name'] = $data['mm_name'];
 			$content['media_parent_id'] = $data['mm_parent_id'];
@@ -324,7 +328,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_update_at'] = dateToEn($data['mtp_update_at']);
 			//mr_media
 			$content['media_id'] = $data['mm_id'];
-			$content['media_alt'] = $data['mm_alt'];
+			$content['media_alt'] = $data[$mm_alt];
 			$content['media_initial'] = $data['mm_initial'];
 			$content['media_name'] = $data['mm_name'];
 			$content['media_parent_id'] = $data['mm_parent_id'];
@@ -373,7 +377,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_update_at'] = dateToEn($data['mtp_update_at']);
 			//mr_media
 			$content['media_id'] = $data['mm_id'];
-			$content['media_alt'] = $data['mm_alt'];
+			$content['media_alt'] = $data[$mm_alt];
 			$content['media_initial'] = $data['mm_initial'];
 			$content['media_name'] = $data['mm_name'];
 			$content['media_parent_id'] = $data['mm_parent_id'];
@@ -434,7 +438,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['text_update_at'] = dateToEn($data['mtp_update_at']);
 			//mr_media
 			$content['media_id'] = $data['mm_id'];
-			$content['media_alt'] = $data['mm_alt'];
+			$content['media_alt'] = $data[$mm_alt];
 			$content['media_initial'] = $data['mm_initial'];
 			$content['media_name'] = $data['mm_name'];
 			$content['media_parent_id'] = $data['mm_parent_id'];
@@ -480,7 +484,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['text_update_at'] = dateToEn($data[$key]['mtp_update_at']);
 			//mr_media
 			$content[$key]['media_id'] = $data[$key]['mm_id'];
-			$content[$key]['media_alt'] = $data[$key]['mm_alt'];
+			$content[$key]['media_alt'] = $data[$key][$mm_alt];
 			$content[$key]['media_initial'] = $data[$key]['mm_initial'];
 			$content[$key]['media_name'] = $data[$key]['mm_name'];
 			$content[$key]['media_parent_id'] = $data[$key]['mm_parent_id'];
@@ -530,7 +534,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['text_update_at'] = dateToEn($data[$key]['mtp_update_at']);
 			//mr_media
 			$content[$key]['media_id'] = $data[$key]['mm_id'];
-			$content[$key]['media_alt'] = $data[$key]['mm_alt'];
+			$content[$key]['media_alt'] = $data[$key][$mm_alt];
 			$content[$key]['media_initial'] = $data[$key]['mm_initial'];
 			$content[$key]['media_name'] = $data[$key]['mm_name'];
 			$content[$key]['media_parent_id'] = $data[$key]['mm_parent_id'];
@@ -592,7 +596,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['text_update_at'] = dateToEn($data[$key]['mtp_update_at']);
 			//mr_media
 			$content[$key]['media_id'] = $data[$key]['mm_id'];
-			$content[$key]['media_alt'] = $data[$key]['mm_alt'];
+			$content[$key]['media_alt'] = $data[$key][$mm_alt];
 			$content[$key]['media_initial'] = $data[$key]['mm_initial'];
 			$content[$key]['media_name'] = $data[$key]['mm_name'];
 			$content[$key]['media_parent_id'] = $data[$key]['mm_parent_id'];
@@ -632,7 +636,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['text_update_at'] = dateToEn($data[$key]['mtp_update_at']);
 			//mr_media
 			$content[$key]['media_id'] = $data[$key]['mm_id'];
-			$content[$key]['media_alt'] = $data[$key]['mm_alt'];
+			$content[$key]['media_alt'] = $data[$key][$mm_alt];
 			$content[$key]['media_initial'] = $data[$key]['mm_initial'];
 			$content[$key]['media_name'] = $data[$key]['mm_name'];
 			$content[$key]['media_parent_id'] = $data[$key]['mm_parent_id'];

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+//log
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -54,9 +57,10 @@ class RestController extends Res
             $req['secret_key'] = 0;
         }
 
+        $string   = str_replace('api/v1/', '', $request->path());
+
         if(isset($req) && isset($req["form_params"]) && isset($req["body"]) && isset($headers) && isset($headers["Authorization"]) && !empty($headers["Authorization"]) && isset($headers["Host"]) && isset($headers["Origin"])) {
 
-            $string                 = str_replace('api/v1/', '', $request->path());
             $req['hostname']        = $hostname;
             $req['form_params']     = $req['form_params'];
             $req['ip']              = $request->ip();
@@ -77,9 +81,8 @@ class RestController extends Res
 
         }else if(isset($req) && isset($req['body']) && isset($headers) && isset($headers["Authorization"]) && !empty($headers["Authorization"])) {
 
-            $hostname               = remove_http($headers["Origin"]);
-            $string                 = str_replace('api/v1/', '', $request->path());
             $req['hostname']        = $request->root();
+            $req['ip']              = $request->ip();
             $url                    = getUrlApi().$string;
             $client                 = new Client(getClientHeadersApi($req));
             $request                = $client->post($url, ['query' => $req]);
@@ -101,7 +104,11 @@ class RestController extends Res
                         'message'   => 'Forbidden',
                         'data'      => 'Empty');   
         }
-        
+        //log info
+        Log::info('RestContoller', [
+            'request' => $req,
+            'response' => $response
+        ]);
         return $response;
     }
 }
