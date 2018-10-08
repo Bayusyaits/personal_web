@@ -66,38 +66,40 @@ class PassportController extends Controller
    public function register(Request $request)
  
    {
+        $input = $request->all();
+        
+        if(isset($input["hostname"])) {
+            $hostname  = remove_http($headers["hostname"]);
+        }else {
+            $hostname  = '127.0.0.1:3000';
+        }
  
        $validator = Validator::make($request->all(), [
  
-           'name' => 'required',
+           'name'     => 'required',
  
-           'email' => 'required|email',
+           'email'    => 'required|email',
  
-           'password' => 'required',
+           'password'   => 'required',
  
            'c_password' => 'required|same:password',
  
-       ]);
- 
- 
+       ]); 
  
        if ($validator->fails()) {
  
            return response()->json(['error'=>$validator->errors()], 401);            
  
        }
- 
- 
- 
-       $input = $request->all();
+        
  
        $input['password'] = bcrypt($input['password']);
  
        $user = User::create($input);
  
-       $success['token'] =  $user->createToken('localhost:8081')->accessToken;
+       $success['token']  =  $user->createToken($hostname)->accessToken;
  
-       $success['name'] =  $user->name;
+       $success['name']   =  $user->name;
  
  
  

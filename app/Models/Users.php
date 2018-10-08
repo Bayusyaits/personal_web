@@ -22,7 +22,7 @@ class Users extends Model
         'is_delete',
         'is_update',
         'ip_address',
-        'level_access',
+        'u_mrm_id',
     ];
 
     // public $timestamps = false;

@@ -132,13 +132,47 @@ function response_mr_media($data = [], $for = '', $object = '',$lang = 'en'){
 
 function response_mr_categories($data = [], $for = '', $object = '', $lang = 'en'){
 	$content = [];
+	$fields	 = [];
+	$subjects = [];
 	$mcl_content = 'mc_content_en';
 	$dm_name 	 = 'dm_content_en';
 	if(isset($lang) && $lang == 'id') {
 		$mcl_content = 'mc_content_id';
 		$dm_name 	 = 'dm_content_id';
 	}
-	if(isset($data) && !empty($data) && $for == 'join|dm_menu' && $object == 'get'){
+	if(isset($data) && !empty($data) && $for == 'merge|join|dm_menu' && $object == 'get'){
+		foreach ($data as $key => $value) {
+
+			if(isset($data[$key]['mc_id']) && $data[$key]['mc_dm_id'] === 55103) {
+				# code...
+				$fields[$key]['category_id'] 			= $data[$key]['mc_id'];
+				$fields[$key]['category_menu_id'] 		= $data[$key]['mc_dm_id'];
+				$fields[$key]['category_type'] 			= $data[$key]['mc_type'];
+				$fields[$key]['category_name'] 			= $data[$key][$mcl_content];
+				$fields[$key]['category_initial'] 		= $data[$key]['mc_initial'];
+				$fields[$key]['category_parent'] 		= $data[$key]['mc_is_parent'];
+				$fields[$key]['category_parent_id']		= $data[$key]['mc_parent_id'];
+				$fields[$key]['menu_id'] 				= $data[$key]['dm_id'];
+				$fields[$key]['menu_name'] 				= $data[$key][$dm_name];
+			}
+
+			if(isset($data[$key]['mc_id']) && $data[$key]['mc_dm_id'] === 55105) {
+				# code...
+				$subjects[$key]['category_id'] 			= $data[$key]['mc_id'];
+				$subjects[$key]['category_menu_id'] 	= $data[$key]['mc_dm_id'];
+				$subjects[$key]['category_type'] 		= $data[$key]['mc_type'];
+				$subjects[$key]['category_name'] 		= $data[$key][$mcl_content];
+				$subjects[$key]['category_initial'] 	= $data[$key]['mc_initial'];
+				$subjects[$key]['category_parent'] 		= $data[$key]['mc_is_parent'];
+				$subjects[$key]['category_parent_id']	= $data[$key]['mc_parent_id'];
+				$subjects[$key]['menu_id'] 				= $data[$key]['dm_id'];
+				$subjects[$key]['menu_name'] 			= $data[$key][$dm_name];
+			}
+		}
+		
+		$content = ['portfolio' => $fields, 'contact' => $subjects];
+
+	}else if(isset($data) && !empty($data) && $for == 'join|dm_menu' && $object == 'get'){
 		foreach ($data as $key => $value) {
 			# code...
 			$content[$key]['category_id'] = $data[$key]['mc_id'];
@@ -151,7 +185,7 @@ function response_mr_categories($data = [], $for = '', $object = '', $lang = 'en
 			$content[$key]['menu_id'] 			= $data[$key]['dm_id'];
 			$content[$key]['menu_name'] 		= $data[$key][$dm_name];
 		}
-	}if(isset($data) && !empty($data)){
+	}else if(isset($data) && !empty($data)){
 		foreach ($data as $key => $value) {
 			# code...
 			$content[$key]['category_id'] = $data[$key]['mc_id'];
@@ -177,6 +211,7 @@ function response_mr_categories($data = [], $for = '', $object = '', $lang = 'en
 }
 function response_mr_content_management($data = [], $for = '', $object = '', $parent = [], $related = [], $lang = 'en'){
 	$content = [];
+	$portfolio = [];
 	$media   = [];
 	$relate  = [];
 	$mtp_caption = 'mtp_caption_en';
@@ -187,6 +222,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 	$ms_body 	 = 'ms_body_en';
 	$ms_punch 	 = 'ms_punch_en';
 	$mm_alt 	 = 'mm_alt_en';
+	$ms_role 	 = 'ms_role_en';
 	if(isset($lang) && $lang == 'id') {
 		$mtp_caption = 'mtp_caption_id';
 		$mtp_content = 'mtp_content_id';
@@ -196,6 +232,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 		$ms_body 	 = 'ms_body_id';
 		$ms_punch 	 = 'ms_punch_id';
 		$mm_alt 	 = 'mm_alt_id';
+		$ms_role 	 = 'ms_role_id';
 	}
 	//mr_media > parent_id
 	if(isset($parent) && !empty($parent)) {
@@ -388,14 +425,14 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 				
 	}else if(isset($data) && !empty($data) && $for == 'join|dm_menu|mr_text_posts|mr_media|mr_categories|mr_templates|mr_stats' && $object == 'first'){
 			//mr_stats
-			$content['statistic_id'] = $data['ms_id'];
+			$content['statistic_id'] 	= $data['ms_id'];
 			$content['statistic_keyword'] = $data['ms_keyword'];
 			$content['statistic_formula'] = $data['ms_formula'];
 			$content['statistic_results'] = $data['ms_results'];
 			$content['statistic_formula'] = $data['ms_formula'];
 			$content['statistic_punch_text'] = $data[$ms_punch];
 			$content['statistic_body_text'] = nl2br(e($data[$ms_body]));
-			$content['statistic_role'] = $data['ms_role'];
+			$content['statistic_role'] = $data[$ms_role];
 			$content['statistic_product'] = $data['ms_product'];
 			$content['statistic_start_project'] = dateToEn($data['ms_start_date']);
 			$content['statistic_finish_project'] = dateToEn($data['ms_finish_date']);
@@ -447,6 +484,58 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['media_create_at'] = dateToEn($data['mm_create_at']);
 			$content['media_update_at'] = dateToEn($data['mm_update_at']);
 				
+	}else if(isset($data) && !empty($data) && $for == 'merge|join|dm_menu|mr_text_posts|mr_media|mr_categories' && $object == 'get'){
+		foreach ($data as $key => $value) {
+			//portfolio
+			if(isset($data[$key]['mcm_dm_id']) && $data[$key]['mcm_dm_id'] === 55103) {
+				//mr_content_management
+				$portfolio[$key]['content_id'] = $data[$key]['mcm_id'];
+				$portfolio[$key]['content_menu_id'] = $data[$key]['mcm_dm_id'];
+				$portfolio[$key]['content_category_id'] = $data[$key]['mcm_mc_id'];
+				$portfolio[$key]['content_media_id'] = $data[$key]['mcm_mm_id'];
+				$portfolio[$key]['content_text_id'] = $data[$key]['mcm_mtp_id'];
+				$portfolio[$key]['content_create_at'] = dateToEn($data[$key]['mcm_create_at']);
+				$portfolio[$key]['content_parent_id'] = $data[$key]['mcm_parent_id'];
+				//dyn_menu
+				$portfolio[$key]['menu_id'] = $data[$key]['dm_id'];
+				$portfolio[$key]['menu_name'] = $data[$key][$dm_name];
+				$portfolio[$key]['menu_url'] = $data[$key]['dm_url'];
+				$portfolio[$key]['menu_uri'] = $data[$key]['dm_uri'];
+				$portfolio[$key]['menu_initial'] = $data[$key]['dm_initial'];
+				$portfolio[$key]['menu_keyword'] = $data[$key]['dm_keyword'];
+				//mr_categories
+				$portfolio[$key]['category_id'] = $data[$key]['mc_id'];
+				$portfolio[$key]['category_menu_id'] = $data[$key]['mc_dm_id'];
+				$portfolio[$key]['category_type'] = $data[$key]['mc_type'];
+				$portfolio[$key]['category_name'] = $data[$key][$mcl_content];
+				$portfolio[$key]['category_initial'] = $data[$key]['mc_initial'];
+				//mr_text_post
+				$portfolio[$key]['text_id'] = $data[$key]['mtp_id'];
+				$portfolio[$key]['text_initial'] = $data[$key]['mtp_initial'];
+				$portfolio[$key]['text_keyword'] = $data[$key]['mtp_keyword'];
+				$portfolio[$key]['text_title'] = $data[$key][$mtp_title];
+				$portfolio[$key]['text_caption'] = nl2br(e($data[$key][$mtp_caption]));
+				$portfolio[$key]['text_content'] = nl2br(e($data[$key][$mtp_content]));
+				$portfolio[$key]['text_parent_id'] = $data[$key]['mtp_parent_id'];
+				$portfolio[$key]['text_tags'] = $data[$key]['mtp_tags'];
+				$portfolio[$key]['text_url'] = $data[$key]['mtp_url'];
+				$portfolio[$key]['text_create_at'] = dateToEn($data[$key]['mtp_create_at']);
+				$portfolio[$key]['text_update_at'] = dateToEn($data[$key]['mtp_update_at']);
+				//mr_media
+				$portfolio[$key]['media_id'] = $data[$key]['mm_id'];
+				$portfolio[$key]['media_alt'] = $data[$key][$mm_alt];
+				$portfolio[$key]['media_initial'] = $data[$key]['mm_initial'];
+				$portfolio[$key]['media_name'] = $data[$key]['mm_name'];
+				$portfolio[$key]['media_parent_id'] = $data[$key]['mm_parent_id'];
+				$portfolio[$key]['media_src'] = $data[$key]['mm_src'];		
+				$portfolio[$key]['media_url'] = $data[$key]['mm_url'];
+				$portfolio[$key]['media_create_at'] = dateToEn($data[$key]['mm_create_at']);
+				$portfolio[$key]['media_update_at'] = dateToEn($data[$key]['mm_update_at']);	
+			}
+		}
+		//add name dm_name base on data content management
+		$content = [ 'portfolio' => $portfolio ];
+	
 	}else if(isset($data) && !empty($data) && $for == 'join|dm_menu|mr_text_posts|mr_media|mr_categories' && $object == 'get'){
 		foreach ($data as $key => $value) {
 			//mr_content_management
@@ -553,7 +642,7 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['statistic_formula'] = $data[$key]['ms_formula'];
 			$content[$key]['statistic_punch_text'] = $data[$key][$ms_punch];
 			$content[$key]['statistic_body_text'] = nl2br(e($data[$key][$ms_body]));
-			$content[$key]['statistic_role'] = $data[$key]['ms_role'];
+			$content[$key]['statistic_role'] = $data[$key][$ms_role];
 			$content[$key]['statistic_product'] = $data[$key]['ms_product'];
 			$content[$key]['statistic_start_project'] = dateToEn($data[$key]['ms_start_date']);
 			$content[$key]['statistic_finish_project'] = dateToEn($data[$key]['ms_finish_date']);

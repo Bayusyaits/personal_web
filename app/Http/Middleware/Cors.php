@@ -19,8 +19,8 @@ class Cors
         if(!user($request)){
             return array(
                     'status'    => 'Error',
-                    'code'      => 405,
-                    'message'   => 'Method Not Allowed',
+                    'code'      => 401,
+                    'message'   => 'Unauthorized',
                     'data'      => 'Empty');
         }
         return $next($request)

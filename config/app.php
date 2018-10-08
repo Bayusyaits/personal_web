@@ -65,7 +65,9 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    //UTC is default
+
+    'timezone' => 'Asia/Bangkok',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +109,8 @@ return [
     'key' => env('APP_KEY','so9wTHW02hoZfzwz03AUtSEPPernMD0y/tN1nKrM9GU='),
 
     'cipher' => 'AES-256-CBC',
+
+    'log_slack_webhook_url' => env('LOG_SLACK_WEBHOOK_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -181,7 +185,9 @@ return [
         //passport token api
         Laravel\Passport\PassportServiceProvider::class,
         //composer require optimus/api-consumer 0.2.*
-        Optimus\ApiConsumer\Provider\LaravelServiceProvider::class
+        Optimus\ApiConsumer\Provider\LaravelServiceProvider::class,
+        //Firewall 2.2 IP
+        PragmaRX\Firewall\Vendor\Laravel\ServiceProvider::class
 
 
     ],
@@ -237,7 +243,7 @@ return [
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-
+        'Firewall' => PragmaRX\Firewall\Vendor\Laravel\Facade::class
     ],
 
 ];

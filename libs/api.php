@@ -28,7 +28,7 @@ function getRequestHeaders() {
 
 function getUrlApi() {
 
-	if(app('env') == 'production'){
+    if(env('APP_ENV', 'production')){
         $url = 'https://api.bayusyaits.com/api/';
     }else {
         $url = 'http://bayusyaits.laravel.com/api/';
@@ -57,6 +57,23 @@ function getClientQueryApi($data = []) {
         $body = '';
     }
 
+    if(isset($data) && isset($data['secret_key']) && $data['secret_key'] !== 0) {
+        $secret = explode('||secret||', $data['secret_key']);
+        if(isset($secret) && isset($secret[0]) && isset($secret[1]) && isset($secret[2])) {
+            $secret_key = $secret[0];
+            $username   = $secret[1];
+            $password   = $secret[2];
+        }else {
+            $secret_key = '';
+            $username   = '';
+            $password   = '';
+        }
+    }else {
+        $secret_key = '';
+        $username   = '';
+        $password   = '';
+    }
+
     if(isset($data) && !empty($data)) {
         $query['body']          = $body;
         $query['operation']     = $body['operation'];
@@ -64,8 +81,10 @@ function getClientQueryApi($data = []) {
         $query['lang']          = isset($body['lang']) && !empty($body['lang']) ? $body['lang'] : 'en';
         $query['keyword']       = isset($body['keyword']) && !empty($body['keyword']) ? $body['keyword'] : '';
         $query['hostname']      = $data['hostname'];
-        $query['client_secret'] = $data['secret_key'];
+        $query['client_secret'] = $secret_key;
         $query['body']['ip']    = $data['ip'];
+        $query['username']      = $username;
+        $query['password']      = $password;
 
         return $query;
 

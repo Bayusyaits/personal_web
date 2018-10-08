@@ -15,14 +15,14 @@ use Illuminate\Http\Request;
 //vue.js
 
 $api->version('v1',
-	[
+    [
         'prefix'               =>  'api',
-		'middleware'           =>  'cors',
-		'limit'                =>  100,
-		'expires'              =>  60,
-		'namespace'            =>  'App\Http\Controllers'
-	], 
-	
+        'middleware'           =>  'cors',
+        'limit'                =>  100,
+        'expires'              =>  60,
+        'namespace'            =>  'App\Http\Controllers'
+    ], 
+    
     function ($api) {
         //rest controller from client
         //post
@@ -69,12 +69,14 @@ $api->version('v1',
             ]
         );
 
+/*
         $api->get('/auth', 
             [
                 'uses'             =>   'API\AppController@getPages', 
                 'as'               =>   'getPages'
             ]
         );
+*/
 
          Route::get('/portfolio/{uri}', 
             [
@@ -134,10 +136,10 @@ $api->version('v1',
         );
 
         $api->post('/related/{uri}',
-        		[
-        			'uses'        =>   'Master\MrContentManagementController@postRelatedProject',
-                	'as'          =>   'postRelatedProject'
-        		]
+                [
+                    'uses'        =>   'Master\MrContentManagementController@postRelatedProject',
+                    'as'          =>   'postRelatedProject'
+                ]
         );
         $api->post('/pages/{uri}', 
             [

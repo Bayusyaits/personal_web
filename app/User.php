@@ -16,7 +16,6 @@ class User extends Authenticatable
    use HasApiTokens, Notifiable;
  
  
- 
    /**
  
     * The attributes that are mass assignable.
@@ -32,7 +31,6 @@ class User extends Authenticatable
        'name', 'email', 'password',
  
    ];
- 
  
  
    /**
@@ -51,4 +49,8 @@ class User extends Authenticatable
  
    ];
  
+  public function routeNotificationForSlack($driver)
+  {
+      return config('app.log_slack_webhook_url');
+  }
 }

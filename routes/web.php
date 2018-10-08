@@ -15,19 +15,24 @@ set_time_limit(3600);
 // define('env', env('APP_ENV'));
 // define('env_bo', env('BACKOFFICE'));
 // define('DATETIME', date('Y-m-d H:i:s'));
-define('REQUEST_SCHEME', 'http');
-define('DATE', date('Y-m-d'));
-define('TIME', time());
-define('JT', 1000000);
+// define('REQUEST_SCHEME', 'http');
+// define('DATE', date('Y-m-d'));
+// define('TIME', time());
+// define('JT', 1000000);
 
 $api = app('Dingo\Api\Routing\Router');
-//https://laravel.com/docs/5.6/routing#route-parameters
+/*
+    laravel.com/docs/5.6/routing#route-parameters
+*/
+/*
 Route::get('/', 
     [
         'uses'                 => 'Frontend\AppController@getIndex',
         'as'                   => 'index'
     ]
 );
+*/
+/*
 
 Route::match(['get','post'],'/exceptions',
     [
@@ -35,7 +40,9 @@ Route::match(['get','post'],'/exceptions',
         'as'                  => 'api_404'
     ]
 );
+*/
 
+/*
 Route::get('/carbon', function () {
     $before = Carbon\Carbon::now();
 
@@ -45,17 +52,20 @@ Route::get('/carbon', function () {
 
     return $now->diffInSeconds($before); // returns 0
 });
+*/
 
 //clear cache
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
     // return what you want
 });
+/*
 Route::get('/test', function() {
     $data = [];
     $data['hostname'] = 'bayusyaits.com';
     return getClientDataApi($data);
 });
+*/
 
 require base_path('routes/firewall.php');
 if(env('API_URI')== 'api.bayusyaits.com' && env('API_PREFIX') == 'api'){
@@ -63,4 +73,4 @@ if(env('API_URI')== 'api.bayusyaits.com' && env('API_PREFIX') == 'api'){
 }
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

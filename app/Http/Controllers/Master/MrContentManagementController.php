@@ -6,15 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 //use dingo
-
 use Dingo\Api\Routing\Helpers;
-
-//guzzle client api
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-use GuzzleHttp\Middleware;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Handler\CurlHandler;
 
 use App\Transformers\AppTransformer;
 use Response;
@@ -120,9 +112,18 @@ class MrContentManagementController extends Res
             }
 
             switch($uri)  {
-                case 'menu' : 
+                case 'index' : 
                     $mcm = model('MrContentManagement')::contentmenu()->get(); 
-                    response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','get',[],[],$input['lang']);
+                    if(isset($mcm) && $mcm){
+                        $mc = model('MrCategories')::categoriesactive()->get();
+                    }else {
+                        $mc = [];
+                    }
+                    if(isset($mc) && $mc) {
+                        $mc = response_mr_categories($mc,'join|dm_menu','get',$input['lang']);
+                    }
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','get',[],[],$input['lang']);
+                    $mcm = array_merge(['content' => $mcm, 'category' => $mc]);
                 break;
                 case 'home'         : 
                     $mcm = model('MrContentManagement')::contentmenupage(55101)->first(); 
@@ -138,9 +139,11 @@ class MrContentManagementController extends Res
                 break;
                 case 'blog'      : 
                     $mcm = model('MrContentManagement')::contentmenupage(55104)->first(); 
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first',[],[],$input['lang']);
                 break;
                 case 'contact'      : 
                     $mcm = model('MrContentManagement')::contentmenupage(55105)->first(); 
+                    $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','first',[],[],$input['lang']);
                 break;
                 case 'case-studies' : 
                     $mcm = model('MrContentManagement')::contentmenupage(55108)->first(); 
@@ -148,7 +151,24 @@ class MrContentManagementController extends Res
                 break;
                 default: 
                     $mcm = model('MrContentManagement')::contentmenu()->get(); 
+                    if(isset($mcm) && $mcm){
+                        $mc = model('MrCategories')::categoriesactive()->get();
+                        $mcm_p  = model('MrContentManagement')::contentmenuproject(5525003,"[Content-Menu|Portfolio]")->get();
+                    }else {
+                        $mc = [];
+                        $mcm_p  = [];
+                    }
+                    
+                    if(isset($mc) && $mc) {
+                        $mc = response_mr_categories($mc,'merge|join|dm_menu','get',$input['lang']);
+                    }
+
+                    if(isset($mcm_p) && $mcm_p) {
+                        $mcm_p = response_mr_content_management($mcm_p,'merge|join|dm_menu|mr_text_posts|mr_media|mr_categories','get',[],[],$input['lang']);
+                    }
+
                     $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','get',[],[],$input['lang']);
+                    $mcm = ['content' => $mcm, 'category' => $mc, 'projects' => $mcm_p];
             }
 
             $mcm =  array(
@@ -294,11 +314,21 @@ class MrContentManagementController extends Res
             }
             switch($uri)  {
             case 'projects'     : 
-                $mcm; 
+                $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','get',[],[],$input['lang']);
+            case 'projects-fields' :
+                if(isset($mcm) && $mcm){
+                    $mc = model('MrCategories')::fields()->get();
+                }else {
+                    $mc = [];
+                }
+                if(isset($mc) && $mc) {
+                    $mc = response_mr_categories($mc,'join|dm_menu','get',$input['lang']);
+                }
+                $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','get',[],[],$input['lang']);
+                $mcm = array_merge(['content' => $mcm, 'category' => $mc]);
               break;
             }
             
-            $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','get',[],[],$input['lang']);
             $mcm =  array(
                     'status'    => 'Success',
                     'code'      => Res::HTTP_OK,

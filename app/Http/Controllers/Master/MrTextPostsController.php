@@ -6,15 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 //use dingo
-
 use Dingo\Api\Routing\Helpers;
 
-//guzzle client api
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-use GuzzleHttp\Middleware;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Handler\CurlHandler;
 
 use App\Transformers\AppTransformer;
 use Response;

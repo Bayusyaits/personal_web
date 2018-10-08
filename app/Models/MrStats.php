@@ -15,7 +15,7 @@ class MrStats extends Model
         'ms_show',
         'ms_keyword',
         'ms_formula',
-        'ms_role',
+        'ms_mcl_initial_role',
         'ms_product',
         'ms_results',
         'ms_initial',
@@ -32,27 +32,27 @@ class MrStats extends Model
     const UPDATED_AT = 'ms_update_at';
 
     protected $fieldRules = [
-        "ms_id"            =>["",""],
-        "ms_keyword"       =>["",""],
-        "ms_formula"       =>["required",""],
-        "ms_results"       =>["required",""],
-        "ms_role"          =>["required",""],
-        "ms_product"       =>["required",""],
-        "ms_initial"         =>["required",""],
-        "ms_punch_en"       =>["required",""],
-        "ms_punch_id"       =>["required",""],
-        "ms_body_en"    =>["required",""],
-        "ms_body_id"    =>["required",""],
-        "ms_show"          =>["required",""],
-        "ms_start_date"    =>["required",""],
-        "ms_finish_date"   =>["required",""],
+        "ms_id"                 =>["",""],
+        "ms_keyword"            =>["",""],
+        "ms_formula"            =>["required",""],
+        "ms_results"            =>["required",""],
+        "ms_product"            =>["required",""],
+        "ms_initial"            =>["required",""],
+        "ms_mcl_initial_role"   =>["required",""],
+        "ms_punch_en"           =>["required",""],
+        "ms_punch_id"           =>["required",""],
+        "ms_body_en"            =>["required",""],
+        "ms_body_id"            =>["required",""],
+        "ms_show"               =>["required",""],
+        "ms_start_date"         =>["required",""],
+        "ms_finish_date"        =>["required",""],
     ];
 
     /*
-	 Funtion
-	 */
-	 
-	  public function scopePostsActive($query)
+     Funtion
+     */
+     
+      public function scopePostsActive($query)
       {
           return $query->where(['ms_show'=> 555,'ms_deleted_at'=>0]);
       }
