@@ -209,6 +209,7 @@ function response_mr_categories($data = [], $for = '', $object = '', $lang = 'en
 	}
 	return $content;
 }
+
 function response_mr_content_management($data = [], $for = '', $object = '', $parent = [], $related = [], $lang = 'en'){
 	$content = [];
 	$portfolio = [];
@@ -434,8 +435,13 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content['statistic_body_text'] = nl2br(e($data[$ms_body]));
 			$content['statistic_role'] = $data[$ms_role];
 			$content['statistic_product'] = $data['ms_product'];
-			$content['statistic_start_project'] = dateToEn($data['ms_start_date']);
-			$content['statistic_finish_project'] = dateToEn($data['ms_finish_date']);
+			if(isset($lang) && $lang == 'id') {
+				$content['statistic_start_project']  = dateToId($data['ms_start_date']);
+				$content['statistic_finish_project'] = dateToId($data['ms_finish_date']);
+			}else {
+				$content['statistic_start_project']  = dateToEn($data['ms_start_date']);
+				$content['statistic_finish_project'] = dateToEn($data['ms_finish_date']);
+			}
 			//mr_templates
 			$content['template_id'] = $data['mt_id'];
 			$content['template_keyword'] = $data['mt_keyword'];
@@ -644,8 +650,13 @@ function response_mr_content_management($data = [], $for = '', $object = '', $pa
 			$content[$key]['statistic_body_text'] = nl2br(e($data[$key][$ms_body]));
 			$content[$key]['statistic_role'] = $data[$key][$ms_role];
 			$content[$key]['statistic_product'] = $data[$key]['ms_product'];
-			$content[$key]['statistic_start_project'] = dateToEn($data[$key]['ms_start_date']);
-			$content[$key]['statistic_finish_project'] = dateToEn($data[$key]['ms_finish_date']);
+			if(isset($lang) && $lang == 'id') {
+				$content[$key]['statistic_start_project']  = dateToId($data[$key]['ms_start_date']);
+				$content[$key]['statistic_finish_project'] = dateToId($data[$key]['ms_finish_date']);
+			}else {
+				$content[$key]['statistic_start_project']  = dateToEn($data[$key]['ms_start_date']);
+				$content[$key]['statistic_finish_project'] = dateToEn($data[$key]['ms_finish_date']);
+			}
 			//mr_templates
 			$content[$key]['template_id'] = $data[$key]['mt_id'];
 			$content[$key]['template_keyword'] = $data[$key]['mt_keyword'];

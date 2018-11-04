@@ -163,18 +163,18 @@ function validateHash($stored, $hash_bcrypt)
 
 //** Format Tanggal YYYY-MM-DD **//
 function dateToEn($date){
-	$date_en = date("Y-m-d H:i:s", $date);
+	$date_en 	 = date("Y-m-d H:i:s", $date);
+	$date_i 	 = date('Y-m-d', strtotime($date_en));
 	$month_array = date('m', strtotime($date_en));
-	$dateObj   = DateTime::createFromFormat('!m', $month_array);
-	$month = $dateObj->format('F');
-	$date = date('d', strtotime($date_en));
-	$year = substr($date_en, 0 , 4);
-	$monthName = substr($month, 0 , 3);
-	$date_en = $monthName." ".$date.", ".$year;
-	if($date_en == '1970-01-01'){
+	$dateObj   	 = DateTime::createFromFormat('!m', $month_array);
+	$month 		 = $dateObj->format('F');
+	$date 		 = date('d', strtotime($date_en));
+	$year 		 = substr($date_en, 0 , 4);
+	$monthName 	 = substr($month, 0 , 3);
+	if($date_i == '1970-01-01'){
 		return '';
 	} else {
-		return $date_en;
+		return $monthName." ".$date.", ".$year;
 	}
 }//function_date_to_en
 
@@ -186,24 +186,43 @@ function dateToTime($date){
 
 //** Format Tanggal DD-MM-YYYY **//
 function dateToId($date){
-	$date_id = date("Y-m-d H:i:s", $date);
-	$date_i = date('Y-m-d', strtotime($date_id));
+	$date_id 	 = date("Y-m-d H:i:s", $date);
+	$date_i 	 = date('Y-m-d', strtotime($date_id));
+	$month_array = date('m', strtotime($date_id));
+	$bulan 		 = array(
+					"", 
+					"Januari",
+					"Februari",
+					"Maret",
+					"April",
+					"Mei",
+					"Juni",
+					"Juli",
+					"Agustus",
+					"September",
+					"Oktober",
+					"November",
+					"Desember"
+			);
+	$date 		 = date('d', strtotime($date_id));
+	$year 		 = substr($date_id, 0 , 4);
+	$month_array = $month_array <= 10 ? substr($month_array, 1, 1) : $month_array;
 	if($date_i == '1970-01-01'){
 		return '';
 	} else {
-		return $date_i;
+		return $date." ".$bulan[$month_array]." ".$year;
 	}
 }//function_date_to_id
 
 //** Format Tanggal DD-MM-YYYY **//
 function dateTimeId($date){
-	$date_id = date("Y-m-d H:i:s", $date);
-	$month_array = date('m', strtotime($date_id));
-	$date_array = substr($date_id, 8 , 2);
-	$newDateTime = date('h:i A', strtotime($date_id));
-    $day_array = date('w', strtotime($date_id));
-    $year = substr($date_id, 2 , 2);
-    $date_i = $month_array." ".$date_array."' ".$year." at ".$newDateTime."";
+	$date_id 		= date("Y-m-d H:i:s", $date);
+	$month_array 	= date('m', strtotime($date_id));
+	$date_array 	= substr($date_id, 8 , 2);
+	$newDateTime 	= date('h:i A', strtotime($date_id));
+    $day_array 		= date('w', strtotime($date_id));
+    $year 			= substr($date_id, 2 , 2);
+    $date_i 		= $month_array." ".$date_array."' ".$year." at ".$newDateTime."";
 	if($date_i == '1970-01-01'){
 		return '';
 	} else {
@@ -213,15 +232,15 @@ function dateTimeId($date){
 
 //** Format Tanggal DD-MM-YYYY **//
 function dateTimeEn($date){
-	$date_id = date("Y-m-d H:i:s", $date);
-	$month_array = date('m', strtotime($date_id));
-	$dateObj   = DateTime::createFromFormat('!m', $month_array);
-	$month = $dateObj->format('F');
-	$monthName = substr($month, 0 , 3);
-	$date = date('d', strtotime($date_id));
-	$newDateTime = date('h:i A', strtotime($date_id));
-	$year = substr($date_id, 0 , 4);
-    $date_i = $monthName." ".$date.", ".$year." at ".$newDateTime."";
+	$date_id 		= date("Y-m-d H:i:s", $date);
+	$month_array 	= date('m', strtotime($date_id));
+	$dateObj   		= DateTime::createFromFormat('!m', $month_array);
+	$month 			= $dateObj->format('F');
+	$monthName 		= substr($month, 0 , 3);
+	$date 			= date('d', strtotime($date_id));
+	$newDateTime 	= date('h:i A', strtotime($date_id));
+	$year 			= substr($date_id, 0 , 4);
+    $date_i 		= $monthName." ".$date.", ".$year." at ".$newDateTime."";
 	if($date_i == '1970-01-01'){
 		return '';
 	} else {

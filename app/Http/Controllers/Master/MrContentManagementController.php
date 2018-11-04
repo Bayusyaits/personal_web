@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 //use dingo
+
 use Dingo\Api\Routing\Helpers;
 
 use App\Transformers\AppTransformer;
@@ -81,6 +82,11 @@ class MrContentManagementController extends Res
                     'message'   => 'Not found',
                     'data'      => 'Empty');
         
+        $mc =  array('status'   => 'Error',
+                    'code'      => Res::HTTP_NOT_FOUND,
+                    'message'   => 'Not found',
+                    'data'      => 'Empty');
+        
         $input = $request->all();
 
         //from javascript
@@ -116,13 +122,14 @@ class MrContentManagementController extends Res
                     $mcm = model('MrContentManagement')::contentmenu()->get(); 
                     if(isset($mcm) && $mcm){
                         $mc = model('MrCategories')::categoriesactive()->get();
-                    }else {
-                        $mc = [];
                     }
+                    
                     if(isset($mc) && $mc) {
                         $mc = response_mr_categories($mc,'join|dm_menu','get',$input['lang']);
                     }
+                    
                     $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media','get',[],[],$input['lang']);
+                    
                     $mcm = array_merge(['content' => $mcm, 'category' => $mc]);
                 break;
                 case 'home'         : 
@@ -185,6 +192,7 @@ class MrContentManagementController extends Res
         }
         return response()->json($mcm,Res::HTTP_OK);
     }
+    
     public function postSinglePageContent(Request $request, $uri = '') {
         $mcm =  array('status'   => 'Error',
                     'code'      => Res::HTTP_NOT_FOUND,
@@ -272,6 +280,11 @@ class MrContentManagementController extends Res
                     'code'      => Res::HTTP_NOT_FOUND,
                     'message'   => 'Not found',
                     'data'      => 'Empty');
+                    
+        $mc =  array('status'   => 'Error',
+                    'code'      => Res::HTTP_NOT_FOUND,
+                    'message'   => 'Not found',
+                    'data'      => 'Empty');
         
         $input = $request->all();
         //from javascript
@@ -294,7 +307,7 @@ class MrContentManagementController extends Res
             $input['operation'] = '';
         }
         
-        if(isset($input) && $input['operation'] == 'Get content projects' && isset($input['lang']) && request('hostname')) {
+        if(isset($input) && $input['operation'] == 'Get Content Projects' && isset($input['lang']) && request('hostname') && !empty($keyword)) {
             // $input['operation'] = bcrypt($input['operation']);
 
             $rests              = model('Rests')::isexist($input['operation'])->first();
@@ -315,18 +328,19 @@ class MrContentManagementController extends Res
             switch($uri)  {
             case 'projects'     : 
                 $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','get',[],[],$input['lang']);
+            break;
             case 'projects-fields' :
                 if(isset($mcm) && $mcm){
                     $mc = model('MrCategories')::fields()->get();
-                }else {
-                    $mc = [];
                 }
+                
                 if(isset($mc) && $mc) {
                     $mc = response_mr_categories($mc,'join|dm_menu','get',$input['lang']);
                 }
+                
                 $mcm = response_mr_content_management($mcm,'join|dm_menu|mr_text_posts|mr_media|mr_categories','get',[],[],$input['lang']);
                 $mcm = array_merge(['content' => $mcm, 'category' => $mc]);
-              break;
+            break;
             }
             
             $mcm =  array(
